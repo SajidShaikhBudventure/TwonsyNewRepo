@@ -131,7 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(right: 15, left: 15),
                 child: Platform.isAndroid ? CommonView.googleBtnShow(context) : Container(),
               ),
-              labelWithEmail(),
+              Container(
+                child: Platform.isAndroid ? labelWithEmail() : Container(),
+              ),
               textFiledEmail(),
               helpTextEmail(),
               textFiledPassword(),
@@ -470,7 +472,7 @@ class _LoginPageState extends State<LoginPage> {
               Const.post, WebApi.rqLogin, rq.toJson(), Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse.success) {
-          Utils.showToast(StringRes.loginSuccess);
+          //Utils.showToast(StringRes.loginSuccess);
           UserData userData = UserData.fromJson(baseResponse.data);
           CommonView.progressDialog(false, context);
 

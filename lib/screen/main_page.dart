@@ -6,6 +6,7 @@ import 'package:marketplace/helper/utils.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/screen/register_page.dart';
 import 'package:marketplace/screen/signin_page.dart';
+import 'dart:io' show Platform;
 
 class MainLoginPage extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  expandedHeight: Utils.getDeviceHeight(context) / 4.5,
+                  expandedHeight: Platform.isAndroid ? (Utils.getDeviceHeight(context) / 4.5) : (Utils.getDeviceHeight(context) / 3.8),
                   floating: false,
                   pinned: false,
                   flexibleSpace: FlexibleSpaceBar(
@@ -45,7 +46,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                         width: Utils.getDeviceWidth(context),
                         color: ColorRes.black,
                         margin: EdgeInsets.only(top: 0, bottom: 0, right: 0, left: 0),
-                        height: Utils.getDeviceHeight(context)/4.5,
+                        height: Platform.isAndroid ? (Utils.getDeviceHeight(context) / 4.5) : (Utils.getDeviceHeight(context) / 3.8),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,13 +58,13 @@ class _MainLoginPageState extends State<MainLoginPage> {
                                   color: ColorRes.white,
                                   fontWeight: FontWeight.w700),
                             ),
-                            SizedBox(height: 12),
+                            SizedBox(height: Utils.getDeviceWidth(context)/60),
                             Text(
                               StringRes.businessTitle,
                               style: TextStyle(
                                   fontSize: Utils.getDeviceHeight(context)/19,
                                   color: ColorRes.white,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w700),
                             )
                           ],
                         ),
@@ -105,7 +106,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
     return Container(
       width: Utils.getDeviceWidth(context),
       color: ColorRes.black,
-      height: Utils.getDeviceHeight(context) / 4.5,
+      height: Platform.isAndroid ? (Utils.getDeviceHeight(context) / 4.5) : (Utils.getDeviceHeight(context) / 3.8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,7 +118,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                 color: ColorRes.white,
                 fontWeight: FontWeight.w800),
           ),
-          SizedBox(height: 8.0),
+          SizedBox(height: Utils.getDeviceWidth(context)/60),
           Text(
             StringRes.businessTitle,
             style: TextStyle(

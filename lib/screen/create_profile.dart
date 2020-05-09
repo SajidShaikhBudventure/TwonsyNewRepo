@@ -267,6 +267,10 @@ class _BusinessPageState extends State<CreateProfile> {
                 decoration: InputDecoration(
                   fillColor: ColorRes.white,
                   contentPadding: EdgeInsets.all(10),
+                  enabledBorder: const OutlineInputBorder(
+                    // width: 0.0 produces a thin "hairline" border
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                  ),
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
@@ -487,7 +491,7 @@ class _BusinessPageState extends State<CreateProfile> {
                                 style: TextStyle(
                                     color: ColorRes.overallGreyText,
                                     fontSize:
-                                        Utils.getDeviceHeight(context) / 40),
+                                        Utils.getDeviceWidth(context) / 28),
                               ),
                             ),
                           ],
@@ -555,6 +559,10 @@ class _BusinessPageState extends State<CreateProfile> {
                       contentPadding:
                           EdgeInsets.only(top: 0.0, right: 10, left: 10),
                       border: OutlineInputBorder(),
+                      enabledBorder: const OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                      ),
                       hintText: StringRes.hintOfBusinessCategory,
                     ),
                     validator: (value) {
@@ -756,6 +764,10 @@ class _BusinessPageState extends State<CreateProfile> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
+                  enabledBorder: const OutlineInputBorder(
+                    // width: 0.0 produces a thin "hairline" border
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                  ),
                 ),
               ),
             ),
@@ -805,7 +817,7 @@ class _BusinessPageState extends State<CreateProfile> {
           child: Text(
             dayTimeList[index].day,
             style: TextStyle(
-                fontSize: Utils.getDeviceWidth(context) / 30,
+                fontSize: Utils.getDeviceWidth(context) / 28,
                 color: !dayTimeList[index].isCheck
                     ? ColorRes.greyText
                     : ColorRes.black),
@@ -820,7 +832,7 @@ class _BusinessPageState extends State<CreateProfile> {
 
     return InkResponse(
       child: Container(
-        height: Utils.getDeviceHeight(context) / 30,
+        //height: Utils.getDeviceHeight(context) / 30,
         padding: EdgeInsets.all(4),
         margin: EdgeInsets.only(right: 0, top: 5),
         decoration: editBusinessInfo == true
@@ -832,7 +844,7 @@ class _BusinessPageState extends State<CreateProfile> {
         child: Text(dayTimeList[index].startTime ?? "08:45",
             style: TextStyle(
                 fontStyle: FontStyle.normal,
-                fontSize: Utils.getDeviceHeight(context) / 60)),
+                fontSize: Utils.getDeviceWidth(context) / 28)),
       ),
       onTap: () {
         DatePicker.showTimePicker(context,
@@ -883,7 +895,7 @@ class _BusinessPageState extends State<CreateProfile> {
 
     return InkResponse(
       child: Container(
-        height: Utils.getDeviceHeight(context) / 30,
+        //height: Utils.getDeviceHeight(context) / 30,
         padding: EdgeInsets.all(4),
         margin: EdgeInsets.only(right: 10, top: 5),
         decoration: editBusinessInfo == true
@@ -893,10 +905,10 @@ class _BusinessPageState extends State<CreateProfile> {
               )
             : BoxDecoration(),
         child: Text(
-          dayTimeList[index].endTime ?? "08:35",
+          dayTimeList[index].endTime ?? "08:45",
           style: TextStyle(
               fontStyle: FontStyle.normal,
-              fontSize: Utils.getDeviceHeight(context) / 60),
+              fontSize: Utils.getDeviceWidth(context) / 28),
         ),
       ),
       onTap: () {
@@ -979,7 +991,7 @@ class _BusinessPageState extends State<CreateProfile> {
       child: Text(
         title,
         style: TextStyle(
-            height: 1.15,
+            height: Utils.getDeviceWidth(context) / 350,
             color: ColorRes.lightGrey,
             fontSize: Utils.getDeviceHeight(context) / 60),
         textAlign: TextAlign.justify,
@@ -1056,6 +1068,10 @@ class _BusinessPageState extends State<CreateProfile> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(),
+                enabledBorder: const OutlineInputBorder(
+                  // width: 0.0 produces a thin "hairline" border
+                  borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                ),
               ),
               validator: (value) {
                 if (value.isEmpty) {
@@ -1118,6 +1134,10 @@ class _BusinessPageState extends State<CreateProfile> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(),
+                enabledBorder: const OutlineInputBorder(
+                  // width: 0.0 produces a thin "hairline" border
+                  borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                ),
               ),
             ),
           ),

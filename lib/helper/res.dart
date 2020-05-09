@@ -69,7 +69,7 @@ class StringRes {
   static var and                    =   "and";
   static var pleaseTryAgain         =   "Please try again later";
   static var registerLine           =   "By clicking \"REGISTER\" you agree to our";
-  static var hintOfBusinessCategory =   "Shoes, Apparels, Mobile Accessories, Bike Accessories, etc.";
+  static var hintOfBusinessCategory =   "Shoes, Clothing, Accessories, Furniture, Computer Hardware, etc.";
   static var choosePhoto            =   "Choose photo";
   static var takePhoto              =   "Take photo";
 
@@ -78,7 +78,7 @@ class StringRes {
   static var deleteProductMsg       =   "Are you sure you want to delete this product?";
   static var deleteBusinessMsg      =   "Are you sure you want to delete this account?";
   static var registerSuccess        =   "Registration successful";
-  static var loginSuccess           =   "Login successful";
+  static var loginSuccess           =   "Login Successful";
   static var makePrivate            =   "Your profile is now hidden on Townsy";
   static var makePublic             =   "Your profile is now visible on Townsy";
   static var deleteSuccessMsg       =   "Business profile deleted";

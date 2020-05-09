@@ -35,8 +35,9 @@ class _SupportPageState extends State<SupportPage> {
         children: <Widget>[
           firstLineText(),
           secondLineImage(),
-          threeEmail(),
-          fourthFacebook(),
+          threePhone(),
+          fourthEmail(),
+          fifthFacebook(),
         ],
       ),
     );
@@ -46,7 +47,7 @@ class _SupportPageState extends State<SupportPage> {
     return Container(
       height: Utils.getDeviceHeight(context)/20,
       width:  Utils.getDeviceWidth(context),
-      margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceHeight(context)/10),
+      margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceHeight(context)/12),
       padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/20, right: Utils. getDeviceWidth(context)/20),
       alignment: Alignment(0,0),
       child: Text(StringRes.weAreHere, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/18), maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -67,11 +68,73 @@ class _SupportPageState extends State<SupportPage> {
     );
   }
 
-  threeEmail() {
+  threePhone() {
     return Container(
       height: Utils.getDeviceHeight(context)/20,
       width:  Utils.getDeviceWidth(context),
       margin: EdgeInsets.only(right: 0, left: 0, top: Utils. getDeviceHeight(context)/20),
+      alignment: Alignment(0,0),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, right: Utils. getDeviceWidth(context)/30),
+      child: Container(
+        color: ColorRes.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              //color: ColorRes.black,
+              width: Utils.getDeviceWidth(context)*3/8,
+              alignment: Alignment(0,0),
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Center(
+                child: Text(
+                "CALL US ON:",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle
+                      .copyWith(color: ColorRes.white),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                    color: ColorRes.white,
+                    border: Border.all(color: ColorRes.black, width: 1)),
+                child: InkWell(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Text(
+                        "+91 7683084157",
+                        style: TextStyle(
+                            fontSize: Utils.getDeviceWidth(context) / 30),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    //_launchURL();
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  fourthEmail() {
+    return Container(
+      height: Utils.getDeviceHeight(context)/20,
+      width:  Utils.getDeviceWidth(context),
+      margin: EdgeInsets.only(right: 0, left: 0, top: Utils. getDeviceHeight(context)/40),
       alignment: Alignment(0,0),
       padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, right: Utils. getDeviceWidth(context)/30),
       child: Container(
@@ -129,7 +192,7 @@ class _SupportPageState extends State<SupportPage> {
     );
   }
 
-  fourthFacebook() {
+  fifthFacebook() {
     return Container(
       height: Utils.getDeviceHeight(context)/20,
       width:  Utils.getDeviceWidth(context),
@@ -150,7 +213,7 @@ class _SupportPageState extends State<SupportPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    child: Text(StringRes.messageOn,
+                    child: Text("REACH US ON ",
                       style: Theme.of(context)
                           .textTheme
                           .subtitle
@@ -160,7 +223,7 @@ class _SupportPageState extends State<SupportPage> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 0),
-                 alignment: Alignment.center,
+                    alignment: Alignment.center,
                     child: Image(
                         height: 15,
                         width: 15,

@@ -159,6 +159,7 @@ class _BusinessPageState extends State<BusinessPage> {
               dateTimeView(),
               invalidTime(),
               titleText(StringRes.businessCategory, 5),
+              busDesTitleText(StringRes.businessDes),
               categoryTextFiled(),
               addCategory(),
               selectedCategoryList(),
@@ -209,6 +210,10 @@ class _BusinessPageState extends State<BusinessPage> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
+                  enabledBorder: const OutlineInputBorder(
+                    // width: 0.0 produces a thin "hairline" border
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                  ),
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
@@ -321,6 +326,10 @@ class _BusinessPageState extends State<BusinessPage> {
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(10),
                             border: OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(
+                              // width: 0.0 produces a thin "hairline" border
+                              borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                            ),
                           ),
                           validator: (value) {
                             if (value.isEmpty) {
@@ -533,9 +542,31 @@ class _BusinessPageState extends State<BusinessPage> {
     );
   }
 
+  busDesTitleText(String title) {
+    return editBusinessInfo
+    ?Container(
+      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 25,
+          bottom: Utils.getDeviceHeight(context) / 50,
+          right: Utils.getDeviceWidth(context) / 25),
+      child: Text(
+        title,
+        style: TextStyle(
+            height: Utils.getDeviceWidth(context) / 350,
+            color: ColorRes.lightGrey,
+            fontSize: Utils.getDeviceHeight(context) / 60),
+        textAlign: TextAlign.justify,
+      ),
+    )
+        :Container();
+  }
+
   Widget categoryTextFiled() {
     return Center(
-      child: Container(
+      child:
+      editBusinessInfo
+      ?Container(
         margin: EdgeInsets.only(
             top: Utils.getDeviceHeight(context) / 200,
             right: Utils.getDeviceWidth(context) / 30,
@@ -561,6 +592,10 @@ class _BusinessPageState extends State<BusinessPage> {
                       contentPadding:
                           EdgeInsets.only(top: 0.0, right: 10, left: 10),
                       border: OutlineInputBorder(),
+                      enabledBorder: const OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                      ),
                       hintText: StringRes.hintOfBusinessCategory,
                     ),
                     validator: (value) {
@@ -594,7 +629,8 @@ class _BusinessPageState extends State<BusinessPage> {
             ],
           ),
         ),
-      ),
+      )
+      :Container(),
     );
   }
 
@@ -622,14 +658,16 @@ class _BusinessPageState extends State<BusinessPage> {
                       style: TextStyle(
                           fontSize: Utils.getDeviceWidth(context) / 28),
                     )),
-                    InkResponse(
+                    editBusinessInfo
+                    ?InkResponse(
                       child: Icon(Icons.delete_outline),
                       onTap: () {
                         if (editBusinessInfo) {
                           confirmationDialog(index);
                         }
                       },
-                    ),
+                    )
+                        :Container(),
                   ],
                 ),
               ),
@@ -643,7 +681,9 @@ class _BusinessPageState extends State<BusinessPage> {
   }
 
   addCategory() {
-    return InkResponse(
+    return
+      editBusinessInfo
+      ?InkResponse(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -679,7 +719,8 @@ class _BusinessPageState extends State<BusinessPage> {
           }
         }
       },
-    );
+    )
+          :Container(margin: EdgeInsets.only(top: 7),);
   }
 
   businessType() {
@@ -804,6 +845,11 @@ class _BusinessPageState extends State<BusinessPage> {
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
+                  enabledBorder: const OutlineInputBorder(
+                    // width: 0.0 produces a thin "hairline" border
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                  ),
+
                 ),
               ),
             ),
@@ -878,7 +924,8 @@ class _BusinessPageState extends State<BusinessPage> {
               )
             : BoxDecoration(),
         child: Text(dayTimeList[index].startTime ?? "08:45",
-            style: TextStyle(fontStyle: FontStyle.normal)));
+            style: TextStyle(fontStyle: FontStyle.normal,
+                fontSize: Utils.getDeviceWidth(context) / 28)));
   }
 
   endTime(int index) {
@@ -941,9 +988,10 @@ class _BusinessPageState extends State<BusinessPage> {
               )
             : BoxDecoration(),
         child: Text(
-          dayTimeList[index].endTime ?? "08:35",
+          dayTimeList[index].endTime ?? "08:45",
           style: TextStyle(
             fontStyle: FontStyle.normal,
+              fontSize: Utils.getDeviceWidth(context) / 28
           ),
         ));
   }
@@ -1012,6 +1060,10 @@ class _BusinessPageState extends State<BusinessPage> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(),
+                enabledBorder: const OutlineInputBorder(
+                  // width: 0.0 produces a thin "hairline" border
+                  borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                ),
               ),
               validator: (value) {
                 if (value.isEmpty) {
@@ -1074,6 +1126,10 @@ class _BusinessPageState extends State<BusinessPage> {
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 border: OutlineInputBorder(),
+                enabledBorder: const OutlineInputBorder(
+                  // width: 0.0 produces a thin "hairline" border
+                  borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                ),
               ),
             ),
           ),
