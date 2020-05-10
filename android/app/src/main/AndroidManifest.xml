@@ -10,8 +10,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="Townsy Business App"
         android:usesCleartextTraffic="true"
-        android:icon="@mipmap/ic_launcher"
-        android:debuggable="false">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
