@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:marketplace/commonview/MyBehavior.dart';
 import 'package:marketplace/commonview/background.dart';
 import 'package:marketplace/helper/constant.dart';
@@ -13,6 +14,7 @@ import 'package:marketplace/helper/web_api.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addcategory.dart';
 import 'package:marketplace/model/getProductData.dart';
+import 'package:marketplace/model/signin.dart';
 import 'package:marketplace/screen/product_Info_page.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -22,29 +24,33 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  TextEditingController addCategory = TextEditingController();
-  TextEditingController editCategory = TextEditingController();
+  TextEditingController addCategoryController = TextEditingController();
+  TextEditingController editCategoryController = TextEditingController();
 
   List<bool> numberTruthList = [true, true, true, true, true, true];
 
-  List<GetCategoryAndProduct> getCategoryAndProduct = List();
+  List<GetCategoryAndProduct> arrCategoryAndProduct = List();
 
-  int selectedCategoryId = 0;
+//  int selectedCategoryId = 0;
 
   bool isLoading = true;
+  Meta meta = Meta();
+  ScrollController _sc = new ScrollController();
+  int page = 1;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-
     Injector.streamController = StreamController.broadcast();
 
     Injector.streamController.stream.listen((data) {
       if (data == StringRes.subProductDataGet) {
         setState(() {
-          getProductList();
+          arrCategoryAndProduct = List();
+          page = 1;
+          getProductList(page); //n
         });
       }
     }, onDone: () {
@@ -52,7 +58,54 @@ class _ProductPageState extends State<ProductPage> {
     }, onError: (error) {
       print("Some Error1");
     });
-    getProductList();
+
+    getProductList(null);
+    /*   _sc.addListener(() {
+      if (_sc.position.pixels == _sc.position.maxScrollExtent) {
+        page++;
+        getProductList(page);
+      }
+    });*/
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+//    _sc.dispose();
+    super.dispose();
+  }
+
+  List<int> data = [];
+  int currentLength = 0;
+  bool isLoadingLazy = false;
+  final int increment = 10;
+
+  Future _loadMore() async {
+    setState(() {
+      isLoadingLazy = true;
+    });
+
+    // Add in an artificial delay
+    await new Future.delayed(const Duration(seconds: 5));
+    if (meta.currentPage == page) {
+      page++;
+      getProductList(page);
+    }
+    setState(() {
+      isLoadingLazy = false;
+    });
+  }
+
+  indicatorShow() {
+    return Container(
+      height: isLoadingLazy ? 50.0 : 0.0,
+      margin: EdgeInsets.only(top: 10.0),
+      color: ColorRes.productBgGrey,
+      child: Center(
+        child: new CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(ColorRes.black)),
+      ),
+    );
   }
 
   @override
@@ -72,18 +125,25 @@ class _ProductPageState extends State<ProductPage> {
         color: ColorRes.productBgGrey,
         child: ScrollConfiguration(
           behavior: MyBehavior(),
-          child: ListView(
-            primary: true,
-            shrinkWrap: true,
-            children: <Widget>[
-              firstAddCategory(),
-              Container(
-                height: 0.9,
-                width: double.infinity,
-                color: ColorRes.lightGrey,
-              ),
-              secondListData()
-            ],
+          child: LazyLoadScrollView(
+            isLoading: isLoading,
+            onEndOfPage: () => _loadMore(),
+            child: ListView(
+              primary: true,
+              shrinkWrap: true,
+//            controller: _sc,
+
+              children: <Widget>[
+                firstAddCategory(),
+                Container(
+                  height: 0.9,
+                  width: double.infinity,
+                  color: ColorRes.lightGrey,
+                ),
+                secondListData(),
+                indicatorShow(),
+              ],
+            ),
           ),
         ));
   }
@@ -113,7 +173,7 @@ class _ProductPageState extends State<ProductPage> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return customDialog(StringRes.addCategoryName, 1);
+              return customDialog(StringRes.addCategoryName, 1, -1);
             });
       },
     );
@@ -123,9 +183,14 @@ class _ProductPageState extends State<ProductPage> {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: getCategoryAndProduct.length,
+//      controller: _sc,
+      itemCount: arrCategoryAndProduct.length,
       itemBuilder: (context, categoryIndex) {
+//        if (categoryIndex == getCategoryAndProduct.length) {
+//          return indicatorShow();
+//        } else {
         return showMainCategoryItem(categoryIndex);
+//        }
       },
     );
   }
@@ -151,7 +216,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
               Expanded(
                   child: Text(
-                getCategoryAndProduct[categoryIndex].category.toUpperCase(),
+                arrCategoryAndProduct[categoryIndex].category.toUpperCase(),
                 style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 27),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -166,12 +231,12 @@ class _ProductPageState extends State<ProductPage> {
               shrinkWrap: true,
               primary: false,
               itemCount:
-                  getCategoryAndProduct[categoryIndex].products.length + 1,
+                  arrCategoryAndProduct[categoryIndex].products.length + 1,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.all(0),
               itemBuilder: (context, productIndex) {
                 if (productIndex >=
-                    getCategoryAndProduct[categoryIndex].products.length)
+                    arrCategoryAndProduct[categoryIndex].products.length)
                   return InkWell(
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -204,10 +269,13 @@ class _ProductPageState extends State<ProductPage> {
                           MaterialPageRoute(
                               builder: (context) => ProductInfoPage(
                                   categoryId:
-                                      getCategoryAndProduct[categoryIndex]
+                                      arrCategoryAndProduct[categoryIndex]
                                           ?.id)));
-                      if(isUpdated){
-                        getProductList();
+                      if (isUpdated) {
+                        arrCategoryAndProduct = List();
+                        page = 1;
+                        getProductList(page); //n
+
                         setState(() {});
                       }
                     },
@@ -215,7 +283,7 @@ class _ProductPageState extends State<ProductPage> {
                 else {
                   return showProductItem(
                       productIndex,
-                      getCategoryAndProduct[categoryIndex]
+                      arrCategoryAndProduct[categoryIndex]
                           .products[productIndex],
                       categoryIndex);
                 }
@@ -323,15 +391,16 @@ class _ProductPageState extends State<ProductPage> {
         context,
         MaterialPageRoute(
             builder: (context) => ProductInfoPage(
-                  categoryId: getCategoryAndProduct[categoryIndex]?.id,
+                  categoryId: arrCategoryAndProduct[categoryIndex]?.id,
                   productId: product != null ? product.id : null,
                 )));
 
-    if(isUpdated){
-      getProductList();
+    if (isUpdated) {
+      arrCategoryAndProduct = List();
+      page = 1;
+      getProductList(page); //n
       setState(() {});
     }
-
   }
 
   rightSidePopUp(int categoryIndex) {
@@ -345,7 +414,7 @@ class _ProductPageState extends State<ProductPage> {
         itemBuilder: (BuildContext con) {
           return Constants.choices.map((String choice) {
             return PopupMenuItem<String>(
-              value: choice,
+              value: choice + "," + categoryIndex.toString(),
               height: Utils.getDeviceHeight(context) / 16,
               textStyle: Theme.of(context).textTheme.body2,
               child: InkResponse(
@@ -354,35 +423,37 @@ class _ProductPageState extends State<ProductPage> {
                   child: Text(choice),
                 ),
                 onTap: () async {
-                  setState(() {
-                    print(getCategoryAndProduct[categoryIndex].id);
-
-                    selectedCategoryId =
-                        getCategoryAndProduct[categoryIndex].id;
-                    getCategoryAndProduct[categoryIndex].category;
-                  });
                   Navigator.pop(context);
+                  print(arrCategoryAndProduct[categoryIndex].id);
+
+                  setState(() {});
                   if (choice == Constants.FirstItem) {
                     bool isUpdated = await Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ProductInfoPage(
-                                categoryId: selectedCategoryId)));
-                    if(isUpdated){
-                      getProductList();
+                                categoryId:
+                                    arrCategoryAndProduct[categoryIndex].id)
+                        ));
+                    if (isUpdated) {
+                      arrCategoryAndProduct = List();
+                      page = 1;
+                      getProductList(page); //n
                       setState(() {});
                     }
                   } else if (choice == Constants.SecondItem) {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return customDialog(StringRes.editCategoryName, 2);
+                          return customDialog(
+                              StringRes.editCategoryName, 2, categoryIndex);
                         });
                   } else if (choice == Constants.ThirdItem) {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return customDialog(StringRes.deleteCategoryMsg, 3);
+                          return customDialog(
+                              StringRes.deleteCategoryMsg, 3, categoryIndex);
                         });
                   }
                 },
@@ -392,13 +463,21 @@ class _ProductPageState extends State<ProductPage> {
         });
   }
 
-  Future<void> choiceAction(String choice) async {
+  choiceAction(String choiceAndCategoryIndex) async {
+    print("chice------");
+
+    var choice = choiceAndCategoryIndex.toString().split(",")[0];
+    var categoryIndex =
+        int.parse(choiceAndCategoryIndex.toString().split(",")[1]);
+
     if (choice == Constants.FirstItem) {
       print('I First Item');
       bool isUpdated = await Navigator.push(
           context, MaterialPageRoute(builder: (context) => ProductInfoPage()));
-      if(isUpdated){
-        getProductList();
+      if (isUpdated) {
+        arrCategoryAndProduct = List();
+        page = 1;
+        getProductList(page); //n
         setState(() {});
       }
     } else if (choice == Constants.SecondItem) {
@@ -406,22 +485,27 @@ class _ProductPageState extends State<ProductPage> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return customDialog(StringRes.editCategoryName, 2);
+            return customDialog(StringRes.editCategoryName, 2, categoryIndex);
           });
     } else if (choice == Constants.ThirdItem) {
       print('I Third Item');
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return customDialog(StringRes.deleteCategoryMsg, 3);
+            return customDialog(StringRes.deleteCategoryMsg, 3, categoryIndex);
           });
     }
   }
 
-  customDialog(String categoryName, int i) {
+  customDialog(String hintText, int i, int categoryIndex) {
+    if (i == 2) {
+      editCategoryController.text = arrCategoryAndProduct[categoryIndex].category;
+    }
+
     return Dialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)), //this right here
+          borderRadius: BorderRadius.circular(10.0)
+      ), //this right here
       child: Container(
         height: i == 3
             ? ((Utils.getDeviceHeight(context) / 10) +
@@ -448,7 +532,7 @@ class _ProductPageState extends State<ProductPage> {
                     : Utils.getDeviceHeight(context) / 20,
                 //height: i == 3 ? 50 : 40,
                 child: Text(
-                  categoryName,
+                  hintText,
                   textAlign: TextAlign.center,
                   style: TextStyle(height: 1.05, fontWeight: FontWeight.w500),
                 ),
@@ -462,7 +546,9 @@ class _ProductPageState extends State<ProductPage> {
                         data: ThemeData(primaryColor: ColorRes.black),
                         child: TextFormField(
                           cursorColor: ColorRes.black,
-                          controller: i == 1 ? addCategory : editCategory,
+                          controller: i == 1
+                              ? addCategoryController
+                              : editCategoryController,
                           textCapitalization: TextCapitalization.characters,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
@@ -505,7 +591,7 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         onPressed: () {
                           if (i == 1) {
-                            if (addCategory.text.isNotEmpty) {
+                            if (addCategoryController.text.isNotEmpty) {
                               Navigator.pop(context);
                               addCategoryApi();
                             } else {
@@ -513,10 +599,10 @@ class _ProductPageState extends State<ProductPage> {
                             }
                           } else if (i == 2) {
                             Navigator.pop(context);
-                            updateCategory();
+                            updateCategory(arrCategoryAndProduct[categoryIndex].id);
                           } else if (i == 3) {
                             Navigator.pop(context);
-                            deleteCategoryApi();
+                            deleteCategoryApi(arrCategoryAndProduct[categoryIndex].id);
                           }
                         },
                       ),
@@ -540,7 +626,7 @@ class _ProductPageState extends State<ProductPage> {
       CommonView.progressDialog(true, context);
 
       AddCategoryRequest rq = AddCategoryRequest();
-      rq.category = addCategory.text;
+      rq.category = addCategoryController.text;
 
       WebApi()
           .callAPI(Const.postWithAccess, WebApi.rqCategory, rq.toJson(),
@@ -549,8 +635,10 @@ class _ProductPageState extends State<ProductPage> {
         if (baseResponse.success) {
           CommonView.progressDialog(false, context);
           Utils.showToast(StringRes.addCategorySuccess);
-          addCategory.text = "";
-          getProductList();
+          addCategoryController.text = "";
+          arrCategoryAndProduct = List();
+          page = 1;
+          getProductList(page); //n
         } else {
           CommonView.progressDialog(false, context);
         }
@@ -561,20 +649,25 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
-  getProductList() async {
+  getProductList(int index) async {
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 
     if (isConnected) {
       WebApi()
-          .callAPI(Const.get, WebApi.rqProduct, null, Injector.accessToken)
+          .callAPI(Const.get, "${WebApi.rqProducts}${index.toString()}", null,
+              Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse.success) {
           setState(() {
+//            page++;
             isLoading = false;
-            getCategoryAndProduct = new List<GetCategoryAndProduct>();
+//            getCategoryAndProduct = new List<GetCategoryAndProduct>();
             baseResponse.data.forEach((v) {
-              getCategoryAndProduct.add(GetCategoryAndProduct.fromJson(v));
+              arrCategoryAndProduct.add(GetCategoryAndProduct.fromJson(v));
             });
+            meta = baseResponse.meta;
+            setState(() {});
+//            UserData userData = UserData.fromJson(data.data);
           });
         } else {
           if (mounted) {
@@ -594,23 +687,25 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
-  updateCategory() async {
+  updateCategory(int categoryId) async {
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 
     if (isConnected) {
       CommonView.progressDialog(true, context);
       AddCategoryRequest rq = AddCategoryRequest();
 
-      rq.category = editCategory.text;
+      rq.category = editCategoryController.text;
 
       WebApi()
-          .callAPI(Const.put, "${WebApi.rqCategory}/$selectedCategoryId",
-              rq.toJson(), Injector.accessToken)
+          .callAPI(Const.put, "${WebApi.rqCategory}/$categoryId", rq.toJson(),
+              Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse != null && baseResponse.success) {
           CommonView.progressDialog(false, context);
           Utils.showToast(StringRes.updateCategorySuccess);
-          getProductList();
+          arrCategoryAndProduct = List();
+          page = 1;
+          getProductList(page);
         } else {
           CommonView.progressDialog(false, context);
         }
@@ -621,19 +716,23 @@ class _ProductPageState extends State<ProductPage> {
     }
   }
 
-  deleteCategoryApi() async {
+  deleteCategoryApi(int categoryId) async {
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 
     if (isConnected) {
       CommonView.progressDialog(true, context);
       WebApi()
-          .callAPI(Const.delete, "${WebApi.rqCategory}/$selectedCategoryId",
-              null, Injector.accessToken)
+          .callAPI(Const.delete, "${WebApi.rqCategory}/$categoryId", null,
+              Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse != null && baseResponse.success) {
           CommonView.progressDialog(false, context);
           Utils.showToast(StringRes.deleteCategorySuccess);
-          getProductList();
+          arrCategoryAndProduct = List();
+          page = 1;
+          getProductList(page); //n
+
+          setState(() {});
         } else {
           CommonView.progressDialog(false, context);
         }

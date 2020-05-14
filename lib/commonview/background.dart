@@ -36,7 +36,7 @@ class CommonView {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0)), //this right here
       child: Container(
-        height: StringRes.successFullySend == message ? 110 : 135,
+        height: StringRes.successFullySend == message ? 110 : 145,
         child: Padding(
           padding: const EdgeInsets.only(top: 5, left: 12, right: 12),
           child: Column(
@@ -44,7 +44,7 @@ class CommonView {
             children: [
               SingleChildScrollView(
                 child: Container(
-                  height: StringRes.successFullySend == message ? 30 : 65,
+                  height: StringRes.successFullySend == message ? 30 : 75,
                   alignment: Alignment.center,
                   child: Text(
                     message,

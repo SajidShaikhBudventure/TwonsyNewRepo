@@ -26,6 +26,7 @@ class WebApi {
   static String rqBusiness = "/business";
   static String rqBusinessMe = "/business/me";
   static String rqProduct = "/product";
+  static String rqProducts = "/product?page=";
   static String rqCategory = "/category";
   static String rqDeleteImage = "/product/photo/";
   static String rqProductUpdate = "/product/update";

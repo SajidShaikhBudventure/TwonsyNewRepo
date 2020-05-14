@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:marketplace/commonview/MyBehavior.dart';
 import 'package:marketplace/helper/constant.dart';
 import 'package:marketplace/helper/res.dart';
@@ -32,6 +33,12 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   Analytics analytics;
   List<ProductCategory> categories = List();
 
+
+  bool isLoadingLazy = false;
+  int currentPageName = 0;
+  int page = 1;
+  Meta meta = Meta();
+
   @override
   void initState() {
     Utils.isInternetConnected().then((isConnected) {
@@ -39,6 +46,37 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     });
     super.initState();
   }
+
+  Future _loadMore() async {
+    setState(() {
+      isLoadingLazy = true;
+    });
+
+    // Add in an artificial delay
+    await new Future.delayed(const Duration(seconds: 5));
+//    if(meta.currentPage == page) {
+      page++;
+      Utils.isInternetConnected().then((isConnected) {
+        if (isConnected) callApi();
+      });
+//    }
+    setState(() {
+      isLoadingLazy = false;
+    });
+  }
+
+
+  indicatorShow() {
+    return Container(
+      height: isLoadingLazy ? 50.0 : 0.0,
+      margin: EdgeInsets.only(top: 10.0),
+      color: ColorRes.white,
+      child: Center(
+        child: new CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(ColorRes.black)),
+      ),);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +99,24 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   widgetsLayout() {
     return ScrollConfiguration(
       behavior: MyBehavior(),
-      child: ListView(
-        primary: true,
-        shrinkWrap: true,
-        children: <Widget>[
-          firstDropDownMenu(),
-          titleTextShow("Your Business", 1),
-          threePeopleView(),
-          titleTextShow("Your Products", 2),
-          fourMainListView()
-        ],
+      child: LazyLoadScrollView(
+        isLoading: isLoadingLazy,
+        onEndOfPage: () => _loadMore(),
+        child: ListView(
+          primary: true,
+          shrinkWrap: true,
+          children: <Widget>[
+            firstDropDownMenu(),
+            titleTextShow("Your Business", 1),
+            threePeopleView(),
+            titleTextShow("Your Products", 2),
+            fourMainListView(),
+            SizedBox(
+              height: 10,
+            ),
+            indicatorShow(),
+          ],
+        ),
       ),
     );
   }
@@ -378,7 +424,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       Map<String, dynamic> map = {'month': month, 'year': year};
       WebApi()
           .callAPI(
-              Const.postWithAccess, "/analytics", map, Injector.accessToken)
+              Const.postWithAccess, page == 1 ? "/analytics" :"/analytics?page=${page.toString()}", map, Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse.success) {
           AnalyticsResponse analyticsResponse =
@@ -386,7 +432,23 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
           analytics = analyticsResponse.analytics;
 
-          categories = analyticsResponse.categories;
+//          baseResponse.data.forEach((v) {
+//          });
+
+
+          for(int i = 0; i < analyticsResponse.categories.length; i++) {
+//            categories.add(baseResponse.data[i]);
+//            categories.add(ProductCategory.fromJson(baseResponse.data[i]));
+
+
+            categories.add(analyticsResponse.categories[i]);
+
+
+          }
+
+
+//          categories = analyticsResponse.categories;
+//          metaData = baseResponse.meta;
 
           setState(() {
             isLoading = false;
@@ -410,7 +472,9 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       selectedDateWithYear = formatted;
       callApiForGetAnalyticsInfo(
           formatterForMonth.format(DateTime.now()).toString(),
-          int.parse(formatterForYear.format(DateTime.now()).toString()));
+          int.parse(formatterForYear.format(DateTime.now()).toString()),
+      );
     }
   }
 }
+

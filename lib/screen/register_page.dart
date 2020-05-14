@@ -142,13 +142,13 @@ class _RegisterPageState extends State<RegisterPage> {
           child: InkResponse(
             child: Column(
               children: <Widget>[
-                Padding(
+                /*Padding(
                   padding: const EdgeInsets.only(right: 15, left: 15),
                   child: Platform.isAndroid ? CommonView.googleBtnShow(context) : Container(),
                 ),
                 Container(
                   child: Platform.isAndroid ? labelWithEmail() : Container(),
-                ),
+                ),*/
                 commonTextFiledView(1),
                 commonTextFiledView(3),
                 helpTextEmail(3),
