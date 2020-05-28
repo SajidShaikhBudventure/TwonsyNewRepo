@@ -15,7 +15,7 @@ import 'constant.dart';
 class WebApi {
 //  static const baseUrl = "http://13.127.186.25/townsy-marketplace/api/v1"; // prod url
 //  static const baseUrl = "http://13.233.208.36/townsy-marketplace/api/v1";
-  static const baseUrl = "http://www.townsy.in/api/v1/";
+  static const baseUrl = "https://www.townsy.in/api/v1/";
 
   static String rqLogin = "/login";
   static String rqRegister = "/register";
