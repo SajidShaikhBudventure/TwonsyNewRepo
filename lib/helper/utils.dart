@@ -63,8 +63,7 @@ class Utils {
 
   static Future<File>  getImage(int type) async {
     return await ImagePicker.pickImage(imageQuality: Const.imgQuality,
-      source:
-          type == Const.typeCamera ? ImageSource.camera : ImageSource.gallery,
+      source: type == Const.typeCamera ? ImageSource.camera : ImageSource.gallery,
     );
   }
 }

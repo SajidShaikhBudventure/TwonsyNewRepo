@@ -144,31 +144,31 @@ class _BusinessPageState extends State<BusinessPage> {
       body: Form(
         key: _formKey,
         child: InkResponse(
-          child: ListView(
-            shrinkWrap: true,
-            primary: false,
-            children: <Widget>[
-              titleText(StringRes.businessName, 1),
-              nameTextFiled(),
-              titleText(StringRes.businessAddress, 2),
-              addressTextFiled(),
-              titleText(StringRes.phoneNumber, 3),
-              telephoneNumberView(),
-              mobileNumberView(),
-              titleText(StringRes.openingTime, 4),
-              dateTimeView(),
-              invalidTime(),
-              titleText(StringRes.businessCategory, 5),
-              busDesTitleText(StringRes.businessDes),
-              categoryTextFiled(),
-              addCategory(),
-              selectedCategoryList(),
-              titleText(StringRes.businessType, 6),
-              businessType(),
-              titleText(StringRes.otherInfoCustomer, 7),
-              noReturnTextFiled(),
-              lastSaveBtn()
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                titleText(StringRes.businessName, 1),
+                nameTextFiled(),
+                titleText(StringRes.businessAddress, 2),
+                addressTextFiled(),
+                titleText(StringRes.phoneNumber, 3),
+                telephoneNumberView(),
+                mobileNumberView(),
+                titleText(StringRes.openingTime, 4),
+                dateTimeView(),
+                invalidTime(),
+                titleText(StringRes.businessCategory, 5),
+                busDesTitleText(StringRes.businessDes),
+                categoryTextFiled(),
+                addCategory(),
+                selectedCategoryList(),
+                titleText(StringRes.businessType, 6),
+                businessType(),
+                titleText(StringRes.otherInfoCustomer, 7),
+                noReturnTextFiled(),
+                lastSaveBtn()
+              ],
+            ),
           ),
           onTap: (){
             FocusScope.of(context).requestFocus(FocusNode());

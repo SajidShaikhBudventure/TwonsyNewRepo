@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:marketplace/helper/constant.dart';
 import 'package:marketplace/helper/prefkeys.dart';
-import 'package:marketplace/model/business_type_model.dart';
 import 'package:marketplace/model/business_user.dart';
 import 'package:marketplace/model/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';

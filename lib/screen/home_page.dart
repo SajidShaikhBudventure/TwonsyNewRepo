@@ -28,6 +28,7 @@ import 'businessInfo_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
+
 class LifecycleEventHandler extends WidgetsBindingObserver {
   final AsyncCallback resumeCallBack;
   final AsyncCallback suspendingCallBack;
@@ -70,13 +71,13 @@ class _HomePageState extends State<HomePage>
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   String headerImage;
-
   String imagePath;
   String businessName;
   String businessAddress;
-
+  ScrollController _controller;
   String webProfile;
-
+  bool silverCollapsed = false;
+  String myTitle = "";
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
     packageName: 'Unknown',
@@ -107,6 +108,30 @@ class _HomePageState extends State<HomePage>
 //    final anHourAgo = (new DateTime.now()) - Duration(minutes: Duration.minutesPerHour);
 
 //    businessSessionAPI();
+    _controller = ScrollController();
+
+    _controller.addListener(() {
+      if (_controller.offset > 220 && !_controller.position.outOfRange) {
+        if(!silverCollapsed){
+
+          // do what ever you want when silver is collapsing !
+
+          myTitle = "";
+          silverCollapsed = true;
+          setState(() {});
+        }
+      }
+      if (_controller.offset <= 220 && !_controller.position.outOfRange) {
+        if(silverCollapsed){
+
+          // do what ever you want when silver is expanding !
+
+          myTitle = "";
+          silverCollapsed = false;
+          setState(() {});
+        }
+      }
+    });
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -262,45 +287,199 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     imageShowStream();
-
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(""),
-        leading: IconButton(
-          icon: Image.asset(
-            Utils.getAssetsImg("menu"),
-            color: ColorRes.white,
-            height: Utils.getDeviceHeight(context) / 25,
-            width: Utils.getDeviceHeight(context) / 25,
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        drawer: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.75,
+          child: Drawer(
+            child: showDrawerView(),
           ),
-          onPressed: () {
-            _scaffoldKey.currentState.openDrawer();
-          },
+        ),
+        body: DefaultTabController(
+          length: 4,
+          child: NestedScrollView(
+            controller: _controller,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  expandedHeight: Utils.getDeviceHeight(context) / 3.3,
+                  floating: true,
+                  pinned: true,
+                  backgroundColor: Colors.black,
+                  centerTitle: true,
+                  title: Text(myTitle),
+                  leading: IconButton(
+                    icon: Image.asset(
+                      Utils.getAssetsImg("menu"),
+                      color: ColorRes.white,
+                      height: Utils.getDeviceHeight(context) / 33,
+                      width: Utils.getDeviceHeight(context) / 33,
+                    ),
+                    onPressed: () {
+                      _scaffoldKey.currentState.openDrawer();
+                    },
+                  ),
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: Stack(
+                    children: <Widget>[
+                      Container(
+                          width: Utils.getDeviceWidth(context),
+                          color: ColorRes.sliderBg,
+                          child: arrImages.isNotEmpty
+                              ? Swiper(
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return arrImages[index]
+                                            .photo
+                                            .contains("http")
+                                        ? Image.network(arrImages[index].photo)
+                                        : Image.file(
+                                            File(arrImages[index].photo));
+                                  },
+                                  index: selectImageIndex,
+                                  onIndexChanged: (i) {
+                                    selectImageIndex = i;
+                                    print("indez__" +
+                                        selectImageIndex.toString());
+                                  },
+                                  autoplay: false,
+                                  itemCount: arrImages.length,
+                                  pagination: new SwiperPagination(),
+                                  control: new SwiperControl(),
+                                  loop: false,
+                                )
+                              : Center(
+                                  child: Image(
+                                      height:
+                                          Utils.getDeviceHeight(context) / 8,
+                                      width: Utils.getDeviceHeight(context) / 8,
+                                      image: AssetImage(
+                                          Utils.getAssetsImg("shop")),
+                                      fit: BoxFit.fitHeight),
+                                )),
+                      rightSideIcon(2),
+                    ],
+                  )),
+                ),
+                SliverPersistentHeader(
+                  delegate: _SliverAppBarDelegate(
+                    TabBar(
+                      indicatorColor: ColorRes.white,
+                      isScrollable: false,
+                      controller: _tabController,
+                      tabs: [
+                        Tab(
+                            child:
+                                tabBarText(StringRes.businessInfo, context, 1)),
+                        Tab(child: tabBarText(StringRes.products, context, 2)),
+                        Tab(
+                            child: tabBarText(
+                                StringRes.ratingsReviews, context, 3)),
+                        Tab(child: tabBarText(StringRes.analytics, context, 4)),
+                      ],
+                    ),
+                  ),
+                  pinned: true,
+                ),
+              ];
+            },
+            body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                BusinessPage(),
+                ProductPage(),
+                RatingPage(),
+                AnalyticsPage(),
+              ],
+              controller: _tabController,
+            ),
+          ),
         ),
       ),
-      drawer: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.75,
-        child: Drawer(
-          child: showDrawerView(),
+    );
+  }
+
+  Widget showTabBar() {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: Utils.getDeviceHeight(context) / 3.3,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                  width: Utils.getDeviceWidth(context),
+                  color: ColorRes.sliderBg,
+                  child: arrImages.isNotEmpty
+                      ? Swiper(
+                          itemBuilder: (BuildContext context, int index) {
+                            return arrImages[index].photo.contains("http")
+                                ? Image.network(arrImages[index].photo)
+                                : Image.file(File(arrImages[index].photo));
+                          },
+                          index: selectImageIndex,
+                          onIndexChanged: (i) {
+                            selectImageIndex = i;
+                            print("indez__" + selectImageIndex.toString());
+                          },
+                          autoplay: false,
+                          itemCount: arrImages.length,
+                          pagination: new SwiperPagination(),
+                          control: new SwiperControl(),
+                          loop: false,
+                        )
+                      : Center(
+                          child: Image(
+                              height: Utils.getDeviceHeight(context) / 8,
+                              width: Utils.getDeviceHeight(context) / 8,
+                              image: AssetImage(Utils.getAssetsImg("shop")),
+                              fit: BoxFit.fitHeight),
+                        )),
+              rightSideIcon(2),
+            ],
+          ),
         ),
-      ),
-      body: showTabBar(),
+        Container(
+          color: ColorRes.black,
+          height: Utils.getDeviceHeight(context) / 10,
+          child: TabBar(
+            indicatorColor: ColorRes.white,
+            isScrollable: false,
+            tabs: <Tab>[
+              Tab(child: tabBarText(StringRes.businessInfo, context, 1)),
+              Tab(child: tabBarText(StringRes.products, context, 2)),
+              Tab(child: tabBarText(StringRes.ratingsReviews, context, 3)),
+              Tab(child: tabBarText(StringRes.analytics, context, 4)),
+            ],
+            controller: _tabController,
+          ),
+        ),
+        Expanded(
+          child: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              BusinessPage(),
+              ProductPage(),
+              RatingPage(),
+              AnalyticsPage(),
+            ],
+            controller: _tabController,
+          ),
+        )
+      ],
     );
   }
 
   showDrawerView() {
     setState(() {});
-    return Container(
-//      color: ColorRes.colorPrimary,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          showDrawerHeader(),
-          showDrawerItems(),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        showDrawerHeader(),
+        showDrawerItems(),
+      ],
     );
   }
 
@@ -308,7 +487,7 @@ class _HomePageState extends State<HomePage>
     return Container(
         color: ColorRes.black,
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 3.0,
+        height: MediaQuery.of(context).size.height / 2.8,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -526,75 +705,6 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget showTabBar() {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: Utils.getDeviceHeight(context) / 3.3,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                  width: Utils.getDeviceWidth(context),
-                  color: ColorRes.sliderBg,
-                  child: arrImages.isNotEmpty
-                      ? Swiper(
-                          itemBuilder: (BuildContext context, int index) {
-                            return arrImages[index].photo.contains("http")
-                                ? Image.network(arrImages[index].photo)
-                                : Image.file(File(arrImages[index].photo));
-                          },
-                          index: selectImageIndex,
-                          onIndexChanged: (i) {
-                            selectImageIndex = i;
-                            print("indez__" + selectImageIndex.toString());
-                          },
-                          autoplay: false,
-                          itemCount: arrImages.length,
-                          pagination: new SwiperPagination(),
-                          control: new SwiperControl(),
-                          loop: false,
-                        )
-                      : Center(
-                          child: Image(
-                              height: Utils.getDeviceHeight(context) / 8,
-                              width: Utils.getDeviceHeight(context) / 8,
-                              image: AssetImage(Utils.getAssetsImg("shop")),
-                              fit: BoxFit.fitHeight),
-                        )),
-              rightSideIcon(2),
-            ],
-          ),
-        ),
-        Container(
-          color: ColorRes.black,
-          height: Utils.getDeviceHeight(context) / 12,
-          child: TabBar(
-            indicatorColor: ColorRes.white,
-            isScrollable: false,
-            tabs: <Tab>[
-              Tab(child: tabBarText(StringRes.businessInfo, context, 1)),
-              Tab(child: tabBarText(StringRes.products, context, 2)),
-              Tab(child: tabBarText(StringRes.ratingsReviews, context, 3)),
-              Tab(child: tabBarText(StringRes.analytics, context, 4)),
-            ],
-            controller: _tabController,
-          ),
-        ),
-        Expanded(
-          child: TabBarView(
-            children: [
-              BusinessPage(),
-              ProductPage(),
-              RatingPage(),
-              AnalyticsPage(),
-            ],
-            controller: _tabController,
-          ),
-        )
-      ],
-    );
-  }
-
   rightSideIcon(int delete) {
     return Align(
         alignment: Alignment.topRight,
@@ -744,7 +854,6 @@ class _HomePageState extends State<HomePage>
 
           setState(() {
             isLoading = false;
-
           });
         } else {
           Utils.showToast(baseResponse.message);
@@ -964,4 +1073,30 @@ tabBarText(String tabName, BuildContext context, int index) {
     maxLines: index == 1 || index == 3 ? 2 : 1,
     overflow: TextOverflow.ellipsis,
   );
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new Container(
+      child: _tabBar,
+      color: Colors.black,
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
 }

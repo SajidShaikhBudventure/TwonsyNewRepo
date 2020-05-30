@@ -12,8 +12,6 @@ import 'package:marketplace/helper/web_api.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addproduct.dart';
 import 'package:marketplace/model/getProductData.dart';
-import 'package:shimmer/shimmer.dart';
-
 class ProductInfoPage extends StatefulWidget {
   final int isAddProduct;
   final int categoryId;
@@ -46,7 +44,6 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
   bool isForQuantity = false;
 
   Product product = Product();
-
 
   @override
   void initState() {
@@ -91,9 +88,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-  return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back, color: ColorRes.white),
@@ -147,15 +142,11 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                                 imageUrl: arrImages[index].photo,
                                 width: double.infinity,
                                 fit: BoxFit.fitHeight,
-                                placeholder: (context, url) =>
-                                    Shimmer.fromColors(
-                                  baseColor: ColorRes.validationColorRed,
-                                  highlightColor: ColorRes.yellow,
-                                  child: Container(
-                                    height: double.infinity,
+                                placeholder: (context, url) => Image.asset(
+                                    Utils.getAssetsImg("product_default_1"),
                                     width: double.infinity,
-                                  ),
-                                ),
+                                    height: double.infinity,
+                                    fit: BoxFit.cover),
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error),
                               )
@@ -191,7 +182,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
   titleText(String titleText) {
     return Container(
-      margin: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, right: Utils.getDeviceWidth(context)/30, top: Utils.getDeviceWidth(context)/25),
+      margin: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 30,
+          right: Utils.getDeviceWidth(context) / 30,
+          top: Utils.getDeviceWidth(context) / 25),
       child: Text(
         titleText,
         textAlign: TextAlign.start,
@@ -205,7 +199,11 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
   nameTextFiled() {
     return Padding(
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, top: Utils.getDeviceWidth(context)/45, right: Utils.getDeviceWidth(context)/30, bottom:Utils.getDeviceWidth(context)/45),
+      padding: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 30,
+          top: Utils.getDeviceWidth(context) / 45,
+          right: Utils.getDeviceWidth(context) / 30,
+          bottom: Utils.getDeviceWidth(context) / 45),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -258,7 +256,11 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
   descriptionTextFiled() {
     return Padding(
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, top: Utils.getDeviceWidth(context)/45, right: Utils.getDeviceWidth(context)/30, bottom:Utils.getDeviceWidth(context)/45),
+      padding: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 30,
+          top: Utils.getDeviceWidth(context) / 45,
+          right: Utils.getDeviceWidth(context) / 30,
+          bottom: Utils.getDeviceWidth(context) / 45),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -285,14 +287,18 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
   pricePerPis() {
     return Padding(
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, top: Utils.getDeviceWidth(context)/45, right: Utils.getDeviceWidth(context)/30, bottom:Utils.getDeviceWidth(context)/45),
+      padding: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 30,
+          top: Utils.getDeviceWidth(context) / 45,
+          right: Utils.getDeviceWidth(context) / 30,
+          bottom: Utils.getDeviceWidth(context) / 45),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.asset(
             Utils.getAssetsImg("rupee"),
-            height: Utils.getDeviceHeight(context)/30,
-            width: Utils.getDeviceHeight(context)/30,
+            height: Utils.getDeviceHeight(context) / 30,
+            width: Utils.getDeviceHeight(context) / 30,
           ),
           SizedBox(width: 5),
           Expanded(
@@ -353,7 +359,11 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
   quantityTextFiled() {
     return Padding(
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, top: Utils.getDeviceWidth(context)/45, right: Utils.getDeviceWidth(context)/30, bottom:Utils.getDeviceWidth(context)/45),
+      padding: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 30,
+          top: Utils.getDeviceWidth(context) / 45,
+          right: Utils.getDeviceWidth(context) / 30,
+          bottom: Utils.getDeviceWidth(context) / 45),
       child: Row(
         children: <Widget>[
           Expanded(
@@ -416,7 +426,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
       color: ColorRes.black,
       child: MaterialButton(
           color: ColorRes.black,
-          height: Utils.getDeviceHeight(context)/13,
+          height: Utils.getDeviceHeight(context) / 13,
           minWidth: Utils.getDeviceWidth(context),
           child: Text(
             widget.productId != null ? StringRes.update : StringRes.done,
@@ -574,7 +584,6 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
   }
 
   showImageDialog() {
-
     FocusScope.of(context).requestFocus(FocusNode());
 
     return showDialog(
@@ -637,6 +646,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
     );
   }
 
+
   //API Product calling.
 
   Future<void> productInsertApi() async {
@@ -668,7 +678,6 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
         if (baseResponse != null) {
           if (baseResponse.success) {
-
             Utils.showToast(StringRes.productInsertMsg);
             productName.text = "";
             description.text = "";
@@ -841,7 +850,6 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
         if (baseResponse != null && baseResponse.success) {
           Utils.showToast(StringRes.deleteProductSuccess);
           Navigator.pop(context, true);
-
         }
       }).catchError((e) {
         print("login_" + e.toString());

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:marketplace/helper/res.dart';
 import 'package:marketplace/helper/utils.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addproduct.dart';

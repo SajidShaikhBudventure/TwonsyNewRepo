@@ -15,8 +15,6 @@ import 'package:marketplace/model/getProductData.dart';
 import 'package:marketplace/model/getcategory.dart';
 import 'package:marketplace/screen/product_Info_page.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import 'package:shimmer/shimmer.dart';
-
 
 
 
@@ -336,17 +334,15 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                               width: double.infinity,
                               height: Utils.getDeviceWidth(context) / 3.2,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                baseColor: ColorRes.validationColorRed,
-                                child: Container(
+                              placeholder: (context, url) => Image.asset(
+                                  Utils.getAssetsImg("product_default"),
                                   width: double.infinity,
                                   height: Utils.getDeviceWidth(context) / 3.2,
-                                ),
-                              ),
+                                  fit: BoxFit.cover),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),
                             )
-                          : Image.asset(Utils.getAssetsImg("app_logo"),
+                          : Image.asset(Utils.getAssetsImg("product_default"),
                               width: double.infinity,
                               height: Utils.getDeviceHeight(context) / 5.7,
                               fit: BoxFit.cover),

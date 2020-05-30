@@ -69,7 +69,7 @@ class StringRes {
   static var and                    =   "and";
   static var pleaseTryAgain         =   "Please try again later";
   static var registerLine           =   "By clicking \"REGISTER\" you agree to our";
-  static var hintOfBusinessCategory =   "Shoes, Clothing, Accessories, Furniture, Computer Hardware, etc.";
+  static var hintOfBusinessCategory =   "Shoes, Clothing, Accessories, Hand Bags, Jewellery, etc.";
   static var choosePhoto            =   "Choose photo";
   static var takePhoto              =   "Take photo";
 

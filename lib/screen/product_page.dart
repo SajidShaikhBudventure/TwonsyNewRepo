@@ -16,7 +16,6 @@ import 'package:marketplace/model/addcategory.dart';
 import 'package:marketplace/model/getProductData.dart';
 import 'package:marketplace/model/signin.dart';
 import 'package:marketplace/screen/product_Info_page.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductPage extends StatefulWidget {
   @override
@@ -31,20 +30,14 @@ class _ProductPageState extends State<ProductPage> {
 
   List<GetCategoryAndProduct> arrCategoryAndProduct = List();
 
-//  int selectedCategoryId = 0;
-
   bool isLoading = true;
   Meta meta = Meta();
-  ScrollController _sc = new ScrollController();
   int page = 1;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     Injector.streamController = StreamController.broadcast();
-
     Injector.streamController.stream.listen((data) {
       if (data == StringRes.subProductDataGet) {
         setState(() {
@@ -53,26 +46,8 @@ class _ProductPageState extends State<ProductPage> {
           getProductList(page); //n
         });
       }
-    }, onDone: () {
-      print("Task Done1");
-    }, onError: (error) {
-      print("Some Error1");
-    });
-
+    }, onDone: () {}, onError: (error) {});
     getProductList(null);
-    /*   _sc.addListener(() {
-      if (_sc.position.pixels == _sc.position.maxScrollExtent) {
-        page++;
-        getProductList(page);
-      }
-    });*/
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-//    _sc.dispose();
-    super.dispose();
   }
 
   List<int> data = [];
@@ -81,19 +56,22 @@ class _ProductPageState extends State<ProductPage> {
   final int increment = 10;
 
   Future _loadMore() async {
-    setState(() {
-      isLoadingLazy = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoadingLazy = true;
+      });
+    }
 
-    // Add in an artificial delay
     await new Future.delayed(const Duration(seconds: 5));
     if (meta.currentPage == page) {
       page++;
       getProductList(page);
     }
-    setState(() {
-      isLoadingLazy = false;
-    });
+    if (mounted) {
+      setState(() {
+        isLoadingLazy = false;
+      });
+    }
   }
 
   indicatorShow() {
@@ -113,13 +91,13 @@ class _ProductPageState extends State<ProductPage> {
     if (isLoading != null && isLoading) {
       return Scaffold(
           body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          SpinKitThreeBounce(
-              color: ColorRes.black, size: Utils.getDeviceWidth(context) / 20)
-        ],
-      ));
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SpinKitThreeBounce(
+                  color: ColorRes.black, size: Utils.getDeviceWidth(context) / 20)
+            ],
+          ));
     }
     return Container(
         color: ColorRes.productBgGrey,
@@ -131,15 +109,12 @@ class _ProductPageState extends State<ProductPage> {
             child: ListView(
               primary: true,
               shrinkWrap: true,
-//            controller: _sc,
-
               children: <Widget>[
                 firstAddCategory(),
                 Container(
-                  height: 0.9,
-                  width: double.infinity,
-                  color: ColorRes.lightGrey,
-                ),
+                    height: 0.9,
+                    width: double.infinity,
+                    color: ColorRes.lightGrey),
                 secondListData(),
                 indicatorShow(),
               ],
@@ -151,7 +126,7 @@ class _ProductPageState extends State<ProductPage> {
   firstAddCategory() {
     return InkResponse(
       child: Container(
-        height: Utils.getDeviceHeight(context) / 12,
+        height: Utils.getDeviceHeight(context) / 14,
         width: Utils.getDeviceWidth(context),
         color: ColorRes.productBgGrey,
         child: Row(
@@ -162,7 +137,7 @@ class _ProductPageState extends State<ProductPage> {
                 "+ ADD PRODUCT CATEGORY",
                 style: TextStyle(
                     color: ColorRes.lightBlueText,
-                    fontSize: Utils.getDeviceWidth(context) / 24,
+                    fontSize: Utils.getDeviceWidth(context) / 28,
                     fontWeight: FontWeight.w600),
               ),
             )
@@ -183,14 +158,9 @@ class _ProductPageState extends State<ProductPage> {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-//      controller: _sc,
       itemCount: arrCategoryAndProduct.length,
       itemBuilder: (context, categoryIndex) {
-//        if (categoryIndex == getCategoryAndProduct.length) {
-//          return indicatorShow();
-//        } else {
         return showMainCategoryItem(categoryIndex);
-//        }
       },
     );
   }
@@ -216,11 +186,11 @@ class _ProductPageState extends State<ProductPage> {
               ),
               Expanded(
                   child: Text(
-                arrCategoryAndProduct[categoryIndex].category.toUpperCase(),
-                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 27),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              )),
+                    arrCategoryAndProduct[categoryIndex].category.toUpperCase(),
+                    style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 27),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
               rightSidePopUp(categoryIndex),
             ],
           ),
@@ -228,58 +198,17 @@ class _ProductPageState extends State<ProductPage> {
         Container(
           height: Utils.getDeviceWidth(context) / 1.8,
           child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
               primary: false,
               itemCount:
-                  arrCategoryAndProduct[categoryIndex].products.length + 1,
+              arrCategoryAndProduct[categoryIndex].products.length + 1,
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.all(0),
               itemBuilder: (context, productIndex) {
                 if (productIndex >=
                     arrCategoryAndProduct[categoryIndex].products.length)
-                  return InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Card(
-                        elevation: 4,
-                        child: Container(
-                          width: Utils.getDeviceWidth(context) / 2.5,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Image.asset(Utils.getAssetsImg("plus_black"),
-                                  height: Utils.getDeviceWidth(context) / 17,
-                                  width: Utils.getDeviceWidth(context) / 17),
-                              Text(
-                                StringRes.addProduct,
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.05),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    onTap: () async {
-                      bool isUpdated = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProductInfoPage(
-                                  categoryId:
-                                      arrCategoryAndProduct[categoryIndex]
-                                          ?.id)));
-                      if (isUpdated) {
-                        arrCategoryAndProduct = List();
-                        page = 1;
-                        getProductList(page); //n
-
-                        setState(() {});
-                      }
-                    },
-                  );
+                  return addProductCard(context, categoryIndex);
                 else {
                   return showProductItem(
                       productIndex,
@@ -293,7 +222,54 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  showProductItem(int productIndex, Product product, int categoryIndex) {
+  Widget addProductCard(BuildContext context, int categoryIndex) {
+    return InkWell(
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Card(
+          elevation: 4,
+          child: Container(
+            width: Utils.getDeviceWidth(context) / 2.5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset(Utils.getAssetsImg("plus_black"),
+                    height: Utils.getDeviceWidth(context) / 17,
+                    width: Utils.getDeviceWidth(context) / 17),
+                Text(
+                  StringRes.addProduct,
+                  style: TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.w700, height: 1.05),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      onTap: () {
+        onClickAddCard(context, categoryIndex);
+      },
+    );
+  }
+
+  Future onClickAddCard(BuildContext context, int categoryIndex) async {
+    bool isUpdated = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProductInfoPage(
+                categoryId: arrCategoryAndProduct[categoryIndex]?.id)));
+    if (isUpdated) {
+      arrCategoryAndProduct = List();
+      page = 1;
+      getProductList(page); //n
+
+      setState(() {});
+    }
+  }
+
+  showProductItem(int productIndex, Product product, int categoryIndex)   {
+
     return InkResponse(
       child: Container(
         width: Utils.getDeviceWidth(context) / 2.4,
@@ -312,28 +288,30 @@ class _ProductPageState extends State<ProductPage> {
                           topLeft: Radius.circular(4),
                           topRight: Radius.circular(4)),
                       child: product.photo != null &&
-                              product.photo.isNotEmpty &&
-                              product.photo.contains("http")
+                          product.photo.isNotEmpty &&
+                          product.photo.contains("http")
                           ? CachedNetworkImage(
-                              imageUrl: product.photo,
-                              width: double.infinity,
-                              height: Utils.getDeviceWidth(context) / 3.2,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Shimmer.fromColors(
-                                baseColor: ColorRes.validationColorRed,
-                                highlightColor: ColorRes.yellow,
-                                child: Container(
-                                  width: double.infinity,
-                                  height: Utils.getDeviceWidth(context) / 3.2,
-                                ),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            )
-                          : Image.asset(Utils.getAssetsImg("app_logo"),
-                              width: double.infinity,
-                              height: Utils.getDeviceHeight(context) / 5.7,
-                              fit: BoxFit.cover),
+                        imageUrl: product.photo,
+                        width: double.infinity,
+                        height: Utils.getDeviceWidth(context) / 3.2,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            Image.asset(
+                                Utils.getAssetsImg("product_default"),
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover),
+                        errorWidget: (context, url, error) =>
+                            Image.asset(
+                                Utils.getAssetsImg("product_default"),
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover),
+                      )
+                          : Image.asset(Utils.getAssetsImg("product_default"),
+                          width: double.infinity,
+                          height: Utils.getDeviceHeight(context) / 5.7,
+                          fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -342,7 +320,7 @@ class _ProductPageState extends State<ProductPage> {
                   child: Text(
                     product.productName.toUpperCase(),
                     style:
-                        TextStyle(fontSize: Utils.getDeviceWidth(context) / 32),
+                    TextStyle(fontSize: Utils.getDeviceWidth(context) / 32),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -372,7 +350,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
+                  EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
                   child: Text("${product.perQuantity}".toUpperCase(),
                       style: TextStyle(
                           fontSize: Utils.getDeviceWidth(context) / 32)),
@@ -386,16 +364,31 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
+  Future<Size> _calculateImageDimension(String photo) {
+    Completer<Size> completer = Completer();
+    Image image = Image.network(photo);
+    image.image.resolve(ImageConfiguration()).addListener(
+      ImageStreamListener(
+            (ImageInfo image, bool synchronousCall) {
+          var myImage = image.image;
+          Size size = Size(myImage.width.toDouble(), myImage.height.toDouble());
+          completer.complete(size);
+        },
+      ),
+    );
+    return completer.future;
+  }
+
   Future<void> navigateToProductInfo(int categoryIndex, Product product) async {
     bool isUpdated = await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProductInfoPage(
-                  categoryId: arrCategoryAndProduct[categoryIndex]?.id,
-                  productId: product != null ? product.id : null,
-                )));
+              categoryId: arrCategoryAndProduct[categoryIndex]?.id,
+              productId: product != null ? product.id : null,
+            )));
 
-    if (isUpdated) {
+    if (isUpdated != null && isUpdated) {
       arrCategoryAndProduct = List();
       page = 1;
       getProductList(page); //n
@@ -404,7 +397,6 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   rightSidePopUp(int categoryIndex) {
-    print(categoryIndex);
     return PopupMenuButton<String>(
         onSelected: choiceAction,
         offset: Offset(100, 100),
@@ -433,8 +425,7 @@ class _ProductPageState extends State<ProductPage> {
                         MaterialPageRoute(
                             builder: (context) => ProductInfoPage(
                                 categoryId:
-                                    arrCategoryAndProduct[categoryIndex].id)
-                        ));
+                                arrCategoryAndProduct[categoryIndex].id)));
                     if (isUpdated) {
                       arrCategoryAndProduct = List();
                       page = 1;
@@ -464,14 +455,11 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   choiceAction(String choiceAndCategoryIndex) async {
-    print("chice------");
-
     var choice = choiceAndCategoryIndex.toString().split(",")[0];
     var categoryIndex =
-        int.parse(choiceAndCategoryIndex.toString().split(",")[1]);
+    int.parse(choiceAndCategoryIndex.toString().split(",")[1]);
 
     if (choice == Constants.FirstItem) {
-      print('I First Item');
       bool isUpdated = await Navigator.push(
           context, MaterialPageRoute(builder: (context) => ProductInfoPage()));
       if (isUpdated) {
@@ -481,14 +469,12 @@ class _ProductPageState extends State<ProductPage> {
         setState(() {});
       }
     } else if (choice == Constants.SecondItem) {
-      print('I Second Item');
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return customDialog(StringRes.editCategoryName, 2, categoryIndex);
           });
     } else if (choice == Constants.ThirdItem) {
-      print('I Third Item');
       showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -499,30 +485,30 @@ class _ProductPageState extends State<ProductPage> {
 
   customDialog(String hintText, int i, int categoryIndex) {
     if (i == 2) {
-      editCategoryController.text = arrCategoryAndProduct[categoryIndex].category;
+      editCategoryController.text =
+          arrCategoryAndProduct[categoryIndex].category;
     }
 
     return Dialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)
-      ), //this right here
+          borderRadius: BorderRadius.circular(10.0)), //this right here
       child: Container(
         height: i == 3
             ? ((Utils.getDeviceHeight(context) / 10) +
-                20 +
-                20 +
-                10 +
-                Utils.getDeviceHeight(context) / 20)
+            20 +
+            20 +
+            10 +
+            Utils.getDeviceHeight(context) / 20)
             : ((Utils.getDeviceHeight(context) / 20) +
-                20 +
-                20 +
-                10 +
-                10 +
-                45 +
-                Utils.getDeviceHeight(context) / 20), //125 : 160,
+            20 +
+            20 +
+            10 +
+            10 +
+            45 +
+            Utils.getDeviceHeight(context) / 20), //125 : 160,
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 20, left: 12, right: 12, bottom: 20),
+          const EdgeInsets.only(top: 20, left: 12, right: 12, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -540,23 +526,23 @@ class _ProductPageState extends State<ProductPage> {
               i == 3
                   ? Container()
                   : Container(
-                      margin: EdgeInsets.only(top: 10),
-                      height: 45,
-                      child: Theme(
-                        data: ThemeData(primaryColor: ColorRes.black),
-                        child: TextFormField(
-                          cursorColor: ColorRes.black,
-                          controller: i == 1
-                              ? addCategoryController
-                              : editCategoryController,
-                          textCapitalization: TextCapitalization.characters,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.all(10),
-                              hintText: ""),
-                        ),
-                      ),
-                    ),
+                margin: EdgeInsets.only(top: 10),
+                height: 45,
+                child: Theme(
+                  data: ThemeData(primaryColor: ColorRes.black),
+                  child: TextFormField(
+                    cursorColor: ColorRes.black,
+                    controller: i == 1
+                        ? addCategoryController
+                        : editCategoryController,
+                    textCapitalization: TextCapitalization.characters,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.all(10),
+                        hintText: ""),
+                  ),
+                ),
+              ),
               Container(
                 height: Utils.getDeviceHeight(context) / 20,
                 margin: EdgeInsets.only(top: 10),
@@ -599,10 +585,12 @@ class _ProductPageState extends State<ProductPage> {
                             }
                           } else if (i == 2) {
                             Navigator.pop(context);
-                            updateCategory(arrCategoryAndProduct[categoryIndex].id);
+                            updateCategory(
+                                arrCategoryAndProduct[categoryIndex].id);
                           } else if (i == 3) {
                             Navigator.pop(context);
-                            deleteCategoryApi(arrCategoryAndProduct[categoryIndex].id);
+                            deleteCategoryApi(
+                                arrCategoryAndProduct[categoryIndex].id);
                           }
                         },
                       ),
@@ -617,8 +605,6 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  //add category api: -
-
   Future<void> addCategoryApi() async {
     bool isConnected = await Utils.isInternetConnectedWithAlert();
 
@@ -630,7 +616,7 @@ class _ProductPageState extends State<ProductPage> {
 
       WebApi()
           .callAPI(Const.postWithAccess, WebApi.rqCategory, rq.toJson(),
-              Injector.accessToken)
+          Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse.success) {
           CommonView.progressDialog(false, context);
@@ -655,19 +641,16 @@ class _ProductPageState extends State<ProductPage> {
     if (isConnected) {
       WebApi()
           .callAPI(Const.get, "${WebApi.rqProducts}${index.toString()}", null,
-              Injector.accessToken)
+          Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse.success) {
           setState(() {
-//            page++;
             isLoading = false;
-//            getCategoryAndProduct = new List<GetCategoryAndProduct>();
             baseResponse.data.forEach((v) {
               arrCategoryAndProduct.add(GetCategoryAndProduct.fromJson(v));
             });
             meta = baseResponse.meta;
             setState(() {});
-//            UserData userData = UserData.fromJson(data.data);
           });
         } else {
           if (mounted) {
@@ -698,7 +681,7 @@ class _ProductPageState extends State<ProductPage> {
 
       WebApi()
           .callAPI(Const.put, "${WebApi.rqCategory}/$categoryId", rq.toJson(),
-              Injector.accessToken)
+          Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse != null && baseResponse.success) {
           CommonView.progressDialog(false, context);
@@ -723,7 +706,7 @@ class _ProductPageState extends State<ProductPage> {
       CommonView.progressDialog(true, context);
       WebApi()
           .callAPI(Const.delete, "${WebApi.rqCategory}/$categoryId", null,
-              Injector.accessToken)
+          Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse != null && baseResponse.success) {
           CommonView.progressDialog(false, context);
