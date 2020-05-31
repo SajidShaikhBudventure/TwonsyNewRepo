@@ -15,6 +15,7 @@ import 'package:marketplace/model/business_user.dart';
 import 'package:marketplace/model/session_request.dart';
 import 'package:marketplace/model/slider_img_upload.dart';
 import 'package:marketplace/screen/analytics_page.dart';
+import 'package:marketplace/screen/how_to_use.dart';
 import 'package:marketplace/screen/main_page.dart';
 import 'package:marketplace/screen/product_page.dart';
 import 'package:marketplace/screen/rating_page.dart';
@@ -24,6 +25,7 @@ import 'package:marketplace/screen/webView.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'businessInfo_page.dart';
+import 'package:share/share.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -639,6 +641,21 @@ class _HomePageState extends State<HomePage>
         children: <Widget>[
           ListTile(
             contentPadding: EdgeInsets.only(
+                left: Utils.getDeviceHeight(context) / 60, right: 10.0),
+            title: Text(
+              StringRes.HowToUse,
+              style: TextStyle(
+                  color: ColorRes.black,
+                  fontSize: Utils.getDeviceHeight(context) / 38),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HowToPage()));
+            },
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.only(
                 left: Utils.getDeviceHeight(context) / 60, right: 10.0, top: 0),
             title: Text(
               StringRes.viewOnTownsy,
@@ -659,6 +676,26 @@ class _HomePageState extends State<HomePage>
             contentPadding: EdgeInsets.only(
                 left: Utils.getDeviceHeight(context) / 60, right: 10.0, top: 0),
             title: Text(
+              StringRes.sharePage,
+              style: TextStyle(
+                  color: ColorRes.black,
+                  fontSize: Utils.getDeviceHeight(context) / 38),
+            ),
+            onTap: () {
+              //Navigator.pop(context);
+              //_launchURL();
+              Share.share(webProfile);
+              //Utils.showToast(webProfile);
+              /*Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WebViewPage(webUrl: webProfile)));*/
+            },
+          ),
+          /*ListTile(
+            contentPadding: EdgeInsets.only(
+                left: Utils.getDeviceHeight(context) / 60, right: 10.0, top: 0),
+            title: Text(
               StringRes.guidelines,
               style: TextStyle(
                   color: ColorRes.black,
@@ -671,7 +708,7 @@ class _HomePageState extends State<HomePage>
                   MaterialPageRoute(
                       builder: (context) => TermsConditions(type: 3)));
             },
-          ),
+          ),*/
           ListTile(
             contentPadding: EdgeInsets.only(
                 left: Utils.getDeviceHeight(context) / 60, right: 10.0),

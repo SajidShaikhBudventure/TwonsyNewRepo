@@ -96,7 +96,9 @@ class StringRes {
   static var invalidOtp             =   "INVALID OTP";
   static var resendOtp              =   "RESEND OTP";
   static var support                =   "Support";
-  static var viewOnTownsy           =   "View profile on Townsy";
+  static var viewOnTownsy           =   "View Townsy Page";
+  static var sharePage              =   "Share Your Page";
+  static var HowToUse               =   "How to use the app";
   static var about                  =   "About";
   static var logout                 =   "Log out";
   static var businessInfo           =   "BUSINESS\nINFO";
@@ -241,10 +243,24 @@ class StringRes {
   //upgrade Alert
 //  static var upgradeTitle           =  "Update App?";
   static var upgradeTitle           =  "New version available";
-  static var upgradeDetails         =  "Please, update app to new version to continue reposting.";
+  static var upgradeDetails         =  "Please update app to the latest version for best experience.";
 //  static var upgradeDetails         =  "A new version of Upgrader is available!";
   static var later                  =  "Later";
   static var updateNow              =  "Update Now";
+
+  static var firstQ              =  "\u2022 What is Townsy?";
+  static var firstA              =  "Townsy.in is an online listing platform for local merchants. It is a platform to help local merchants find and attract more customers. When you list your products on Townsy.in, your products are viewed by thousands of customers in your city who are searching for these products.";
+  static var secondQ              =  "\u2022 What is Townsy Business App?";
+  static var secondA            =  "Merchants and businesses can list their products on Townsy using the Townsy Business App. Using this app, you can list your products on Townsy, add new listings, manage existing listings and get data on how many people are looking at your listed products. You can also share your Townsy Page containing all your products with people or on social media with just one button.";
+  static var thirdQ              =  "\u2022 Is there any fee involved?";
+  static var thirdA              =  "No. Townsy is free to use for both merchants and customers.";
+  static var fourthQ              =  "\u2022 How do I upload my products?";
+  static var fourthA1             =  "Go to the PRODUCTS tab on the app and add a new category of products.";
+  static var fourthA2              =  "Add a new product by clicking the ADD PRODUCT button.";
+  static var fourthA3              =  "Add your product’s photos and details and click DONE.";
+  static var fourthA4              =  "Your product listings are now online on Townsy.in.";
+  static var fifthQ              =  "\u2022 How do I share my page?";
+  static var fifthA              =  "Use the SHARE MY PAGE button on the left-hand side menu to share you page.";
 
 
   //google ads key:
