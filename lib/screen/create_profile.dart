@@ -991,7 +991,7 @@ class _BusinessPageState extends State<CreateProfile> {
       child: Text(
         title,
         style: TextStyle(
-            height: Utils.getDeviceWidth(context) / 350,
+            height: 1.1,
             color: ColorRes.lightGrey,
             fontSize: Utils.getDeviceHeight(context) / 60),
         textAlign: TextAlign.justify,
