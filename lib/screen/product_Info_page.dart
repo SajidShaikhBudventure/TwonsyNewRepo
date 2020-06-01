@@ -491,14 +491,14 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0)), //this right here
       child: Container(
-        height: i == 2 ? 130 : 145,
+        height: i == 2 ? 130 : 155,
         child: Padding(
           padding: const EdgeInsets.only(top: 20, left: 12, right: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 40,
+                height: 50,
                 child: Text(
                   categoryName,
                   style: TextStyle(fontWeight: FontWeight.w500),
