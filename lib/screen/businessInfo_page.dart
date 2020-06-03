@@ -149,7 +149,7 @@ class _BusinessPageState extends State<BusinessPage> {
               children: <Widget>[
                 titleText(StringRes.businessName, 1),
                 nameTextFiled(),
-                titleText(StringRes.businessAddress, 2),
+                addresstitleText(StringRes.businessAddress, 2),
                 addressTextFiled(),
                 titleText(StringRes.phoneNumber, 3),
                 telephoneNumberView(),
@@ -268,6 +268,29 @@ class _BusinessPageState extends State<BusinessPage> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Widget addresstitleText(String title, int type) {
+    return Container(
+      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 25,
+          top: Utils.getDeviceHeight(context) / 50,
+          bottom: Utils.getDeviceHeight(context) / 120),
+      child: editBusinessInfo
+          ?Text(
+        title,
+        style: TextStyle(
+            fontSize: Utils.getDeviceWidth(context) / 32,
+            fontWeight: FontWeight.w700),
+      )
+          :Text(
+        "City Located",
+        style: TextStyle(
+            fontSize: Utils.getDeviceWidth(context) / 32,
+            fontWeight: FontWeight.w700),
+      ),
+    );
   }
 
   addressTextFiled() {

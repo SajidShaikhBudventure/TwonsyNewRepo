@@ -135,7 +135,7 @@ class StringRes {
   static var checkSunday            =   "sunday";
 
   static var businessName           =  "Business Name";
-  static var businessAddress        =  "Business Address";
+  static var businessAddress        =  "Which city are you located in?";
   static var phoneNumber            =  "Phone Numbers";
   static var mobileNumber           =  "Mobile Number";
   static var telephoneNumber        =  "Telephone Number (Optional)";
