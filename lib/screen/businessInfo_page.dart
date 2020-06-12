@@ -15,6 +15,7 @@ import 'package:marketplace/model/business_type_model.dart';
 import 'package:marketplace/model/business_user.dart';
 import 'package:marketplace/model/create_profile.dart';
 import 'package:marketplace/screen/home_page.dart';
+import 'dart:io' show Platform;
 
 import '../helper/res.dart';
 import '../helper/utils.dart';
@@ -164,7 +165,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 selectedCategoryList(),
                 titleText(StringRes.businessType, 6),
                 businessType(),
-                titleText(StringRes.otherInfoCustomer, 7),
+                titleText("Other Info For Customers", 7),
                 noReturnTextFiled(),
                 lastSaveBtn()
               ],
@@ -576,7 +577,7 @@ class _BusinessPageState extends State<BusinessPage> {
       child: Text(
         title,
         style: TextStyle(
-            height: 1.1,
+            height: Platform.isAndroid?1.1:1.25,
             color: ColorRes.lightGrey,
             fontSize: Utils.getDeviceHeight(context) / 60),
         textAlign: TextAlign.justify,

@@ -5,6 +5,8 @@ import 'package:marketplace/helper/res.dart';
 import 'package:marketplace/helper/utils.dart';
 import 'package:marketplace/screen/terms_conditions.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:io' show Platform;
+
 
 class HowToPage extends StatefulWidget {
   @override
@@ -69,7 +71,7 @@ class _HowToPageState extends State<HowToPage> {
       padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
       margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
       alignment: Alignment.topLeft,
-      child: Text(StringRes.firstA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+      child: Text(StringRes.firstA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
     );
   }
 
@@ -91,7 +93,7 @@ class _HowToPageState extends State<HowToPage> {
       padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
       margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
       alignment: Alignment.topLeft,
-      child: Text(StringRes.secondA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+      child: Text(StringRes.secondA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
     );
   }
 
@@ -113,7 +115,7 @@ class _HowToPageState extends State<HowToPage> {
       padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
       margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
       alignment: Alignment.topLeft,
-      child: Text(StringRes.thirdA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+      child: Text(StringRes.thirdA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
     );
   }
 
@@ -139,7 +141,7 @@ class _HowToPageState extends State<HowToPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(StringRes.fourthA1, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+          Text(StringRes.fourthA1, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -151,7 +153,7 @@ class _HowToPageState extends State<HowToPage> {
               //width: Utils.getDeviceWidth(context)/2,
             ),
           ),
-          Text(StringRes.fourthA2, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+          Text(StringRes.fourthA2, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -163,7 +165,7 @@ class _HowToPageState extends State<HowToPage> {
               //width: Utils.getDeviceWidth(context)/2,
             ),
           ),
-          Text(StringRes.fourthA3, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+          Text(StringRes.fourthA3, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -186,7 +188,7 @@ class _HowToPageState extends State<HowToPage> {
               //width: Utils.getDeviceWidth(context)/2,
             ),
           ),
-          Text(StringRes.fourthA4, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+          Text(StringRes.fourthA4, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -224,7 +226,7 @@ class _HowToPageState extends State<HowToPage> {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(StringRes.fifthA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: 1.075),textAlign: TextAlign.justify),
+        Text(StringRes.fifthA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
         Container(
           //height: Utils.getDeviceHeight(context)/2,
           //width:  Utils.getDeviceWidth(context),

@@ -12,6 +12,7 @@ import 'package:marketplace/model/business_type_model.dart';
 import 'package:marketplace/model/business_user.dart';
 import 'package:marketplace/model/create_profile.dart';
 import 'package:marketplace/model/send_otp.dart';
+import 'dart:io' show Platform;
 
 import '../helper/res.dart';
 import '../helper/utils.dart';
@@ -160,7 +161,7 @@ class _BusinessPageState extends State<CreateProfile> {
     return Scaffold(
       key: homeScaffoldKey,
       appBar: AppBar(
-        title: Text("Create New Profile"),
+        title: Text("Create New Profile", style: TextStyle(fontSize: Utils.getDeviceWidth(context)/21)),
       ),
       body: Column(
         children: <Widget>[
@@ -259,7 +260,7 @@ class _BusinessPageState extends State<CreateProfile> {
               child: TextFormField(
                 maxLines: 1,
 //                textInputAction: TextInputAction.next,
-
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
                 cursorColor: ColorRes.black,
                 controller: businessNameTF,
                 enabled: editBusinessInfo,
@@ -363,7 +364,7 @@ class _BusinessPageState extends State<CreateProfile> {
                     border: Border.all(color: ColorRes.black, width: 1)),
                 child: Text(
                     businessAddressTF == null ? "" : businessAddressTF.text,
-                    style: TextStyle(color: ColorRes.black, fontSize: 13)),
+                    style: TextStyle(color: ColorRes.black, fontSize: Utils.getDeviceWidth(context)/26)),
               ),
               onTap: () async {
                 p = await PlacesAutocomplete.show(
@@ -564,6 +565,7 @@ class _BusinessPageState extends State<CreateProfile> {
                         borderSide: const BorderSide(color: Colors.black, width: 1.0),
                       ),
                       hintText: StringRes.hintOfBusinessCategory,
+                      hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/26),
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -759,6 +761,7 @@ class _BusinessPageState extends State<CreateProfile> {
                 enabled: editBusinessInfo,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
 //                  textInputAction: TextInputAction.go,
 
                 decoration: InputDecoration(
@@ -991,7 +994,7 @@ class _BusinessPageState extends State<CreateProfile> {
       child: Text(
         title,
         style: TextStyle(
-            height: 1.1,
+            height: Platform.isAndroid? 1.1 : 1.25,
             color: ColorRes.lightGrey,
             fontSize: Utils.getDeviceHeight(context) / 60),
         textAlign: TextAlign.justify,
@@ -1063,7 +1066,7 @@ class _BusinessPageState extends State<CreateProfile> {
               textAlign: TextAlign.left,
               maxLines: 1,
               enabled: editBusinessInfo,
-              style: TextStyle(fontSize: Utils.getDeviceHeight(context) / 50),
+              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
               inputFormatters: [LengthLimitingTextInputFormatter(10)],
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
@@ -1129,7 +1132,7 @@ class _BusinessPageState extends State<CreateProfile> {
               textAlign: TextAlign.left,
               maxLines: 1,
               enabled: editBusinessInfo,
-              style: TextStyle(fontSize: Utils.getDeviceHeight(context) / 50),
+              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
               inputFormatters: [LengthLimitingTextInputFormatter(100)],
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),

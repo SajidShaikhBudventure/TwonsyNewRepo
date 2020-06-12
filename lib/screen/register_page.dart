@@ -145,10 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 /*Padding(
                   padding: const EdgeInsets.only(right: 15, left: 15),
                   child: Platform.isAndroid ? CommonView.googleBtnShow(context) : Container(),
-                ),
-                Container(
-                  child: Platform.isAndroid ? labelWithEmail() : Container(),
                 ),*/
+                registerLabel(),
                 commonTextFiledView(1),
                 commonTextFiledView(3),
                 helpTextEmail(3),
@@ -170,19 +168,16 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  labelWithEmail() {
+  registerLabel() {
     return  Container(
-        margin: EdgeInsets.only(right: 0, left: 0, top: 15),
-        child: Row(children: <Widget>[
-      Expanded(child: Divider()),
-      Padding(padding: EdgeInsets.only(right: 10.0)),
-      Text(
-        Platform.isAndroid ? StringRes.orContinueWithEmail : StringRes.continueWithEmail,
-        style: TextStyle(color: ColorRes.greyText, fontSize: Utils.getDeviceHeight(context)/38),
+      margin: EdgeInsets.only(right: 0, left: 0, top: Utils.getDeviceHeight(context)/31),
+      child: Text(
+        "Create a new seller account",
+        textAlign: TextAlign.center,
+        style: TextStyle(color: ColorRes.fontGrey, fontSize: Utils.getDeviceHeight(context)/32, fontFamily: FontRes.nunito),
       ),
-      Padding(padding: EdgeInsets.only(left: 10.0)),
-      Expanded(child: Divider()),
-    ]));
+
+    );
   }
 
   registerButton() {
@@ -194,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: MaterialButton(
         child: Text(
           StringRes.registerBtn,
-          style: TextStyle(color: ColorRes.white, fontSize: Utils.getDeviceHeight(context)/42),
+          style: TextStyle(color: ColorRes.white, fontSize: Utils.getDeviceHeight(context)/42, fontFamily: FontRes.nunito),
         ),
         onPressed: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -246,7 +241,7 @@ class _RegisterPageState extends State<RegisterPage> {
         controller: controllerTextFiled(i),
         decoration: InputDecoration(
           hintText: showHintText(i),
-          hintStyle: TextStyle(color: ColorRes.greyText),
+          hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito),
         ),
         style: TextStyle(fontSize: Utils.getDeviceWidth(context)/28, color: ColorRes.black),
       ),
@@ -263,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
             width: Utils.getDeviceWidth(context),
             child: Text(
               StringRes.registerLine,
-              style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.cancelGreyText),
+              style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.cancelGreyText, fontFamily: FontRes.nunito),
               textAlign: TextAlign.center,
             ),
           ),
@@ -277,7 +272,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Container(
                     alignment: Alignment.center,
                     child: Text(StringRes.terms,
-                        style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.blue),
+                        style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.blue, fontFamily: FontRes.nunito),
                         textAlign: TextAlign.center),
                   ),
                   onTap: () {
@@ -291,14 +286,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.only(left: 5, right: 5),
                   child: Text(StringRes.and,
-                      style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.cancelGreyText),
+                      style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.cancelGreyText, fontFamily: FontRes.nunito),
                       textAlign: TextAlign.center),
                 ),
                 InkResponse(
                   child: Container(
                     alignment: Alignment.center,
                     child: Text(StringRes.privacy,
-                        style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.blue),
+                        style: TextStyle(fontSize: Utils.getDeviceHeight(context)/63, color: ColorRes.blue, fontFamily: FontRes.nunito),
                         textAlign: TextAlign.center),
                   ),
                   onTap: () {
@@ -350,7 +345,7 @@ class _RegisterPageState extends State<RegisterPage> {
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(left: i == 1 || i == 2 ? 0 : Utils.getDeviceHeight(context)/40, top: 3),
         child: Text(helpTitleShow(i),
-            style: TextStyle(color: ColorRes.red, fontSize: Utils.getDeviceHeight(context)/70)),
+            style: TextStyle(color: ColorRes.red, fontSize: Utils.getDeviceHeight(context)/70, fontFamily: FontRes.nunito)),
       ),
       visible: helpTextVisible(i),
     );

@@ -37,7 +37,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  expandedHeight: Platform.isAndroid ? (Utils.getDeviceHeight(context) / 3.8) : (Utils.getDeviceHeight(context) / 3.8),
+                  expandedHeight: Utils.getDeviceHeight(context) / 4.5,
                   floating: false,
                   pinned: false,
                   flexibleSpace: FlexibleSpaceBar(
@@ -46,7 +46,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                         width: Utils.getDeviceWidth(context),
                         color: ColorRes.black,
                         margin: EdgeInsets.only(top: 0, bottom: 0, right: 0, left: 0),
-                        height: Platform.isAndroid ? (Utils.getDeviceHeight(context) / 3.8) : (Utils.getDeviceHeight(context) / 3.8),
+                        height: Utils.getDeviceHeight(context) / 4.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,17 +54,19 @@ class _MainLoginPageState extends State<MainLoginPage> {
                             Text(
                               StringRes.townsyTitle,
                               style: TextStyle(
-                                  fontSize: Utils.getDeviceHeight(context)/15,
+                                  fontSize: Utils.getDeviceHeight(context)/17,
                                   color: ColorRes.white,
-                                  fontWeight: FontWeight.w700),
+                                  fontWeight: FontWeight.w700,
+                              fontFamily: FontRes.nunito),
                             ),
                             SizedBox(height: Utils.getDeviceWidth(context)/60),
                             Text(
                               StringRes.businessTitle,
                               style: TextStyle(
-                                  fontSize: Utils.getDeviceHeight(context)/19,
+                                  fontSize: Utils.getDeviceHeight(context)/21,
                                   color: ColorRes.white,
-                                  fontWeight: FontWeight.w700),
+                                  fontWeight: FontWeight.w700,
+                              fontFamily: FontRes.nunito),
                             )
                           ],
                         ),
@@ -106,7 +108,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
     return Container(
       width: Utils.getDeviceWidth(context),
       color: ColorRes.black,
-      height: Platform.isAndroid ? (Utils.getDeviceHeight(context) / 3.8) : (Utils.getDeviceHeight(context) / 3.8),
+      height: Utils.getDeviceHeight(context) / 4.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -116,7 +118,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
             style: TextStyle(
                 fontSize: Utils.getDeviceHeight(context)/15,
                 color: ColorRes.white,
-                fontWeight: FontWeight.w800),
+                fontWeight: FontWeight.w800, fontFamily: FontRes.nunito),
           ),
           SizedBox(height: Utils.getDeviceWidth(context)/60),
           Text(
@@ -124,7 +126,8 @@ class _MainLoginPageState extends State<MainLoginPage> {
             style: TextStyle(
                 fontSize: Utils.getDeviceHeight(context)/19,
                 color: ColorRes.white,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w700,
+            fontFamily: FontRes.nunito),
           )
         ],
       ),

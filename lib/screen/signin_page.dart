@@ -122,52 +122,37 @@ class _LoginPageState extends State<LoginPage> {
 
       home: Scaffold(
         resizeToAvoidBottomPadding: false,
-        body: InkResponse(
-          child: ListView(
-            shrinkWrap: true,
-            primary: false,
-            children: <Widget>[
-              /*Padding(
-                padding: const EdgeInsets.only(right: 15, left: 15),
-                child: Platform.isAndroid ? CommonView.googleBtnShow(context) : Container(),
-              ),
-              Container(
-                child: Platform.isAndroid ? labelWithEmail() : Container(),
-              ),*/
-              textFiledEmail(),
-              helpTextEmail(),
-              textFiledPassword(),
-              helpTextPassword(),
-              forgotPassword(),
-            ],
+        body: SingleChildScrollView(
+          child: InkResponse(
+            child: Column(
+              children: <Widget>[
+                SignInLabel(),
+                textFiledEmail(),
+                helpTextEmail(),
+                textFiledPassword(),
+                helpTextPassword(),
+                forgotPassword(),
+              ],
+            ),
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
           ),
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
         ),
         bottomNavigationBar: loginButton(),
       ),
     );
   }
 
-  labelWithEmail() {
+  SignInLabel() {
     return Container(
-        margin: EdgeInsets.only(right: 0, left: 0, top: 0),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-      Expanded(child: Divider()),
-      Padding(padding: EdgeInsets.only(right: 10.0)),
-      Text(
-        Platform.isAndroid ? StringRes.orContinueWithEmail : StringRes.continueWithEmail,
-        style: TextStyle(
-          color: ColorRes.greyText,
-          fontSize: Utils.getDeviceHeight(context)/38,
-        ),
+      margin: EdgeInsets.only(right: 0, left: 0, top: Utils.getDeviceHeight(context)/31),
+      child: Text(
+        "Sign-in to your seller account",
+        textAlign: TextAlign.center,
+        style: TextStyle(color: ColorRes.fontGrey, fontSize: Utils.getDeviceHeight(context)/32, fontFamily: FontRes.nunito),
       ),
-      Padding(padding: EdgeInsets.only(left: 10.0)),
-      Expanded(child: Divider()),
-    ]));
+    );
   }
 
   forgotPassword() {
@@ -179,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
       child: InkResponse(
         child: Text(
           StringRes.forgotPassword,
-          style: TextStyle(color: ColorRes.black, fontSize: Utils.getDeviceWidth(context) / 22),
+          style: TextStyle(color: ColorRes.black, fontSize: Utils.getDeviceWidth(context) / 22, fontFamily: FontRes.nunito),
           textAlign: TextAlign.right,
         ),
         onTap: () {
@@ -202,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         child: Text(
           StringRes.signIn,
-          style: TextStyle(color: ColorRes.white, fontSize: Utils.getDeviceHeight(context)/42),
+          style: TextStyle(color: ColorRes.white, fontSize: Utils.getDeviceHeight(context)/42, fontFamily: FontRes.nunito),
         ),
         onPressed: () {
           FocusScope.of(context).requestFocus(FocusNode());
@@ -225,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: StringRes.email,
-            hintStyle: TextStyle(color: ColorRes.fontGrey),
+            hintStyle: TextStyle(color: ColorRes.fontGrey, fontFamily: FontRes.nunito),
           ),
           style: TextStyle(fontSize: Utils.getDeviceHeight(context)/55, color: ColorRes.black),
         ),
@@ -244,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
           obscureText: true,
           decoration: InputDecoration(
             hintText: StringRes.password,
-            hintStyle: TextStyle(color: ColorRes.fontGrey),
+            hintStyle: TextStyle(color: ColorRes.fontGrey, fontFamily: FontRes.nunito),
           ),
           style: TextStyle(fontSize: Utils.getDeviceHeight(context)/55, color: ColorRes.black),
         ),
@@ -258,7 +243,7 @@ class _LoginPageState extends State<LoginPage> {
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/23, top: 3),
         child: Text(helpEmailStr,
-            style: TextStyle(color: ColorRes.red, fontSize: Utils.getDeviceHeight(context)/60)),
+            style: TextStyle(color: ColorRes.red, fontSize: Utils.getDeviceHeight(context)/60, fontFamily: FontRes.nunito)),
       ),
       visible: helpEmail,
     );
@@ -270,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/23, top: 3),
         child: Text(helpPasswordStr,
-            style: TextStyle(color: ColorRes.red, fontSize: Utils.getDeviceHeight(context)/60)),
+            style: TextStyle(color: ColorRes.red, fontSize: Utils.getDeviceHeight(context)/60, fontFamily: FontRes.nunito)),
       ),
       visible: helpPassword,
     );
