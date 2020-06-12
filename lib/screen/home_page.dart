@@ -368,7 +368,7 @@ class _HomePageState extends State<HomePage>
                 SliverPersistentHeader(
                   delegate: _SliverAppBarDelegate(
                     TabBar(
-                      labelPadding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/26),
+                      labelPadding: EdgeInsets.symmetric(horizontal: 5),
                       indicatorColor: ColorRes.white,
                       isScrollable: false,
                       controller: _tabController,

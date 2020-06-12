@@ -1287,7 +1287,7 @@ class _BusinessPageState extends State<BusinessPage> {
       margin: const EdgeInsets.only(right: 10, left: 10, top: 15),
       child: InkResponse(
         child:
-            Text(stringName, style: TextStyle(color: ColorRes.lightBlueText)),
+            Text(stringName, style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28, color: ColorRes.lightBlueText)),
         onTap: () {
           setState(() {
             if (editBusinessInfo == false) {
@@ -1306,7 +1306,7 @@ class _BusinessPageState extends State<BusinessPage> {
       alignment: Alignment.center,
       margin: const EdgeInsets.only(right: 10, left: 10, top: 12),
       child: InkResponse(
-        child: Text(stringName, style: TextStyle(color: ColorRes.lightRedText)),
+        child: Text(stringName, style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28, color: ColorRes.lightRedText)),
         onTap: () {
           type == 1 ? onTapPublic() : deleteBusinessAlert();
         },

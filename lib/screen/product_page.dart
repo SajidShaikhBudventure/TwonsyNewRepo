@@ -111,10 +111,10 @@ class _ProductPageState extends State<ProductPage> {
               shrinkWrap: true,
               children: <Widget>[
                 firstAddCategory(),
-                Container(
+                /*Container(
                     height: 0.9,
                     width: double.infinity,
-                    color: ColorRes.lightGrey),
+                    color: ColorRes.lightGrey),*/
                 secondListData(),
                 indicatorShow(),
               ],
@@ -123,27 +123,28 @@ class _ProductPageState extends State<ProductPage> {
         ));
   }
 
+
   firstAddCategory() {
-    return InkResponse(
-      child: Container(
-        height: Utils.getDeviceHeight(context) / 14,
-        width: Utils.getDeviceWidth(context),
-        color: ColorRes.productBgGrey,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Text(
-                "+ ADD PRODUCT CATEGORY",
-                style: TextStyle(
-                    color: ColorRes.lightBlueText,
-                    fontSize: Utils.getDeviceWidth(context) / 28,
-                    fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
-        ),
-      ),
+    return InkWell(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+            margin: EdgeInsets.only(top:Utils.getDeviceHeight(context) / 45, bottom: 0),
+            height: Utils.getDeviceHeight(context) / 17,
+            child: Card(
+                elevation: 4,
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  color: ColorRes.black,
+                  child: Text(
+                    "ADD NEW PRODUCT CATEGORY",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: ColorRes.white,
+                        fontSize: Utils.getDeviceWidth(context) / 28,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ))),),
       onTap: () {
         showDialog(
             context: context,

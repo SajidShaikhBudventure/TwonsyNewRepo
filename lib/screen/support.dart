@@ -48,7 +48,7 @@ class _SupportPageState extends State<SupportPage> {
       height: Utils.getDeviceHeight(context)/20,
       width:  Utils.getDeviceWidth(context),
       margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceHeight(context)/12),
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/20, right: Utils. getDeviceWidth(context)/20),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/22, right: Utils. getDeviceWidth(context)/22),
       alignment: Alignment(0,0),
       child: Text(StringRes.weAreHere, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/18), maxLines: 1, overflow: TextOverflow.ellipsis),
     );
@@ -144,7 +144,7 @@ class _SupportPageState extends State<SupportPage> {
               //color: ColorRes.black,
               width: Utils.getDeviceWidth(context)*3/8,
               alignment: Alignment(0,0),
-              padding: EdgeInsets.only(left: 8, right: 4),
+              padding: EdgeInsets.only(left: 8, right: 3),
               child: Center(
                 child: Text(
                   StringRes.emailAt,
@@ -164,7 +164,7 @@ class _SupportPageState extends State<SupportPage> {
                 child: InkWell(
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(1),
                       child: Text(
                         "SUPPORT@TOWNSY.IN",
                         style: TextStyle(
@@ -230,7 +230,7 @@ class _SupportPageState extends State<SupportPage> {
               child: Container(
                 //height: 40,
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                     color: ColorRes.white,
                     border: Border.all(color: ColorRes.black, width: 1)),
