@@ -97,7 +97,7 @@ class StringRes {
   static var resendOtp              =   "RESEND OTP";
   static var support                =   "Support";
   static var viewOnTownsy           =   "View Townsy Page";
-  static var sharePage              =   "Share Your Page";
+  static var sharePage              =   "Share your page";
   static var HowToUse               =   "How to use the app";
   static var about                  =   "About";
   static var logout                 =   "Log out";
