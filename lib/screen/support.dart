@@ -48,7 +48,7 @@ class _SupportPageState extends State<SupportPage> {
       height: Utils.getDeviceHeight(context)/20,
       width:  Utils.getDeviceWidth(context),
       margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceHeight(context)/12),
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/22, right: Utils. getDeviceWidth(context)/22),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
       alignment: Alignment(0,0),
       child: Text(StringRes.weAreHere, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/18), maxLines: 1, overflow: TextOverflow.ellipsis),
     );
@@ -230,7 +230,7 @@ class _SupportPageState extends State<SupportPage> {
               child: Container(
                 //height: 40,
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(horizontal: 3),
                 decoration: BoxDecoration(
                     color: ColorRes.white,
                     border: Border.all(color: ColorRes.black, width: 1)),
