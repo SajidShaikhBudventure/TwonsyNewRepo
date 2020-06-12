@@ -368,15 +368,15 @@ class _HomePageState extends State<HomePage>
                 SliverPersistentHeader(
                   delegate: _SliverAppBarDelegate(
                     TabBar(
-                      labelPadding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/26, vertical: 7),
+                      labelPadding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/26),
                       indicatorColor: ColorRes.white,
                       isScrollable: false,
                       controller: _tabController,
                       tabs: [
-                        Tab(child: tabBarText(StringRes.businessInfo, context, 1)),
-                        Tab(child: tabBarText(StringRes.products, context, 2)),
-                        Tab(child: tabBarText(StringRes.ratingsReviews, context, 3)),
-                        Tab(child: tabBarText(StringRes.analytics, context, 4)),
+                        Tab(child: tabBarText("ABOUT", context, 1)),
+                        Tab(child: tabBarText("PRODUCTS", context, 2)),
+                        Tab(child: tabBarText("REVIEWS", context, 3)),
+                        Tab(child: tabBarText("ANALYTICS", context, 4)),
                       ],
                     ),
                   ),
@@ -446,10 +446,10 @@ class _HomePageState extends State<HomePage>
             indicatorColor: ColorRes.white,
             isScrollable: false,
             tabs: <Tab>[
-              Tab(child: tabBarText(StringRes.businessInfo, context, 1)),
-              Tab(child: tabBarText(StringRes.products, context, 2)),
-              Tab(child: tabBarText(StringRes.ratingsReviews, context, 3)),
-              Tab(child: tabBarText(StringRes.analytics, context, 4)),
+              Tab(child: tabBarText("ABOUT", context, 1)),
+              Tab(child: tabBarText("PRODUCTS", context, 2)),
+              Tab(child: tabBarText("REVIEWS", context, 3)),
+              Tab(child: tabBarText("ANALYTICS", context, 4)),
             ],
             controller: _tabController,
           ),
@@ -1082,20 +1082,21 @@ class _HomePageState extends State<HomePage>
 //tabbar Text
 
 tabBarText(String tabName, BuildContext context, int index) {
-  /* return Container(
+  return Container(
     child: Text(
       tabName,
-      maxLines: 3,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
           fontFamily: "assets/fonts/Nunito-Regular",
-          fontSize: Utils.getDeviceWidth(context) / 42,
+          fontSize: Utils.getDeviceWidth(context) / 35,
           fontWeight: FontWeight.w500,
           height: 1.2),
       textAlign: TextAlign.center,
     ),
-  );*/
+  );
 
-  return AutoSizeText(
+  /*return AutoSizeText(
     tabName,
     style: TextStyle(
         fontSize: Utils.getDeviceWidth(context) / 20,
@@ -1105,7 +1106,7 @@ tabBarText(String tabName, BuildContext context, int index) {
     minFontSize: 5,
     maxLines: index == 1 || index == 3 ? 2 : 1,
     overflow: TextOverflow.ellipsis,
-  );
+  );*/
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
