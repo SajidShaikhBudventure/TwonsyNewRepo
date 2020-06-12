@@ -130,7 +130,7 @@ class _ProductPageState extends State<ProductPage> {
         alignment: Alignment.center,
         child: Container(
             margin: EdgeInsets.only(top:Utils.getDeviceHeight(context) / 45, bottom: 0),
-            height: Utils.getDeviceHeight(context) / 17,
+            //height: Utils.getDeviceHeight(context) / 17,
             child: Card(
                 elevation: 4,
                 child: Container(
