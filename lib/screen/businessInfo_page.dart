@@ -278,7 +278,7 @@ class _BusinessPageState extends State<BusinessPage> {
           top: Utils.getDeviceHeight(context) / 50,
           bottom: Utils.getDeviceHeight(context) / 120),
       child: editBusinessInfo
-          ?Text(
+      ?Text(
         title,
         style: TextStyle(
             fontSize: Utils.getDeviceWidth(context) / 32,

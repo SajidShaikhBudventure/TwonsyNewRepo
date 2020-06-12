@@ -368,17 +368,14 @@ class _HomePageState extends State<HomePage>
                 SliverPersistentHeader(
                   delegate: _SliverAppBarDelegate(
                     TabBar(
+                      labelPadding: EdgeInsets.symmetric(horizontal: Utils.getDeviceWidth(context)/26, vertical: 7),
                       indicatorColor: ColorRes.white,
                       isScrollable: false,
                       controller: _tabController,
                       tabs: [
-                        Tab(
-                            child:
-                                tabBarText(StringRes.businessInfo, context, 1)),
+                        Tab(child: tabBarText(StringRes.businessInfo, context, 1)),
                         Tab(child: tabBarText(StringRes.products, context, 2)),
-                        Tab(
-                            child: tabBarText(
-                                StringRes.ratingsReviews, context, 3)),
+                        Tab(child: tabBarText(StringRes.ratingsReviews, context, 3)),
                         Tab(child: tabBarText(StringRes.analytics, context, 4)),
                       ],
                     ),
@@ -558,16 +555,15 @@ class _HomePageState extends State<HomePage>
                         overflow: TextOverflow.ellipsis),
                   ),
                   Container(
-                    alignment: Alignment.centerLeft,
                     height: Utils.getDeviceHeight(context) / 29,
                     width: Utils.getDeviceWidth(context),
+                    alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(
                         right: Utils.getDeviceHeight(context) / 100,
                         left: Utils.getDeviceHeight(context) / 110,
                         bottom: Utils.getDeviceHeight(context) / 90,
                         top: Utils.getDeviceHeight(context) / 150),
-                    //padding: EdgeInsets.only(top: 1),
-
+                    //padding: EdgeInsets.only(bottom: 5),
                     child: Text(businessAddress.toString(),
                         style: TextStyle(
                             color: ColorRes.white,

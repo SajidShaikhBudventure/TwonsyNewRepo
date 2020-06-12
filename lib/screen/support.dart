@@ -85,14 +85,11 @@ class _SupportPageState extends State<SupportPage> {
               //color: ColorRes.black,
               width: Utils.getDeviceWidth(context)*3/8,
               alignment: Alignment(0,0),
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.only(left: 8, right: 4),
               child: Center(
                 child: Text(
                 "CALL US ON:",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle
-                      .copyWith(color: ColorRes.white),
+                  style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -147,14 +144,11 @@ class _SupportPageState extends State<SupportPage> {
               //color: ColorRes.black,
               width: Utils.getDeviceWidth(context)*3/8,
               alignment: Alignment(0,0),
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: EdgeInsets.only(left: 8, right: 4),
               child: Center(
                 child: Text(
                   StringRes.emailAt,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle
-                      .copyWith(color: ColorRes.white),
+                  style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -214,10 +208,7 @@ class _SupportPageState extends State<SupportPage> {
                 children: <Widget>[
                   Container(
                     child: Text("REACH US ON ",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle
-                          .copyWith(color: ColorRes.white),
+                      style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,),
                   ),
@@ -230,7 +221,7 @@ class _SupportPageState extends State<SupportPage> {
                         image: AssetImage(Utils.getAssetsImg("facebook"))),
                   ),
                   Container(
-                    child: Text(" :", style: TextStyle(color: ColorRes.white)),
+                    child: Text(" :", style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white)),
                   )
                 ],
               ),
@@ -246,7 +237,7 @@ class _SupportPageState extends State<SupportPage> {
                 child: InkWell(
                   child: Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: Text(
                         "@TOWNSYINDIA",
                         style: TextStyle(
