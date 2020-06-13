@@ -134,7 +134,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
             arrImages.isNotEmpty
                 ? Container(
                     width: Utils.getDeviceWidth(context),
-                    color: ColorRes.sliderBg,
+                    color: ColorRes.black,
                     child: Swiper(
                       itemBuilder: (BuildContext context, int index) {
                         return arrImages[index].photo.contains("http")
@@ -503,7 +503,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 child: Text(
                   categoryName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/27, height: Platform.isAndroid?1.1:1.3),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/26, height: Platform.isAndroid?1.1:1.3),
                 ),
               ),
               Container(

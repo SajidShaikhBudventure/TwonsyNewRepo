@@ -1348,7 +1348,7 @@ class _BusinessPageState extends State<BusinessPage> {
                           style: TextStyle(
                               height: 1.3,
                               fontWeight: FontWeight.w500,
-                              fontSize: Utils.getDeviceWidth(context) / 27),
+                              fontSize: Utils.getDeviceWidth(context) / 26),
                           textAlign: TextAlign.center,
                         ),
                       ),

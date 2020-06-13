@@ -170,7 +170,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   registerLabel() {
     return  Container(
-      margin: EdgeInsets.only(right: 0, left: 0, top: Utils.getDeviceHeight(context)/31),
+      margin: EdgeInsets.only(right: 5, left: 5, top: Utils.getDeviceHeight(context)/31),
       child: Text(
         "Create a new seller account",
         textAlign: TextAlign.center,

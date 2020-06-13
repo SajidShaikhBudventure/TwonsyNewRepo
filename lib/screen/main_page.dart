@@ -76,6 +76,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                   delegate: _SliverAppBarDelegate(
                     TabBar(
                       labelColor: ColorRes.white,
+                      labelStyle: TextStyle(fontSize: Utils.getDeviceWidth(context)/27, fontFamily: FontRes.nunito),
                       unselectedLabelColor: ColorRes.lightGrey,
                       indicatorColor: ColorRes.white,
                       tabs: [

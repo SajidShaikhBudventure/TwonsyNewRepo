@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage>
     _initPackageInfo();
     headerImage = Injector.userDataMain.profile;
     _tabController = new TabController(length: 4, vsync: this);
+    _tabController.animateTo(1);
 
     DateTime now = DateTime.now();
     String sessionStart = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
@@ -328,7 +329,7 @@ class _HomePageState extends State<HomePage>
                     children: <Widget>[
                       Container(
                           width: Utils.getDeviceWidth(context),
-                          color: ColorRes.sliderBg,
+                          color: ColorRes.black,
                           child: arrImages.isNotEmpty
                               ? Swiper(
                                   itemBuilder:
@@ -349,16 +350,15 @@ class _HomePageState extends State<HomePage>
                                   autoplay: false,
                                   itemCount: arrImages.length,
                                   pagination: new SwiperPagination(),
-                                  control: new SwiperControl(),
+                                  control: new SwiperControl(color: ColorRes.black),
                                   loop: false,
                                 )
                               : Center(
                             child:  Image(
-                                height:
-                                Utils.getDeviceHeight(context) / 8,
-                                width: Utils.getDeviceHeight(context) / 8,
+                                //height:Utils.getDeviceHeight(context) / 8,
+                                //width: Utils.getDeviceHeight(context) / 8,
                                 image: AssetImage(
-                                    Utils.getAssetsImg("shop")),
+                                    Utils.getAssetsImg("shop1")),
                                 fit: BoxFit.fitHeight),
                           ),),
                       rightSideIcon(2),
@@ -371,6 +371,7 @@ class _HomePageState extends State<HomePage>
                       labelPadding: EdgeInsets.symmetric(horizontal: 3),
                       indicatorColor: ColorRes.white,
                       isScrollable: false,
+
                       controller: _tabController,
                       tabs: [
                         Tab(child: tabBarText("ABOUT", context, 1)),

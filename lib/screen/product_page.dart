@@ -520,7 +520,7 @@ class _ProductPageState extends State<ProductPage> {
                 child: Text(
                   hintText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(height: 1.05, fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/27),
+                  style: TextStyle(height: 1.05, fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/26),
                 ),
               ),
               i == 3
