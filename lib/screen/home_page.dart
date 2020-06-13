@@ -353,14 +353,14 @@ class _HomePageState extends State<HomePage>
                                   loop: false,
                                 )
                               : Center(
-                            child: Image(
+                            child:  Image(
                                 height:
                                 Utils.getDeviceHeight(context) / 8,
                                 width: Utils.getDeviceHeight(context) / 8,
                                 image: AssetImage(
-                                    Utils.getAssetsImg("shop")),
+                                    Utils.getAssetsImg("product_default_1")),
                                 fit: BoxFit.fitHeight),
-                          )),
+                          ),),
                       rightSideIcon(2),
                     ],
                   )),
@@ -368,7 +368,7 @@ class _HomePageState extends State<HomePage>
                 SliverPersistentHeader(
                   delegate: _SliverAppBarDelegate(
                     TabBar(
-                      labelPadding: EdgeInsets.symmetric(horizontal: 5),
+                      labelPadding: EdgeInsets.symmetric(horizontal: 3),
                       indicatorColor: ColorRes.white,
                       isScrollable: false,
                       controller: _tabController,

@@ -157,7 +157,7 @@ class _SupportPageState extends State<SupportPage> {
             Expanded(
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: 4),
+                padding: EdgeInsets.symmetric(horizontal: 2),
                 decoration: BoxDecoration(
                     color: ColorRes.white,
                     border: Border.all(color: ColorRes.black, width: 1)),
@@ -168,7 +168,7 @@ class _SupportPageState extends State<SupportPage> {
                       child: Text(
                         "SUPPORT@TOWNSY.IN",
                         style: TextStyle(
-                            fontSize: Utils.getDeviceWidth(context) / 30),
+                            fontSize: Utils.getDeviceWidth(context) / 31),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
