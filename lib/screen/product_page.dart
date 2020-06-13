@@ -520,7 +520,7 @@ class _ProductPageState extends State<ProductPage> {
                 child: Text(
                   hintText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(height: 1.05, fontWeight: FontWeight.w500),
+                  style: TextStyle(height: 1.05, fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/27),
                 ),
               ),
               i == 3
@@ -531,12 +531,15 @@ class _ProductPageState extends State<ProductPage> {
                 child: Theme(
                   data: ThemeData(primaryColor: ColorRes.black),
                   child: TextFormField(
+                    style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
                     cursorColor: ColorRes.black,
                     controller: i == 1
                         ? addCategoryController
                         : editCategoryController,
                     textCapitalization: TextCapitalization.characters,
+
                     decoration: InputDecoration(
+
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.all(10),
                         hintText: ""),

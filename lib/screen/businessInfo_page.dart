@@ -687,7 +687,8 @@ class _BusinessPageState extends State<BusinessPage> {
                       child: Icon(Icons.delete_outline),
                       onTap: () {
                         if (editBusinessInfo) {
-                          confirmationDialog(index);
+                          categoryList.removeAt(index);
+                          setState(() {});
                         }
                       },
                     )
@@ -1333,7 +1334,7 @@ class _BusinessPageState extends State<BusinessPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)), //this right here
             child: Container(
-              height: Utils.getDeviceHeight(context) / 3.7,
+              height: 180,
               child: Container(
                 padding: const EdgeInsets.only(
                     top: 20, left: 12, right: 12, bottom: 20),
@@ -1345,9 +1346,9 @@ class _BusinessPageState extends State<BusinessPage> {
                         child: Text(
                           StringRes.deleteBusinessMsg,
                           style: TextStyle(
-                              height: 1.2,
+                              height: 1.3,
                               fontWeight: FontWeight.w500,
-                              fontSize: Utils.getDeviceHeight(context) / 45),
+                              fontSize: Utils.getDeviceWidth(context) / 27),
                           textAlign: TextAlign.center,
                         ),
                       ),

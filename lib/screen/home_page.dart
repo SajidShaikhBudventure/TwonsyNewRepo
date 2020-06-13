@@ -358,7 +358,7 @@ class _HomePageState extends State<HomePage>
                                 Utils.getDeviceHeight(context) / 8,
                                 width: Utils.getDeviceHeight(context) / 8,
                                 image: AssetImage(
-                                    Utils.getAssetsImg("product_default_1")),
+                                    Utils.getAssetsImg("shop")),
                                 fit: BoxFit.fitHeight),
                           ),),
                       rightSideIcon(2),
@@ -775,7 +775,19 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                     )
-                  : Container()
+                  : Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: InkResponse(
+                  onTap: () {
+                    deleteImgApi(arrImages[selectImageIndex].id);
+                  },
+                  child: Icon(
+                    Icons.close,
+                    color: ColorRes.white,
+                    size: Utils.getDeviceWidth(context) / 15,
+                  ),
+                ),
+              )
             ],
           ),
         ));

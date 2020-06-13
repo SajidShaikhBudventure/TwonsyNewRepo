@@ -492,17 +492,18 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0)), //this right here
       child: Container(
-        height: i == 2 ? 130 : 145,
+        height: i == 2 ? 150 : 145,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 12, right: 12),
+          padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 40,
+                height: 65,
                 child: Text(
                   categoryName,
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/27, height: Platform.isAndroid?1.1:1.3),
                 ),
               ),
               Container(

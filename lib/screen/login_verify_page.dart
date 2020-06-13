@@ -10,6 +10,7 @@ import 'package:marketplace/model/business_user.dart';
 import 'package:marketplace/model/create_profile.dart';
 import 'package:marketplace/model/send_otp.dart';
 import 'package:marketplace/screen/home_page.dart';
+import 'dart:io' show Platform;
 
 class LoginVerifyPage extends StatefulWidget {
   final BusinessCreateRequest businessCreateRequest;
@@ -109,7 +110,7 @@ class _LoginVerifyPageState extends State<LoginVerifyPage> {
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: ColorRes.black,
-                fontSize: Utils.getDeviceWidth(context) / 27, height: 1.2),
+                fontSize: Utils.getDeviceWidth(context) / 27, height: Platform.isAndroid? 1.2 : 1.3),
           ),
         ),
         Container(

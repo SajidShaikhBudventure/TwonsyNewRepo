@@ -52,7 +52,7 @@ class StringRes {
   static var next                   =   "NEXT";
   static var forgotPassword         =   "Forgot password?";
   static var marketplace            =   "marketplace";
-  static var verifyMobile           =   "Verify number";
+  static var verifyMobile           =   "Verify your mobile number";
   static var enterTenDigit          =   "Mobile number must be 10 digits";
   static var enterEmail             =   "Please enter your email ID";
   static var successFullySend       =   "Reset Password Link Sent";

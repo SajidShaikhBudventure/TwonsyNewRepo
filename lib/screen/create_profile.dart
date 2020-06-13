@@ -622,7 +622,7 @@ class _BusinessPageState extends State<CreateProfile> {
                     top: 5.0, left: 12.0, bottom: 10.0, right: 8.0),
                 child: Row(
                   children: <Widget>[
-                    Expanded(child: Text(categoryList[index])),
+                    Expanded(child: Text(categoryList[index], style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),)),
                     InkResponse(
                       child: Icon(Icons.delete_outline),
                       onTap: () {
