@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
 
   SignInLabel() {
     return Container(
-      margin: EdgeInsets.only(right: 5, left: 5, top: Utils.getDeviceHeight(context)/31),
+      margin: EdgeInsets.only(right: 8, left: 8, top: Utils.getDeviceHeight(context)/31),
       child: Text(
         "Sign-in to your seller account",
         textAlign: TextAlign.center,

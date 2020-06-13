@@ -190,10 +190,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
       child: Text(
         titleText,
         textAlign: TextAlign.start,
-        style: Theme.of(context)
-            .textTheme
-            .subtitle
-            .copyWith(fontWeight: FontWeight.w700),
+        style: TextStyle(fontWeight: FontWeight.w700, fontSize: Utils.getDeviceWidth(context)/29),
       ),
     );
   }
@@ -212,8 +209,9 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
             data: ThemeData(primaryColor: ColorRes.black),
             child: Container(
               color: ColorRes.white,
-              height: 44,
+              //height: 44,
               child: TextFormField(
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context)/28),
                 maxLines: 1,
                 textAlign: TextAlign.left,
                 cursorColor: ColorRes.black,
@@ -271,6 +269,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
               color: ColorRes.white,
               child: TextFormField(
                 maxLines: 5,
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context)/28),
                 cursorColor: ColorRes.black,
                 controller: description,
                 decoration: InputDecoration(
@@ -310,9 +309,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 Theme(
                   data: ThemeData(primaryColor: ColorRes.black),
                   child: Container(
-                    height: 44,
+                    //height: 44,
                     color: ColorRes.white,
                     child: TextFormField(
+                      style: TextStyle(fontSize: Utils.getDeviceWidth(context)/28),
                       maxLines: 1,
                       cursorColor: ColorRes.black,
                       controller: price,
@@ -374,9 +374,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 Theme(
                   data: ThemeData(primaryColor: ColorRes.black),
                   child: Container(
-                    height: 44,
+                    //height: 44,
                     color: ColorRes.white,
                     child: TextFormField(
+                      style: TextStyle(fontSize: Utils.getDeviceWidth(context)/28),
                       maxLines: 1,
                       cursorColor: ColorRes.black,
                       controller: quantity,

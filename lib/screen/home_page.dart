@@ -94,7 +94,6 @@ class _HomePageState extends State<HomePage>
     _initPackageInfo();
     headerImage = Injector.userDataMain.profile;
     _tabController = new TabController(length: 4, vsync: this);
-    _tabController.animateTo(1);
 
     DateTime now = DateTime.now();
     String sessionStart = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
@@ -371,7 +370,6 @@ class _HomePageState extends State<HomePage>
                       labelPadding: EdgeInsets.symmetric(horizontal: 3),
                       indicatorColor: ColorRes.white,
                       isScrollable: false,
-
                       controller: _tabController,
                       tabs: [
                         Tab(child: tabBarText("ABOUT", context, 1)),
