@@ -54,7 +54,7 @@ class _LoginVerifyPageState extends State<LoginVerifyPage> {
       appBar: AppBar(
         title: Text(
           StringRes.verifyMobile,
-          style: TextStyle(fontSize: Utils.getDeviceWidth(context)/22),
+          style: TextStyle(fontSize: Utils.getDeviceWidth(context)/21),
         ),
       ),
       body: Container(

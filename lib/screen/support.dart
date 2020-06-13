@@ -16,7 +16,7 @@ class _SupportPageState extends State<SupportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SUPPORT"),
+        title: Text("SUPPORT", style: TextStyle(fontSize: Utils.getDeviceWidth(context)/21)),
       ),
       body: fullView(),
       bottomNavigationBar: bottomView(),
@@ -89,7 +89,7 @@ class _SupportPageState extends State<SupportPage> {
               child: Center(
                 child: Text(
                 "CALL US ON:",
-                  style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white),
+                  style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28, color: ColorRes.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -148,7 +148,7 @@ class _SupportPageState extends State<SupportPage> {
               child: Center(
                 child: Text(
                   StringRes.emailAt,
-                  style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white),
+                  style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28, color: ColorRes.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -208,7 +208,7 @@ class _SupportPageState extends State<SupportPage> {
                 children: <Widget>[
                   Container(
                     child: Text("REACH US ON ",
-                      style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white),
+                      style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28, color: ColorRes.white),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,),
                   ),
@@ -221,7 +221,7 @@ class _SupportPageState extends State<SupportPage> {
                         image: AssetImage(Utils.getAssetsImg("facebook"))),
                   ),
                   Container(
-                    child: Text(" :", style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26, color: ColorRes.white)),
+                    child: Text(" :", style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28, color: ColorRes.white)),
                   )
                 ],
               ),

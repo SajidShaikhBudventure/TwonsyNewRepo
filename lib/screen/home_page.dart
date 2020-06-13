@@ -353,14 +353,14 @@ class _HomePageState extends State<HomePage>
                                   loop: false,
                                 )
                               : Center(
-                                  child: Image(
-                                      height:
-                                          Utils.getDeviceHeight(context) / 8,
-                                      width: Utils.getDeviceHeight(context) / 8,
-                                      image: AssetImage(
-                                          Utils.getAssetsImg("shop")),
-                                      fit: BoxFit.fitHeight),
-                                )),
+                            child: Image(
+                                height:
+                                Utils.getDeviceHeight(context) / 8,
+                                width: Utils.getDeviceHeight(context) / 8,
+                                image: AssetImage(
+                                    Utils.getAssetsImg("shop")),
+                                fit: BoxFit.fitHeight),
+                          )),
                       rightSideIcon(2),
                     ],
                   )),
@@ -1089,7 +1089,7 @@ tabBarText(String tabName, BuildContext context, int index) {
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
           fontFamily: "assets/fonts/Nunito-Regular",
-          fontSize: Utils.getDeviceWidth(context) / 35,
+          fontSize: Utils.getDeviceWidth(context) / 36.5,
           fontWeight: FontWeight.w500,
           height: 1.2),
       textAlign: TextAlign.center,

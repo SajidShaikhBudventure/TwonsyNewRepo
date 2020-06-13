@@ -52,7 +52,7 @@ class StringRes {
   static var next                   =   "NEXT";
   static var forgotPassword         =   "Forgot password?";
   static var marketplace            =   "marketplace";
-  static var verifyMobile           =   "Verify your mobile number";
+  static var verifyMobile           =   "Verify number";
   static var enterTenDigit          =   "Mobile number must be 10 digits";
   static var enterEmail             =   "Please enter your email ID";
   static var successFullySend       =   "Reset Password Link Sent";
@@ -96,7 +96,7 @@ class StringRes {
   static var invalidOtp             =   "INVALID OTP";
   static var resendOtp              =   "RESEND OTP";
   static var support                =   "Support";
-  static var viewOnTownsy           =   "View Townsy Page";
+  static var viewOnTownsy           =   "View your page";
   static var sharePage              =   "Share your page";
   static var HowToUse               =   "How to use the app";
   static var about                  =   "About";

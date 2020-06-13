@@ -321,7 +321,7 @@ class _BusinessPageState extends State<BusinessPage> {
                               ? ""
                               : businessAddressTF.text,
                           style:
-                              TextStyle(color: ColorRes.black, fontSize: 13)),
+                              TextStyle(color: ColorRes.black, fontSize: Utils.getDeviceWidth(context)/26)),
                     ),
                     onTap: () async {
                       p = await PlacesAutocomplete.show(
@@ -468,7 +468,7 @@ class _BusinessPageState extends State<BusinessPage> {
           shrinkWrap: true,
           primary: false,
           padding: EdgeInsets.fromLTRB(
-              Utils.getDeviceWidth(context) / 30, 10, 8, 10),
+              Utils.getDeviceWidth(context) / 25, 10, 8, 10),
           children: List.generate(dayList.length, (index) {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -489,9 +489,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         ),
                       )
                     : Container(),
-                SizedBox(
-                  width: 10,
-                ),
+                SizedBox(width: 0),
                 Expanded(
                   child: Text(
                     dayList[index].name,
@@ -577,7 +575,7 @@ class _BusinessPageState extends State<BusinessPage> {
       child: Text(
         title,
         style: TextStyle(
-            height: Platform.isAndroid?1.1:1.25,
+            height: Platform.isAndroid?1.1:1.3,
             color: ColorRes.lightGrey,
             fontSize: Utils.getDeviceHeight(context) / 60),
         textAlign: TextAlign.justify,
@@ -621,6 +619,8 @@ class _BusinessPageState extends State<BusinessPage> {
                         borderSide: const BorderSide(color: Colors.black, width: 1.0),
                       ),
                       hintText: StringRes.hintOfBusinessCategory,
+                      hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28),
+
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -799,7 +799,7 @@ class _BusinessPageState extends State<BusinessPage> {
             : ListView(
                 shrinkWrap: true,
                 primary: false,
-                padding: EdgeInsets.fromLTRB(25, 0, 10, 10),
+                padding: EdgeInsets.fromLTRB(Utils.getDeviceWidth(context) / 25, 0, 10, 10),
                 children:
                     List.generate(businessTypeDisplayList.length, (index) {
                   String businessType;

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:marketplace/helper/web_api.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addproduct.dart';
 import 'package:marketplace/model/getProductData.dart';
+
 class ProductInfoPage extends StatefulWidget {
   final int isAddProduct;
   final int categoryId;
@@ -168,9 +168,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 : Container(
                     width: Utils.getDeviceWidth(context),
                     height: Utils.getDeviceHeight(context) / 3.5,
-                    child: Image(
-                        image: AssetImage(Utils.getAssetsImg("add_product")),
+                    child: InkWell( child: Image(
+                        image: AssetImage(Utils.getAssetsImg("add_product_1")),
                         fit: BoxFit.fill),
+                    onTap: showImageDialog,),
                   ),
 
             rightSideIcon(2)

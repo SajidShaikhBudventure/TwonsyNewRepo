@@ -256,11 +256,11 @@ class _BusinessPageState extends State<CreateProfile> {
             data: ThemeData(primaryColor: ColorRes.black),
             child: Container(
               color: ColorRes.white,
-              height: Utils.getDeviceHeight(context) / 15,
+              height: Utils.getDeviceHeight(context) / 16,
               child: TextFormField(
                 maxLines: 1,
 //                textInputAction: TextInputAction.next,
-                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
                 cursorColor: ColorRes.black,
                 controller: businessNameTF,
                 enabled: editBusinessInfo,
@@ -414,19 +414,19 @@ class _BusinessPageState extends State<CreateProfile> {
               width: Utils.getDeviceHeight(context) / 25,
             ),
           ),
-          Container(
+          /*Container(
             margin: const EdgeInsets.only(right: 0, left: 0, bottom: 5),
             child: Text(
               StringRes.nineOne,
               style: TextStyle(fontSize: Utils.getDeviceHeight(context) / 50),
             ),
-          ),
+          ),*/
           Container(
             child: phoneNumberAddText(),
             width: Utils.getDeviceWidth(context) * 2 / 5,
             margin: EdgeInsets.only(
                 top: Utils.getDeviceHeight(context) / 150,
-                left: Utils.getDeviceWidth(context) / 100),
+                left: 5),
           ),
         ],
       ),
@@ -556,6 +556,8 @@ class _BusinessPageState extends State<CreateProfile> {
                     cursorColor: ColorRes.black,
                     enabled: editBusinessInfo,
                     controller: categoryTF,
+                    style:
+                    TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.only(top: 0.0, right: 10, left: 10),
@@ -565,7 +567,7 @@ class _BusinessPageState extends State<CreateProfile> {
                         borderSide: const BorderSide(color: Colors.black, width: 1.0),
                       ),
                       hintText: StringRes.hintOfBusinessCategory,
-                      hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/26),
+                      hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28),
                     ),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -761,7 +763,7 @@ class _BusinessPageState extends State<CreateProfile> {
                 enabled: editBusinessInfo,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
 //                  textInputAction: TextInputAction.go,
 
                 decoration: InputDecoration(
@@ -994,7 +996,7 @@ class _BusinessPageState extends State<CreateProfile> {
       child: Text(
         title,
         style: TextStyle(
-            height: Platform.isAndroid? 1.1 : 1.25,
+            height: Platform.isAndroid? 1.1 : 1.3,
             color: ColorRes.lightGrey,
             fontSize: Utils.getDeviceHeight(context) / 60),
         textAlign: TextAlign.justify,
@@ -1066,7 +1068,7 @@ class _BusinessPageState extends State<CreateProfile> {
               textAlign: TextAlign.left,
               maxLines: 1,
               enabled: editBusinessInfo,
-              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
+              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
               inputFormatters: [LengthLimitingTextInputFormatter(10)],
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
@@ -1132,7 +1134,7 @@ class _BusinessPageState extends State<CreateProfile> {
               textAlign: TextAlign.left,
               maxLines: 1,
               enabled: editBusinessInfo,
-              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 26),
+              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
               inputFormatters: [LengthLimitingTextInputFormatter(100)],
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),

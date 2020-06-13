@@ -18,7 +18,7 @@ class _HowToPageState extends State<HowToPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("HOW TO USE"),
+        title: Text("HOW TO USE", style: TextStyle(fontSize: Utils.getDeviceWidth(context)/21)),
       ),
       body: body(),
     );
