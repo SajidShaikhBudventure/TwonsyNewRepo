@@ -350,7 +350,7 @@ class _LoginPageState extends State<LoginPage> {
                 margin: EdgeInsets.only(top:Utils.getDeviceHeight(context)/140, left:0, right:0, bottom: Utils.getDeviceHeight(context)/60),
                 child: Text(
                   categoryName,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: Utils.getDeviceHeight(context)/45),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: Utils.getDeviceWidth(context)/27),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -362,6 +362,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Theme(
                   data: ThemeData(primaryColor: ColorRes.black),
                   child: TextFormField(
+                    style: TextStyle(fontSize: Utils.getDeviceWidth(context)/27),
                     cursorColor: ColorRes.black,
                     controller: forgotEmail,
                     keyboardType: TextInputType.emailAddress,

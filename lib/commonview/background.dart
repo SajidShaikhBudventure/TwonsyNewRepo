@@ -47,10 +47,11 @@ class CommonView {
                   height: StringRes.successFullySend == message ? 30 : 80,
                   alignment: Alignment.center,
                   child: Text(
+
                     message,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/27),
                     textAlign: TextAlign.center,
                   ),
                 ),
