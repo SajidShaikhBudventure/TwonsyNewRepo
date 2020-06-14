@@ -71,6 +71,7 @@ class _RatingPageState extends State<RatingPage> {
           ratingShowFirst(),
           ratingShowAllLine(),
           ratingCount(),
+          noRatings(),
           rateUserDescription(),
         ],
       ),
@@ -245,6 +246,19 @@ class _RatingPageState extends State<RatingPage> {
           )
         ],
       ),
+    );
+  }
+
+  noRatings(){
+    return reviewList.length>0
+        ?Container()
+        :Container(
+      //height: Utils.getDeviceHeight(context)/20,
+      //width:  Utils.getDeviceWidth(context),
+      margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceWidth(context)/20),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
+      alignment: Alignment(0,0),
+      child: Text("No reviews yet", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/20, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 

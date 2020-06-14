@@ -162,7 +162,7 @@ class StringRes {
 
   //Product screen
   static var addCategory            =  " + ADD CATEGORY";
-  static var categoryName           =  "CATEGORY NAME:";
+  static var categoryName           =  "CATEGORY:";
   static var addCategoryName        =  "Add category name";
   static var editCategoryName       =  "Edit category name";
   static var cancel                 =  "Cancel";

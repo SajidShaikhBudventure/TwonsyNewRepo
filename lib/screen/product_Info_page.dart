@@ -504,7 +504,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 child: Text(
                   categoryName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/26, height: Platform.isAndroid?1.1:1.3),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/25, height: Platform.isAndroid?1.1:1.4),
                 ),
               ),
               Container(

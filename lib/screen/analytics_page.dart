@@ -108,6 +108,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             titleTextShow("Your Business", 1),
             threePeopleView(),
             titleTextShow("Your Products", 2),
+            noProducts(),
             fourMainListView(),
             SizedBox(
               height: 10,
@@ -249,6 +250,19 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     );
   }
 
+  noProducts(){
+    return categories.length>0
+        ?Container()
+        :Container(
+      //height: Utils.getDeviceHeight(context)/20,
+      //width:  Utils.getDeviceWidth(context),
+      margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceWidth(context)/20),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
+      alignment: Alignment(0,0),
+      child: Text("No products yet", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/20, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
+    );
+  }
+
   fourMainListView() {
     return ListView.builder(
       itemCount: categories.length,
@@ -311,7 +325,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   listOfSubItem(Product product, int categoryIndex) {
     return InkResponse(
       child: Container(
-        width: Utils.getDeviceWidth(context) / 2.4,
+        width: Utils.getDeviceWidth(context) / 2.3,
         padding: EdgeInsets.all(4.0),
         child: Card(
             color: ColorRes.white,
@@ -350,11 +364,11 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                  padding: EdgeInsets.only(left: 5, right: 3, top: 5),
                   child: Text(
                     product.productName.toUpperCase(),
                     style:
-                        TextStyle(fontSize: Utils.getDeviceWidth(context) / 32),
+                        TextStyle(fontSize: Utils.getDeviceWidth(context) / 34),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -364,7 +378,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                   child: Text(
                     "${product.views} ${StringRes.views}",
                     style:
-                        TextStyle(fontSize: Utils.getDeviceWidth(context) / 32),
+                        TextStyle(fontSize: Utils.getDeviceWidth(context) / 34),
                   ),
                 ),
               ],

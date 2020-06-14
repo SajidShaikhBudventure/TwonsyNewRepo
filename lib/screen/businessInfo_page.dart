@@ -866,7 +866,7 @@ class _BusinessPageState extends State<BusinessPage> {
                 enabled: editBusinessInfo,
                 keyboardType: TextInputType.multiline,
                 style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
-                maxLines: null,
+                maxLines: 1,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
@@ -1334,7 +1334,7 @@ class _BusinessPageState extends State<BusinessPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)), //this right here
             child: Container(
-              height: 180,
+              height: 170,
               child: Container(
                 padding: const EdgeInsets.only(
                     top: 20, left: 12, right: 12, bottom: 20),
@@ -1346,7 +1346,7 @@ class _BusinessPageState extends State<BusinessPage> {
                         child: Text(
                           StringRes.deleteBusinessMsg,
                           style: TextStyle(
-                              height: 1.3,
+                              height: Platform.isAndroid?1.1:1.4,
                               fontWeight: FontWeight.w500,
                               fontSize: Utils.getDeviceWidth(context) / 26),
                           textAlign: TextAlign.center,

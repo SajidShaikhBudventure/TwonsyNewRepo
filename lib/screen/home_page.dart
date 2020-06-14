@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage>
     _initPackageInfo();
     headerImage = Injector.userDataMain.profile;
     _tabController = new TabController(length: 4, vsync: this);
+    _tabController.animateTo(0);
 
     DateTime now = DateTime.now();
     String sessionStart = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
@@ -760,7 +761,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
               ),
-              arrImages.isNotEmpty && arrImages.length > 1
+              arrImages.isNotEmpty && arrImages.length > 0
                   ? Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: InkResponse(
@@ -774,19 +775,7 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                     )
-                  : Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: InkResponse(
-                  onTap: () {
-                    deleteImgApi(arrImages[selectImageIndex].id);
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: ColorRes.white,
-                    size: Utils.getDeviceWidth(context) / 15,
-                  ),
-                ),
-              )
+                  : Container(),
             ],
           ),
         ));

@@ -113,10 +113,9 @@ class _ProductPageState extends State<ProductPage> {
               shrinkWrap: true,
               children: <Widget>[
                 firstAddCategory(),
-                /*Container(
-                    height: 0.9,
-                    width: double.infinity,
-                    color: ColorRes.lightGrey),*/
+                addProductIcon(),
+                noProducts(),
+                addProductsHere(),
                 secondListData(),
                 indicatorShow(),
               ],
@@ -153,6 +152,49 @@ class _ProductPageState extends State<ProductPage> {
               return customDialog(StringRes.addCategoryName, 1, -1);
             });
       },
+    );
+  }
+
+  addProductIcon(){
+    return arrCategoryAndProduct.length>0
+      ?Container()
+    :Container(
+      height: Utils.getDeviceWidth(context)/5,
+      //width:  Utils.getDeviceWidth(context)/6,
+      margin: EdgeInsets.only(right: 0, left: 0, top: Utils. getDeviceHeight(context)/11),
+      alignment: Alignment(0,0),
+      child: Image.asset(
+        Utils.getAssetsImg("sale"),
+        height: Utils.getDeviceHeight(context)/2,
+        width: Utils.getDeviceWidth(context)/2,
+      ),
+    );
+
+  }
+
+  noProducts(){
+    return arrCategoryAndProduct.length>0
+      ?Container()
+      :Container(
+      //height: Utils.getDeviceHeight(context)/20,
+      //width:  Utils.getDeviceWidth(context),
+      margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceWidth(context)/60),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
+      alignment: Alignment(0,0),
+      child: Text("You don't have any products yet.", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/20, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
+    );
+  }
+
+  addProductsHere(){
+    return arrCategoryAndProduct.length>0
+    ?Container()
+    :Container(
+      //height: Utils.getDeviceHeight(context)/20,
+      //width:  Utils.getDeviceWidth(context),
+      margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceHeight(context)/60),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
+      alignment: Alignment(0,0),
+      child: Text("Upload your products here", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/20, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 
@@ -274,7 +316,7 @@ class _ProductPageState extends State<ProductPage> {
 
     return InkResponse(
       child: Container(
-        width: Utils.getDeviceWidth(context) / 2.4,
+        width: Utils.getDeviceWidth(context) / 2.3,
         padding: EdgeInsets.all(4.0),
         child: Card(
             color: ColorRes.white,
@@ -318,17 +360,17 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                  padding: EdgeInsets.only(left: 5, right: 3, top: 5),
                   child: Text(
                     product.productName.toUpperCase(),
                     style:
-                    TextStyle(fontSize: Utils.getDeviceWidth(context) / 32),
+                    TextStyle(fontSize: Utils.getDeviceWidth(context) / 34),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 5, right: 5, top: 5),
+                  padding: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -344,19 +386,19 @@ class _ProductPageState extends State<ProductPage> {
                         child: Text(
                           "${product.price}",
                           style: TextStyle(
-                              fontSize: Utils.getDeviceWidth(context) / 32),
+                              fontSize: Utils.getDeviceWidth(context) / 34),
                         ),
                       )
                     ],
                   ),
                 ),
-                Padding(
+                /*Padding(
                   padding:
                   EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 5),
                   child: Text("${product.perQuantity}".toUpperCase(),
                       style: TextStyle(
-                          fontSize: Utils.getDeviceWidth(context) / 32)),
-                ),
+                          fontSize: Utils.getDeviceWidth(context) / 34)),
+                ),*/
               ],
             )),
       ),
@@ -522,7 +564,7 @@ class _ProductPageState extends State<ProductPage> {
                 child: Text(
                   hintText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(height: 1.05, fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/26),
+                  style: TextStyle(height: Platform.isAndroid?1.1:1.4, fontWeight: FontWeight.w500, fontSize: Utils.getDeviceWidth(context)/25),
                 ),
               ),
               i == 3
