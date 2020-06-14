@@ -181,7 +181,7 @@ class _ProductPageState extends State<ProductPage> {
       margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceWidth(context)/60),
       padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
       alignment: Alignment(0,0),
-      child: Text("You don't have any products yet.", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/20, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
+      child: Text("You don't have any products yet.", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/22, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 
@@ -192,7 +192,7 @@ class _ProductPageState extends State<ProductPage> {
       //height: Utils.getDeviceHeight(context)/20,
       //width:  Utils.getDeviceWidth(context),
       margin: EdgeInsets.only(right: 0, left:0, top: Utils. getDeviceHeight(context)/60),
-      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/24, right: Utils. getDeviceWidth(context)/24),
+      padding: EdgeInsets.only(left: Utils.getDeviceWidth(context)/22, right: Utils. getDeviceWidth(context)/24),
       alignment: Alignment(0,0),
       child: Text("Upload your products here", style: TextStyle(color: ColorRes.cancelGreyText, fontSize: Utils.getDeviceWidth(context)/20, fontFamily: FontRes.nunito), maxLines: 1, overflow: TextOverflow.ellipsis),
     );
