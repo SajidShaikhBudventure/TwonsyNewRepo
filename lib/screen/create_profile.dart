@@ -38,16 +38,22 @@ class _BusinessPageState extends State<CreateProfile> {
   bool retailer = false;
 
   bool isLoading = false;
+  String dropdownValue = 'One';
 
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
   List<BusinessTypeModel> businessTypeList = new List<BusinessTypeModel>();
   bool isForBusiness = false;
+  bool isForFullAddress=false;
   bool isForBusinessAddress = false;
   bool isForMobileNumber = false;
   bool isForMobileNumber10Limit = false;
   bool isForTelephoneNumber = false;
   bool isForOtherInfo = false;
   bool isCategoryEmpty = false;
+  bool isForBusinessNearBy = false;
+  bool other_address=false;
+  String selected_category="Select Business Category";
+  bool other_category=false;
 
   final _formKey = GlobalKey<FormState>();
   final _formKeyForCategory = GlobalKey<FormState>();
@@ -67,9 +73,12 @@ class _BusinessPageState extends State<CreateProfile> {
   FocusNode otherInfoTFNode = new FocusNode();
 
   TextEditingController businessNameTF = TextEditingController();
+  TextEditingController fullAddressNameTF = TextEditingController();
   TextEditingController businessAddressTF = TextEditingController();
+  TextEditingController nearByAddressTF = TextEditingController();
   TextEditingController mobileTF = TextEditingController();
   TextEditingController telephoneTF = TextEditingController();
+  TextEditingController add_telephoneTF = TextEditingController();
   TextEditingController businessCatTF = TextEditingController();
   TextEditingController otherInfoTF = TextEditingController();
   TextEditingController categoryTF = TextEditingController();
@@ -175,18 +184,102 @@ class _BusinessPageState extends State<CreateProfile> {
                   children: <Widget>[
                     titleText(StringRes.businessName, 1),
                     nameTextFiled(),
-                    titleText(StringRes.businessAddress, 2),
+                    titleText("Full Address", 2),
+                    fullAddressTextFiled(),
+                    titleText("Nearby Landmark", 2),
+                    nearbyTextFiled(),
+                    titleText("Town/City", 2),
                     addressTextFiled(),
                     titleTextMobileNumber(),
                     mobileNumberView(),
-                    titleText(StringRes.telephoneNumber, 4),
+                    titleText("Additonal Phone Number", 4),
                     telephoneNumberView(),
+
+                    addAdditionNumber(),
+                    titleTextAdd(StringRes.addtelephoneNumber, 4),
+                    addtelephoneNumberView(),
                     titleText(StringRes.openingTime, 5),
                     dateTimeView(),
                     dateTimeValidation(),
                     invalidTime(),
                     titleText(StringRes.businessCategory, 6),
                     busDesTitleText(StringRes.businessDes),
+                 Container(width: Utils.getDeviceWidth(context)*.93,
+          height: 45.0,
+          padding: EdgeInsets.only(left: 8.0,right: 8.0),
+         
+          decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          
+          border: Border.all(color: Colors.black)),
+                         child: DropdownButton<String>(
+                          
+                         value: selected_category,
+                          isExpanded: true,
+
+                           
+                           style: TextStyle(color: Colors.black),
+                          underline: Container(
+        height: 0,
+       
+      ),
+                         items: <String>['Select Business Category',"Men's Fashion", 'Women Fashion', 'Mobile Phones', 'Laptop & Computers','Electronics & Appliances','Furniture','Home Decor','Auto Accessories','Gift Products','Kid Products','Other'].map((String value) {
+                            return new DropdownMenuItem<String>(
+                              value: value,
+                              child: new Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (String newValue) {
+                            if(newValue == "Other"){
+                              other_category=true;
+                            }else{
+                               other_category=false;
+                            }
+ if (newValue.isEmpty) {
+                        setState(() {
+                          isForCategory = true;
+                        });
+                      } else {
+                        setState(() {
+                          isForCategory = false;
+                        });
+                      }
+
+                             setState(() {
+          selected_category=newValue;
+        });
+         if (editBusinessInfo) {
+           if (selected_category.isNotEmpty &&
+              selected_category != null &&
+              selected_category != null &&
+              selected_category !="Select Business Category" &&
+              selected_category.isNotEmpty) {
+        if(selected_category =="Other"){
+
+          if (categoryTF.text.isNotEmpty &&
+              categoryTF.text.toString() != null &&
+              categoryTF.text.toString().trim() != null &&
+              categoryTF.text.toString().trim().isNotEmpty) {
+            categoryList.add(categoryTF.text.toString());
+            categoryTF.text = "";
+             selected_category="Select Business Category";
+                                          other_category=false;
+            setState(() {});
+          }
+        }else{
+ categoryList.add(selected_category);
+ selected_category="Select Business Category";
+   categoryTF.text = "";
+            setState(() {});
+
+
+        }
+        }
+        }
+                        
+                          }
+                      ),
+                      ),
                     categoryTextFiled(),
                     addCategory(),
                     selectedCategoryList(),
@@ -209,35 +302,89 @@ class _BusinessPageState extends State<CreateProfile> {
       ),
     );
   }
-
-  Widget addCategory() {
-    return InkResponse(
+ addCategory() {
+    return
+      editBusinessInfo
+      ?InkResponse(
+        child:Visibility(
+          visible: other_category,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
+          /*Container(
+            padding: EdgeInsets.only(right: 0, top: 3),
+            child: Image(
+                height: 40,
+                width: 40,
+                image: AssetImage(Utils.getAssetsImg("plus_blue"))),
+          ),*/
           Container(
-            padding: EdgeInsets.only(right: 10, top: 15),
+            color: ColorRes.black,
+            margin: const EdgeInsets.only(left: 0.0, right: 20.0,bottom:5),
+           
+            padding: EdgeInsets.only(right: 10,left: 10, top: 5, bottom: 5),
             child: Text(
-              StringRes.addCategory,
+              "DONE",
               style: TextStyle(
                   fontSize: Utils.getDeviceWidth(context) / 28,
-                  color: ColorRes.lightBlueText),
+                  color: ColorRes.white),
             ),
           )
         ],
       ),
+        ),
       onTap: () {
         if (editBusinessInfo) {
+          print('jj');
+          // if (_formKeyForCategory.currentState.validate()) {
+          //   _formKeyForCategory.currentState.save();
+            
+        if(selected_category =="Other"){
+
           if (categoryTF.text.isNotEmpty &&
               categoryTF.text.toString() != null &&
               categoryTF.text.toString().trim() != null &&
               categoryTF.text.toString().trim().isNotEmpty) {
             categoryList.add(categoryTF.text.toString());
             categoryTF.text = "";
+             selected_category="Select Business Category";
+                                          other_category=false;
             setState(() {});
           }
-        }
+      
+              }}
+        
+      },
+      
+    )
+      
+          :Container(margin: EdgeInsets.only(top: 7),);
+  }
+
+  Widget addAdditionNumber() {
+    return InkResponse(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 13, top: 10,bottom: 10),
+            child: Text(
+              "+ ADD PHONE NUMBERS",
+              style: TextStyle(
+                  fontSize: Utils.getDeviceWidth(context) / 26,
+                  color:  Color(0xff456FCB)),
+            ),
+          )
+        ],
+      ),
+      onTap: () {
+     other_address=true;
+     setState(() {
+       
+     });
+
       },
     );
   }
@@ -306,6 +453,70 @@ class _BusinessPageState extends State<CreateProfile> {
       ),
     );
   }
+fullAddressTextFiled() {
+    return Container(
+      margin: EdgeInsets.only(
+          top: Utils.getDeviceHeight(context) / 200,
+          right: Utils.getDeviceWidth(context) / 30,
+          left: Utils.getDeviceWidth(context) / 30),
+      //padding: EdgeInsets.only(right: 10, left: 10, top: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Theme(
+            data: ThemeData(primaryColor: ColorRes.black),
+            child: Container(
+              color: ColorRes.white,
+              height: Utils.getDeviceHeight(context) / 16,
+              child: TextFormField(
+                maxLines: 1,
+//                textInputAction: TextInputAction.next,
+                style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
+                cursorColor: ColorRes.black,
+                controller: fullAddressNameTF,
+                enabled: editBusinessInfo,
+                textAlign: TextAlign.left,
+                decoration: InputDecoration(
+                  fillColor: ColorRes.white,
+                  contentPadding: EdgeInsets.all(10),
+                  enabledBorder: const OutlineInputBorder(
+                    // width: 0.0 produces a thin "hairline" border
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    setState(() {
+                      isForFullAddress = true;
+                    });
+                  } else {
+                    setState(() {
+                      isForFullAddress = false;
+                    });
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+          isForFullAddress
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 5.0),
+                  child: Text(
+                    StringRes.requiredFiled,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: ColorRes.validationColorRed),
+                  ),
+                )
+              : Container()
+        ],
+      ),
+    );
+  }
 
   titleTextMobileNumber() {
     return Container(
@@ -325,6 +536,25 @@ class _BusinessPageState extends State<CreateProfile> {
     try {
       if (p != null) {
         businessAddressTF.text = p.description.toString();
+        var addresses =
+            await Geocoder.local.findAddressesFromQuery(p.description);
+        print(addresses.first.coordinates.latitude.toString() +
+            "=====>" +
+            addresses.first.coordinates.longitude.toString());
+
+        latitude = addresses.first.coordinates.latitude.toString();
+        longitude = addresses.first.coordinates.longitude.toString();
+
+        setState(() {});
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+displayPredictionNearBy(Prediction p) async {
+    try {
+      if (p != null) {
+        nearByAddressTF.text = p.description.toString();
         var addresses =
             await Geocoder.local.findAddressesFromQuery(p.description);
         print(addresses.first.coordinates.latitude.toString() +
@@ -378,6 +608,61 @@ class _BusinessPageState extends State<CreateProfile> {
             ),
           ),
           isForBusinessAddress
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 5.0),
+                  child: Text(
+                    StringRes.requiredFiled,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color: ColorRes.validationColorRed),
+                  ),
+                )
+              : Container()
+        ],
+      ),
+    );
+  }
+
+
+  nearbyTextFiled() {
+    Prediction p;
+
+    return Container(
+      margin: EdgeInsets.only(
+          top: Utils.getDeviceHeight(context) / 200,
+          right: Utils.getDeviceWidth(context) / 30,
+          left: Utils.getDeviceWidth(context) / 30),
+      //padding: EdgeInsets.only(right: 10, left: 10, top: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Theme(
+            data: ThemeData(primaryColor: ColorRes.black),
+            child: InkResponse(
+              child: Container(
+                padding: EdgeInsets.only(top: 8, bottom: 15, left: 8, right: 8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    color: ColorRes.white,
+                    border: Border.all(color: ColorRes.black, width: 1)),
+                child: Text(
+                    nearByAddressTF == null ? "" : nearByAddressTF.text,
+                    style: TextStyle(color: ColorRes.black, fontSize: Utils.getDeviceWidth(context)/26)),
+              ),
+              onTap: () async {
+                p = await PlacesAutocomplete.show(
+                    context: context,
+                    mode: Mode.overlay,
+                    apiKey: StringRes.googleAddress);
+                displayPredictionNearBy(p);
+
+                setState(() {});
+              },
+            ),
+          ),
+          isForBusinessNearBy
               ? Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: Text(
@@ -455,6 +740,29 @@ class _BusinessPageState extends State<CreateProfile> {
           ),
         ],
       ),
+    );
+  }
+  addtelephoneNumberView() {
+    return 
+    Visibility(
+     visible: other_address,
+    child:Container(
+      margin: EdgeInsets.only(
+          top: Utils.getDeviceHeight(context) / 200,
+          right: Utils.getDeviceWidth(context) / 30,
+          left: Utils.getDeviceWidth(context) / 65),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+         
+          Container(
+            width: Utils.getDeviceWidth(context) * 2 / 4,
+            margin: EdgeInsets.only(left: 10),
+            child: add_telePhoneNumberAddText(),
+          ),
+        ],
+      ),
+    ),
     );
   }
 
@@ -542,8 +850,9 @@ class _BusinessPageState extends State<CreateProfile> {
             right: Utils.getDeviceWidth(context) / 30,
             left: Utils.getDeviceWidth(context) / 30),
         //padding: const EdgeInsets.only(top: 5.0, right: 10, left: 10),
-        child: Form(
+        child: Visibility(
           key: _formKeyForCategory,
+          visible: other_category,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -566,7 +875,7 @@ class _BusinessPageState extends State<CreateProfile> {
                         // width: 0.0 produces a thin "hairline" border
                         borderSide: const BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: StringRes.hintOfBusinessCategory,
+                      hintText: "Other Category",
                       hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28),
                     ),
                     validator: (value) {
@@ -959,7 +1268,9 @@ class _BusinessPageState extends State<CreateProfile> {
   }
 
   Widget titleText(String title, int type) {
-    return Container(
+    return 
+    
+     Container(
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(
           left: Utils.getDeviceWidth(context) / 25,
@@ -983,6 +1294,38 @@ class _BusinessPageState extends State<CreateProfile> {
                 ),
         ],
       ),
+    
+    );
+  }
+  Widget titleTextAdd(String title, int type) {
+    return 
+    Visibility(
+      visible: other_category,
+    child :Container(
+      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(
+          left: Utils.getDeviceWidth(context) / 25,
+          top: Utils.getDeviceHeight(context) / 50,
+          bottom: Utils.getDeviceHeight(context) / 120),
+      child: Row(
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: Utils.getDeviceHeight(context) / 60,
+                fontWeight: FontWeight.w700),
+          ),
+          type == 4 || type == 8
+              ? Text("")
+              : Text(
+                  "*",
+                  style: TextStyle(
+                      fontSize: Utils.getDeviceHeight(context) / 50,
+                      fontWeight: FontWeight.w600),
+                ),
+        ],
+      ),
+    ),
     );
   }
 
@@ -1163,6 +1506,52 @@ class _BusinessPageState extends State<CreateProfile> {
       ],
     );
   }
+  Widget add_telePhoneNumberAddText() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Theme(
+          data: ThemeData(primaryColor: ColorRes.black),
+          child: Container(
+            color: ColorRes.white,
+            height: Utils.getDeviceHeight(context) / 19,
+            child: TextFormField(
+              cursorColor: ColorRes.black,
+              controller: add_telephoneTF,
+              keyboardType: TextInputType.number,
+              textAlignVertical: TextAlignVertical.center,
+              textAlign: TextAlign.left,
+              maxLines: 1,
+              enabled: editBusinessInfo,
+              style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
+              inputFormatters: [LengthLimitingTextInputFormatter(100)],
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(10),
+                border: OutlineInputBorder(),
+                enabledBorder: const OutlineInputBorder(
+                  // width: 0.0 produces a thin "hairline" border
+                  borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+        isForTelephoneNumber
+            ? Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Text(
+                  StringRes.requiredFiled,
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context)
+                      .textTheme
+                      .caption
+                      .copyWith(color: ColorRes.validationColorRed),
+                ),
+              )
+            : Container()
+      ],
+    );
+  }
 
   createProBtn() {
     return Container(
@@ -1195,11 +1584,26 @@ class _BusinessPageState extends State<CreateProfile> {
                 .isNotEmpty;
 
             setState(() {});
+            if((nearByAddressTF.text =="") | (nearByAddressTF.text == null)){
+               isForBusinessNearBy=true;
+               setState(() {
+                 
+               });
+            }
+             if((businessAddressTF.text =="") | (businessAddressTF.text == null)){
+               isForBusinessAddress=true;
+               setState(() {
+                 
+               });
+            }
+          
 
             if (_formKey.currentState.validate()) {
               if (!isForCategory &&
                   !isSelectDateTime &&
                   !isSelectTimeInvalid &&
+                  !isForFullAddress &&
+                     !isForBusinessNearBy &&
                   !isForBusinessTypeNull) {
                 if (mobileTF.text.length == 10 && isSelectDateTime == false) {
                   otpSendApi();
@@ -1223,14 +1627,14 @@ class _BusinessPageState extends State<CreateProfile> {
       SendOtpRequest rq = SendOtpRequest();
       rq.phone = mobileTF.text;
       rq.countryCode = StringRes.sendNineOne;
-
+ print(add_telephoneTF.text+"additional number");
       WebApi()
           .callAPI(Const.postWithAccess, WebApi.sendOtp, rq.toJson(),
               widget.userData.auth.accessToken)
           .then((baseResponse) async {
         if (baseResponse != null && baseResponse.success) {
           Utils.showToast(baseResponse.message);
-
+  print("login_" + baseResponse.message);
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
 
@@ -1248,6 +1652,9 @@ class _BusinessPageState extends State<CreateProfile> {
             }
 
             rq.business_name = businessNameTF.text;
+            rq.additional_address = fullAddressNameTF.text;
+            rq.landmark = nearByAddressTF.text;
+            rq.additional_telephone=add_telephoneTF.text;
             rq.address = businessAddressTF.text;
             rq.phone = mobileTF.text;
             rq.telephone = telephoneTF.text;
@@ -1257,6 +1664,7 @@ class _BusinessPageState extends State<CreateProfile> {
             rq.latitude = latitude;
             rq.longitude = longitude;
             rq.time = selectDayList;
+            
 
             Navigator.push(
                 context,

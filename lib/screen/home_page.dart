@@ -75,6 +75,8 @@ class _HomePageState extends State<HomePage>
   String headerImage;
   String imagePath;
   String businessName;
+ UserData userData=Injector.userDataMain;
+
   String businessAddress;
   ScrollController _controller;
   String webProfile;
@@ -275,7 +277,8 @@ class _HomePageState extends State<HomePage>
         headerImage = Injector.userDataMain.profile;
         businessName = Injector.prefs.getString(PrefKeys.businessName);
         businessAddress = Injector.prefs.getString(PrefKeys.businessAddress);
-      }
+     print(businessName+" ====Busniess Name 2");
+     }
       setState(() {});
     }, onDone: () {
       print("Task Done1");
@@ -547,7 +550,7 @@ class _HomePageState extends State<HomePage>
                         right: Utils.getDeviceHeight(context) / 100,
                         left: Utils.getDeviceHeight(context) / 110,
                         top: Utils.getDeviceHeight(context) / 100),
-                    child: Text(businessName.toString(),
+                    child: Text(businessName.toString()== "null"?userData.businessName.toString():businessName.toString(),
                         style: TextStyle(
                             color: ColorRes.white,
                             fontSize: Utils.getDeviceHeight(context) / 44),
@@ -564,7 +567,7 @@ class _HomePageState extends State<HomePage>
                         bottom: Utils.getDeviceHeight(context) / 90,
                         top: Utils.getDeviceHeight(context) / 150),
                     //padding: EdgeInsets.only(bottom: 5),
-                    child: Text(businessAddress.toString(),
+                    child: Text(businessAddress.toString()== "null"?userData.address.toString():businessAddress.toString(),
                         style: TextStyle(
                             color: ColorRes.white,
                             fontSize: Utils.getDeviceHeight(context) / 44),
@@ -867,7 +870,7 @@ class _HomePageState extends State<HomePage>
         if (baseResponse.success) {
           UserBusinessData userBusinessData =
               UserBusinessData.fromJson(baseResponse.data);
-
+          print(userBusinessData.businessName+" ====Busniess Name");
           Injector.userDataMain.businessName = userBusinessData.businessName;
           Injector.userDataMain.address = userBusinessData.address;
           Injector.userDataMain.profileStatus = userBusinessData.profileStatus;
@@ -879,7 +882,7 @@ class _HomePageState extends State<HomePage>
 
 //          Injector.userDataMain.photos = userBusinessData.photos;
 
-          Injector.updateUserData(Injector.userDataMain);
+        //  Injector.updateUserData(Injector.userDataMain);
 
 //          await Injector.updateBusinessData(userBusinessData);
 

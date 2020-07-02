@@ -58,7 +58,39 @@ class Product {
     price = json['price'];
     perQuantity = json['per_quantity'];
     views = json['product_view'];
+    photo = "https://www.townsy.in/storage/"+json['photo'].toString();
+   
+    if (json['photos'] != null) {
+      photos = new List<ProductPhoto>();
+      json['photos'].forEach((v) {
+        photos.add(new ProductPhoto.fromJson(v));
+      });
+    }
+  }
+   Product.fromJsonPhoto(Map<String, dynamic> json) {
+    id = json['id'];
+    productName = json['product_name'];
+    description = json['description'];
+    price = json['price'];
+    perQuantity = json['per_quantity'];
+    views = json['product_view'];
     photo = json['photo'];
+    if (json['photos'] != null) {
+      photos = new List<ProductPhoto>();
+      json['photos'].forEach((v) {
+        photos.add(new ProductPhoto.fromJson(v));
+      });
+    }
+  }
+
+ Product.fromJsonHttp(Map<String, dynamic> json) {
+    id = json['id'];
+    productName = json['product_name'];
+    description = json['description'];
+    price = json['price'];
+    perQuantity = json['per_quantity'];
+    views = json['product_view'];
+    photo = "https://www.townsy.in/storage/"+json['thumbnail'].toString();
     if (json['photos'] != null) {
       photos = new List<ProductPhoto>();
       json['photos'].forEach((v) {

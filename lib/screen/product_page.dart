@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:marketplace/commonview/MyBehavior.dart';
@@ -15,6 +16,7 @@ import 'package:marketplace/helper/web_api.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addcategory.dart';
 import 'package:marketplace/model/getProductData.dart';
+import 'package:marketplace/model/getcategory.dart';
 import 'package:marketplace/model/signin.dart';
 import 'package:marketplace/screen/product_Info_page.dart';
 
@@ -30,16 +32,31 @@ class _ProductPageState extends State<ProductPage> {
   List<bool> numberTruthList = [true, true, true, true, true, true];
 
   List<GetCategoryAndProduct> arrCategoryAndProduct = List();
-
+ ScrollController _hideButtonController;
   bool isLoading = true;
   Meta meta = Meta();
+  bool _isVisible=false;
   int page = 1;
+ 
+  double valueWidth=Platform.isAndroid?110:135;
+
+  bool fabIsVisible = true;
+ScrollController controller = ScrollController();
 
 
   @override
   void initState() {
     super.initState();
     Injector.streamController = StreamController.broadcast();
+
+    controller.addListener(() {
+      setState(() {
+        
+        fabIsVisible =
+            controller.position.userScrollDirection == ScrollDirection.forward;
+      });
+    });
+     
     Injector.streamController.stream.listen((data) {
       if (data == StringRes.subProductDataGet) {
         setState(() {
@@ -99,17 +116,29 @@ class _ProductPageState extends State<ProductPage> {
               SpinKitThreeBounce(
                   color: ColorRes.black, size: Utils.getDeviceWidth(context) / 20)
             ],
-          ));
+          ),
+         
+      
+    );
+          
+         
     }
+ 
+
     return Container(
         color: ColorRes.productBgGrey,
         child: ScrollConfiguration(
           behavior: MyBehavior(),
-          child: LazyLoadScrollView(
-            isLoading: isLoading,
-            onEndOfPage: () => _loadMore(),
-            child: ListView(
-              primary: true,
+
+           
+         
+             
+            
+          
+                
+              child: ListView(
+     
+              controller: controller,
               shrinkWrap: true,
               children: <Widget>[
                 firstAddCategory(),
@@ -117,11 +146,62 @@ class _ProductPageState extends State<ProductPage> {
                 noProducts(),
                 addProductsHere(),
                 secondListData(),
-                indicatorShow(),
-              ],
+                               Container(
+             transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+             margin:   EdgeInsets.only(left: valueWidth,right: valueWidth),
+            child: 
+            Visibility(
+              visible: _isVisible,
+            
+           child: MaterialButton(
+             color:ColorRes.black,
+             
+              onPressed: () => {
+               controller.animateTo(
+            0.0,
+            curve: Curves.easeOut,
+            duration: const Duration(milliseconds: 300),
+        
+          )
+             
+              },
+              
+             
+             
+             child: Row(
+             mainAxisAlignment: MainAxisAlignment.center,   
+      children: <Widget>[
+
+        Text('GO TO TOP', style: TextStyle(color: Colors.white),),
+       Padding(
+   padding: EdgeInsets.only(bottom: 2, left:5),
+       
+       child: Icon(Icons.arrow_upward, color: Colors.white),
+       ),
+      ],
+              ),
+             
             ),
           ),
-        ));
+                ), 
+                indicatorShow(),
+
+            
+              ],
+            
+              
+          
+           
+              
+           
+          ),
+              
+          ),        
+        
+
+        );
+  
+  
   }
 
 
@@ -296,20 +376,42 @@ class _ProductPageState extends State<ProductPage> {
       },
     );
   }
+  void getDataFromEdit(Product detailClass,int cat_id) {
+    for(int i=0;i<arrCategoryAndProduct.length;i++){
+             
+  if(arrCategoryAndProduct[i].id == cat_id){
+   
+   arrCategoryAndProduct[i].products.add(detailClass);
+   setState(() {
+     
+   });
+
+
+  }
+
+    }
+      
+      }
 
   Future onClickAddCard(BuildContext context, int categoryIndex) async {
-    bool isUpdated = await Navigator.push(
+  int cat_id=arrCategoryAndProduct[categoryIndex]?.id;
+    final result  = await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProductInfoPage(
-                categoryId: arrCategoryAndProduct[categoryIndex]?.id)));
-    if (isUpdated) {
-      arrCategoryAndProduct = List();
-      page = 1;
-      getProductList(page); //n
+                categoryId: arrCategoryAndProduct[categoryIndex]?.id))).then((val){
+getDataFromEdit(val,cat_id);
 
-      setState(() {});
-    }
+        
+        });
+       
+    // if (isUpdated) {
+    //   arrCategoryAndProduct = List();
+    //   page = 1;
+    //   ProductListUpdate(page); //n
+
+    //   setState(() {});
+    // }
   }
 
   showProductItem(int productIndex, Product product, int categoryIndex)   {
@@ -433,6 +535,7 @@ class _ProductPageState extends State<ProductPage> {
             )));
 
     if (isUpdated != null && isUpdated) {
+    
       arrCategoryAndProduct = List();
       page = 1;
       getProductList(page); //n
@@ -687,14 +790,28 @@ class _ProductPageState extends State<ProductPage> {
 
     if (isConnected) {
       WebApi()
-          .callAPI(Const.get, "${WebApi.rqProducts}${index.toString()}", null,
+          .callAPI(Const.get, "${WebApi.rqProductsList}", null,
           Injector.accessToken)
           .then((baseResponse) async {
+            
         if (baseResponse.success) {
+
           setState(() {
             isLoading = false;
+            _isVisible=true;
             baseResponse.data.forEach((v) {
               arrCategoryAndProduct.add(GetCategoryAndProduct.fromJson(v));
+//             GetCategoryAndProduct getCategoryAndProduct=GetCategoryAndProduct.fromJson(v);
+//             for(int i=0;i<arrCategoryAndProduct.length;i++){
+//  GetCategoryAndProduct addedItem=arrCategoryAndProduct[i];
+//  List<Product> products=addedItem.products;
+//           if(products.length<getCategoryAndProduct)
+
+//             }
+            
+          
+            
+            
             });
             meta = baseResponse.meta;
             setState(() {});
@@ -704,6 +821,49 @@ class _ProductPageState extends State<ProductPage> {
             setState(() {
               isLoading = false;
             });
+             _isVisible=true;
+          }
+        }
+      }).catchError((e) {
+        print(e);
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      });
+    }
+  }
+
+  ProductListUpdate(int index) async {
+    bool isConnected = await Utils.isInternetConnectedWithAlert();
+List<GetCategoryAndProduct> arrCategoryAndProduct2=new List();
+    if (isConnected) {
+      WebApi()
+          .callAPI(Const.get, "${WebApi.rqProducts}${index.toString()}", null,
+          Injector.accessToken)
+          .then((baseResponse) async {
+            
+        if (baseResponse.success) {
+
+          setState(() {
+            isLoading = false;
+            _isVisible=true;
+            baseResponse.data.forEach((v) {
+              arrCategoryAndProduct2.add(GetCategoryAndProduct.fromJson(v));
+            });
+            meta = baseResponse.meta;
+             arrCategoryAndProduct=arrCategoryAndProduct2;
+            setState(() {
+             
+            });
+          });
+        } else {
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+            });
+             _isVisible=true;
           }
         }
       }).catchError((e) {

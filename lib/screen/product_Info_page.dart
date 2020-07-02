@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:marketplace/commonview/background.dart';
 import 'package:marketplace/helper/constant.dart';
@@ -11,6 +12,8 @@ import 'package:marketplace/helper/web_api.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addproduct.dart';
 import 'package:marketplace/model/getProductData.dart';
+import 'package:marketplace/model/signin.dart';
+import 'package:marketplace/screen/image_show.dart';
 
 class ProductInfoPage extends StatefulWidget {
   final int isAddProduct;
@@ -29,13 +32,15 @@ class ProductInfoPage extends StatefulWidget {
 
 class _ProductInfoPageState extends State<ProductInfoPage> {
   bool isLoading = false;
+ ScrollController controller;
+  bool fabIsVisible = true;
 
   List<GetCategoryAndProduct> getCategoryAndProduct = List();
 
   TextEditingController productName = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController price = TextEditingController();
-  TextEditingController quantity = TextEditingController();
+  TextEditingController quantity = TextEditingController(text: "1");
   final _formKey = GlobalKey<FormState>();
 
   bool isForName = false;
@@ -52,6 +57,13 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
     if (widget.productId != null) {
       getProductById(widget.productId);
     }
+     controller = ScrollController();
+    controller.addListener(() {
+      setState(() {
+        fabIsVisible =
+            controller.position.userScrollDirection == ScrollDirection.forward;
+      });
+    });
   }
 
   SwiperControl swiperControl = SwiperControl();
@@ -92,7 +104,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
       appBar: AppBar(
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back, color: ColorRes.white),
-          onPressed: () => Navigator.of(context).pop(true),
+          onPressed: () => Navigator.pop(context, true),
         ),
         title: Text(""),
         actions: <Widget>[
@@ -104,6 +116,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
         child: InkResponse(
           child: ListView(
             shrinkWrap: true,
+              
             primary: false,
             children: <Widget>[
               firstCarouselView(),
@@ -113,8 +126,9 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
               descriptionTextFiled(),
               titleText(StringRes.priceTitle),
               pricePerPis(),
-              titleText(StringRes.quantity),
-              quantityTextFiled()
+              // titleText(StringRes.quantity),
+              quantityTextFiled(),
+        
             ],
           ),
           onTap: () {
@@ -123,6 +137,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
         ),
       ),
       bottomNavigationBar: lastDoneButton(),
+       
     );
   }
 
@@ -163,6 +178,12 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                       pagination: new SwiperPagination(),
                       control: new SwiperControl(),
                       loop: false,
+                      onTap: (i){
+                        selectImageIndex = i;
+                         print("indez__" + selectImageIndex.toString());
+                       Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ImageShow(selectedImageIndex:selectImageIndex,arrImages:arrImages,)));
+                      },
                     ),
                   )
                 : Container(
@@ -268,7 +289,12 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
             child: Container(
               color: ColorRes.white,
               child: TextFormField(
-                maxLines: 5,
+                maxLines: 9,
+                textInputAction: TextInputAction.newline,
+                autovalidate: true,
+   validator: (value){
+           
+            },
                 style: TextStyle(fontSize: Utils.getDeviceWidth(context)/28),
                 cursorColor: ColorRes.black,
                 controller: description,
@@ -359,7 +385,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
   }
 
   quantityTextFiled() {
-    return Padding(
+    return 
+    Visibility(
+    visible: false,
+    child :Padding(
       padding: EdgeInsets.only(
           left: Utils.getDeviceWidth(context) / 30,
           top: Utils.getDeviceWidth(context) / 45,
@@ -381,6 +410,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                       maxLines: 1,
                       cursorColor: ColorRes.black,
                       controller: quantity,
+                    
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10),
@@ -420,6 +450,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
           Expanded(child: Container())
         ],
       ),
+    ),
     );
   }
 
@@ -611,6 +642,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                     if (file != null) {
                       ProductPhoto photos = ProductPhoto();
                       photos.photo = file.path;
+                       print(photos.toJson());
                       if (product.photos == null) product.photos = List();
                       arrImages.add(photos);
 
@@ -637,9 +669,52 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                       photos.photo = file.path;
                       if (product.photos == null) product.photos = List();
                       arrImages.add(photos);
-                      setState(() {});
+
+                      
+                       setState(() {});
                     }
                   });
+            
+
+                
+                
+                
+                },
+              ),
+
+                            Container(
+                height: 1,
+                color: ColorRes.fontGrey,
+              ),
+              InkResponse(
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  child: Text("Choose Multiple Photo"),
+                  alignment: Alignment.center,
+                ),
+                onTap: () async {
+                  Navigator.pop(context);
+                 
+                Utils.loadAssets().then((value)  
+                {
+                   List<String> paths=value;
+                   for (String r in paths) {
+        String t = r;
+       ProductPhoto photos = new ProductPhoto();
+                      photos.photo = t;
+                     
+                      arrImages.add(photos);
+
+                      print(photos.toJson());
+                      
+
+      }
+     
+      setState(() {});
+
+                }
+                
+                );
                 },
               ),
             ],
@@ -657,40 +732,62 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
     if (isConnected) {
       AddProductRequest rq = AddProductRequest();
-      rq.category = widget.categoryId;
+     
+
+    String descriptionText="";
+
+var split =   description.text.split('\n').map((i) {
+  if (i == "") {
+   
+  } else {
+     descriptionText=descriptionText+i+"\\n";
+    return Text(i);
+  }
+}).toList();
+
+var displayElement = Column(children: split);
+ rq.category = widget.categoryId;
       rq.productName = productName.text;
-      rq.description = description.text;
+      rq.description = descriptionText;
       rq.price = price.text;
       rq.perQuantity = quantity.text;
-
+     // print(descriptionText);
+  
       List<File> arrFile = List();
+      print(rq.toJson());
 
       for (int i = 0; i < arrImages.length; i++) {
         if (!arrImages[i].photo.contains("http")) {
           File file = File(arrImages[i].photo);
+          print(arrImages[i].photo);
           arrFile.add(file);
         }
       }
 
       CommonView.progressDialog(true, context);
-
+   
       WebApi()
           .uploadImageProduct(WebApi.rqProduct, rq, arrFile)
           .then((baseResponse) async {
         CommonView.progressDialog(false, context);
-
+       
         if (baseResponse != null) {
           if (baseResponse.success) {
             Utils.showToast(StringRes.productInsertMsg);
+         
+
+         Product  product = Product.fromJsonHttp(baseResponse.data[0]);
+       
             productName.text = "";
             description.text = "";
             price.text = "";
             quantity.text = "";
-            Navigator.pop(context, true);
+            
+            Navigator.pop(context, product);
           } else {
             Utils.showToast(baseResponse.message);
           }
-        }
+       }
       }).catchError((e) {
         CommonView.progressDialog(false, context);
         Utils.showToast(StringRes.pleaseTryAgain);
@@ -703,12 +800,21 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
     if (isConnected) {
       CommonView.progressDialog(true, context);
+   String descriptionText="";
 
+var split =   description.text.split('\n').map((i) {
+  if (i == "") {
+   
+  } else {
+     descriptionText=descriptionText+i+"\\n";
+    return Text(i);
+  }
+}).toList();
       AddProductRequest rq = AddProductRequest();
       rq.productId = widget.productId;
       rq.category = widget.categoryId;
       rq.productName = productName.text;
-      rq.description = description.text;
+      rq.description = descriptionText;
       rq.price = price.text;
       rq.perQuantity = quantity.text;
 
@@ -716,7 +822,8 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
       for (int i = 0; i < arrImages.length; i++) {
         if (!arrImages[i].photo.contains("http")) {
-          File file = File(arrImages[i].photo);
+          File file = File(arrImages[i].photo.toString());
+          print(arrImages[i].photo.toString());
           arrFile.add(file);
         }
       }
@@ -751,7 +858,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
         });
         Utils.showToast(StringRes.pleaseTryAgain);
       });
-    }
+     }
   }
 
   getProductList() async {
@@ -821,9 +928,11 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
           .then((baseResponse) async {
         if (baseResponse.success) {
           setState(() {
-            product = Product.fromJson(baseResponse.data);
+            product = Product.fromJsonPhoto(baseResponse.data);
             productName.text = product.productName;
             description.text = product.description;
+           
+              description.text = description.text.replaceAll('\\n', "\n");
             price.text = product.price?.toString();
             quantity.text = product.perQuantity?.toString();
             arrImages = product.photos ?? List();
@@ -868,4 +977,10 @@ class ProductRefConstants {
   static const String SecondItem = 'Delete Product';
 
   static const List<String> choices = <String>[SecondItem];
+}
+class ProductSend {
+  String categoryId;
+  Product products;
+
+  ProductSend({this.categoryId,this.products});
 }

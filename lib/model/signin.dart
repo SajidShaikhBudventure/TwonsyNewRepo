@@ -31,6 +31,8 @@ class BaseResponse<T> {
     success = json['success'];
     message = json['message'];
     data = json['data'];
+    print(json);
+
     if (json.containsKey("meta") && json["meta"] != null) {
       meta = new Meta.fromJson(json['meta']);
     }

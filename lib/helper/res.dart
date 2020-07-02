@@ -135,10 +135,11 @@ class StringRes {
   static var checkSunday            =   "sunday";
 
   static var businessName           =  "Business Name";
-  static var businessAddress        =  "Which city are you located in?";
+  static var businessAddress        =  "Town/City";
   static var phoneNumber            =  "Phone Numbers";
   static var mobileNumber           =  "Mobile Number";
-  static var telephoneNumber        =  "Telephone Number (Optional)";
+  static var telephoneNumber        =  "Additonal Phone Number";
+  static var addtelephoneNumber    =   "Additional Phone Number (Optional)";
   static var otpRequired            =  "(OTP Verification Required)";
 
   static var manufacturer           =  "Manufacturer";

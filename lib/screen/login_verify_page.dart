@@ -455,7 +455,7 @@ class _LoginVerifyPageState extends State<LoginVerifyPage> {
           createBusinessProfile();
         } else {
           textShow = true;
-
+           createBusinessProfile();
           setState(() {});
         }
       }).catchError((e) {

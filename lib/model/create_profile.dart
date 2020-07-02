@@ -4,6 +4,7 @@ class BusinessCreateRequest {
 //  int id;
   String business_name;
   String telephone;
+  String additional_telephone;
   String phone;
   String address;
   String categories;
@@ -12,12 +13,17 @@ class BusinessCreateRequest {
   String other_info;
   String latitude;
   String longitude;
+  String additional_address;
+  String landmark;
   List<Time> time;
 
   BusinessCreateRequest(
       {this.business_name,
       this.telephone,
       this.phone,
+      this.additional_telephone,
+      this.additional_address,
+      this.landmark,
       this.address,
       this.categories,
       this.profile,
@@ -30,6 +36,9 @@ class BusinessCreateRequest {
 
   BusinessCreateRequest.fromJson(Map<String, dynamic> json) {
     business_name = json['business_name'];
+    additional_telephone=json['additional_telephone'];
+    additional_address=json['additional_address'];
+    landmark=json['landmark'];
     telephone = json['telephone'];
       phone = json['phone'];
     address = json['address'];
@@ -50,8 +59,11 @@ class BusinessCreateRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['business_name'] = this.business_name;
+    data['additional_address'] = this.additional_address;
+    data['landmark'] = this.landmark;
     data['telephone'] = this.telephone;
     data['phone'] = this.phone;
+    data['additional_telephone']=this.additional_telephone;
     data['address'] = this.address;
     data['categories'] = this.categories;
 //    data['profile'] = this.profile;

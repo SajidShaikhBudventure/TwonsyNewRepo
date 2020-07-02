@@ -11,6 +11,7 @@ class UserData {
   String lastname;
   String email;
   String businessName;
+  String additional_telephone;
   String profile;
   String phone;
   String telephone;
@@ -32,6 +33,7 @@ class UserData {
     this.lastname,
     this.email,
     this.businessName,
+    this.additional_telephone,
     this.profile,
     this.phone,
     this.telephone,
@@ -53,6 +55,7 @@ class UserData {
     lastname = json['lastname'];
     email = json['email'];
     businessName = json['business_name'];
+    additional_telephone= json['additional_telephone'];
     profile = json['profile'];
     phone = json['phone'];
     telephone = json['telephone'];
@@ -83,6 +86,7 @@ class UserData {
     data['lastname'] = this.lastname;
     data['email'] = this.email;
     data['business_name'] = this.businessName;
+    data['additional_telephone']=this.additional_telephone;
     data['profile'] = this.profile;
     data['phone'] = this.phone;
     data['telephone'] = this.telephone;
@@ -115,6 +119,9 @@ class UserBusinessData {
   String lastname;
   String email;
   String businessName;
+  String additional_telephone;
+  String additional_address;
+  String landmark;
   String profile;
   String phone;
   String telephone;
@@ -139,6 +146,9 @@ class UserBusinessData {
       this.lastname,
       this.email,
       this.businessName,
+      this.additional_telephone,
+      this.additional_address,
+      this.landmark,
       this.profile,
       this.phone,
       this.telephone,
@@ -162,6 +172,9 @@ class UserBusinessData {
     lastname = json['lastname'];
     email = json['email'];
     businessName = json['business_name'];
+    additional_telephone=json['additional_telephone'];
+    additional_address=json['additional_address'];
+    landmark=json['landmark'];
     profile = json['profile'];
     phone = json['phone'];
     telephone = json['telephone'];
@@ -202,6 +215,9 @@ class UserBusinessData {
     data['lastname'] = this.lastname;
     data['email'] = this.email;
     data['business_name'] = this.businessName;
+    data['additional_telephone']=this.additional_telephone;
+    data['additional_address']=this.additional_address;
+    data['landmark']=this.landmark;
     data['profile'] = this.profile;
     data['phone'] = this.phone;
     data['telephone'] = this.telephone;
