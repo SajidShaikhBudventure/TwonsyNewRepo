@@ -38,7 +38,8 @@ class _ProductPageState extends State<ProductPage> {
   bool _isVisible=false;
   int page = 1;
  
-  double valueWidth=Platform.isAndroid?110:135;
+  double valueWidth=0;
+ final dataKey = new GlobalKey();
 
   bool fabIsVisible = true;
 ScrollController controller = ScrollController();
@@ -119,36 +120,59 @@ ScrollController controller = ScrollController();
           ),
          
       
+    
     );
           
          
     }
  
 
-    return Container(
+    return 
+    Scaffold(
+          body:
+    Container(
         color: ColorRes.productBgGrey,
         child: ScrollConfiguration(
           behavior: MyBehavior(),
-
+  
            
          
              
             
           
                 
-              child: ListView(
-     
-              controller: controller,
-              shrinkWrap: true,
+              child: SingleChildScrollView(
+              
+              primary: true,
+                child: new Column(
               children: <Widget>[
                 firstAddCategory(),
                 addProductIcon(),
                 noProducts(),
                 addProductsHere(),
                 secondListData(),
-                               Container(
+                     
+                indicatorShow(),
+
+            
+              ],
+            
+              
+          
+           
+              
+           
+          ),
+              
+              
+              ),
+              
+        ),
+    ),
+floatingActionButton: Container(
              transform: Matrix4.translationValues(0.0, 0.0, 0.0),
-             margin:   EdgeInsets.only(left: valueWidth,right: valueWidth),
+             margin:   EdgeInsets.only(left: 0,right: 0),
+             width: 200,
             child: 
             Visibility(
               visible: _isVisible,
@@ -157,18 +181,14 @@ ScrollController controller = ScrollController();
              color:ColorRes.black,
              
               onPressed: () => {
-               controller.animateTo(
-            0.0,
-            curve: Curves.easeOut,
-            duration: const Duration(milliseconds: 300),
-        
-          )
+           Scrollable.ensureVisible(dataKey.currentContext),
              
               },
               
              
              
              child: Row(
+               
              mainAxisAlignment: MainAxisAlignment.center,   
       children: <Widget>[
 
@@ -183,22 +203,9 @@ ScrollController controller = ScrollController();
              
             ),
           ),
-                ), 
-                indicatorShow(),
+                ),
 
-            
-              ],
-            
-              
-          
-           
-              
-           
-          ),
-              
-          ),        
-        
-
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         );
   
   
@@ -207,11 +214,14 @@ ScrollController controller = ScrollController();
 
   firstAddCategory() {
     return InkWell(
+       key: dataKey,
       child: Align(
         alignment: Alignment.center,
         child: Container(
+         
             margin: EdgeInsets.only(top:Utils.getDeviceHeight(context) / 45, bottom: 0),
             child: Card(
+              
                 elevation: 4,
                 child: Container(
                   padding: EdgeInsets.all(10.0),
@@ -281,7 +291,8 @@ ScrollController controller = ScrollController();
   Widget secondListData() {
     return ListView.builder(
       shrinkWrap: true,
-      primary: false,
+     
+      controller: controller,
       itemCount: arrCategoryAndProduct.length,
       itemBuilder: (context, categoryIndex) {
         return showMainCategoryItem(categoryIndex);
@@ -293,6 +304,7 @@ ScrollController controller = ScrollController();
     return ListView(
       shrinkWrap: true,
       primary: false,
+       
       children: <Widget>[
         Container(
           padding: EdgeInsets.only(left: 8.0),
@@ -324,6 +336,8 @@ ScrollController controller = ScrollController();
           child: ListView.builder(
               physics: const AlwaysScrollableScrollPhysics(),
               shrinkWrap: true,
+              
+              cacheExtent: 1500, 
               primary: false,
               itemCount:
               arrCategoryAndProduct[categoryIndex].products.length + 1,
@@ -400,7 +414,9 @@ ScrollController controller = ScrollController();
         MaterialPageRoute(
             builder: (context) => ProductInfoPage(
                 categoryId: arrCategoryAndProduct[categoryIndex]?.id))).then((val){
+  if(val != null) {
 getDataFromEdit(val,cat_id);
+  }
 
         
         });
@@ -436,8 +452,13 @@ getDataFromEdit(val,cat_id);
                       child: product.photo != null &&
                           product.photo.isNotEmpty &&
                           product.photo.contains("http")
-                          ? CachedNetworkImage(
-                        imageUrl: product.photo,
+                          ? 
+                   
+                          
+                          
+                          
+                          CachedNetworkImage(
+                        imageUrl: "https://images.weserv.nl/?url="+product.photo+"&w=300&h=300",
                         width: double.infinity,
                         height: Utils.getDeviceWidth(context) / 3.2,
                         fit: BoxFit.cover,
@@ -800,7 +821,7 @@ getDataFromEdit(val,cat_id);
             isLoading = false;
             _isVisible=true;
             baseResponse.data.forEach((v) {
-              arrCategoryAndProduct.add(GetCategoryAndProduct.fromJson(v));
+            arrCategoryAndProduct.add(GetCategoryAndProduct.fromJson(v));
 //             GetCategoryAndProduct getCategoryAndProduct=GetCategoryAndProduct.fromJson(v);
 //             for(int i=0;i<arrCategoryAndProduct.length;i++){
 //  GetCategoryAndProduct addedItem=arrCategoryAndProduct[i];

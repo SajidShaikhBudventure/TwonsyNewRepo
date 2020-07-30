@@ -43,6 +43,18 @@ class ProductCategory {
     }
   }
 
+  ProductCategory.fromJsonAnalytics(Map<String, dynamic> json) {
+    id = json['id'];
+    category = json['category'];
+    if (json['products'] != null) {
+      products = new List<Product>();
+      json['products'].forEach((v) {
+        products.add(new Product.fromJsonPhoto(v));
+      });
+    }
+  }
+
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;

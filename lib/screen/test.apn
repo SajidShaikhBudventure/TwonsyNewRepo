@@ -1,0 +1,8 @@
+{ 
+   "aps" : {
+      "content-available" : 1
+   },
+   "acme1" : "bar",
+   "acme2" : 42,
+"Simulator Target Bundle": "com.townsy.app" 
+}

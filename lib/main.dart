@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:marketplace/screen/create_profile.dart';
 import 'package:marketplace/screen/home_page.dart';
 import 'package:marketplace/screen/main_page.dart';
+import 'package:marketplace/screen/mesibo_chat_app.dart';
 import 'helper/prefkeys.dart';
 import 'helper/res.dart';
 import 'injection/dependency_injection.dart';
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home:  Injector.userDataMain != null
           ? (Injector.userDataMain.profileStatus == 1
-              ? HomePage()
+               ? HomePage()
               : CreateProfile())
           : MainLoginPage(),
       routes: {

@@ -63,6 +63,30 @@ class Injector {
     }
   }
 
+  static updateVerifyUserData(UserData userData) async {
+    userData.profileStatus=1;
+    await Injector.prefs
+        .setString(PrefKeys.user, jsonEncode(userData.toJson()));
+
+    userDataMain = userData;
+    if (userDataMain.auth != null) {
+      auth = userDataMain.auth;
+      accessToken = auth.accessToken;
+    }
+  }
+  static updateVerifyUserDataSign(UserData userData,String token) async {
+    userData.profileStatus=1;
+    userData.mesibo_token=token;
+    await Injector.prefs
+        .setString(PrefKeys.user, jsonEncode(userData.toJson()));
+
+    userDataMain = userData;
+    if (userDataMain.auth != null) {
+      auth = userDataMain.auth;
+      accessToken = auth.accessToken;
+    }
+  }
+
   static getUserData() {
     if (prefs.getString(PrefKeys.user) != null &&
         prefs.getString(PrefKeys.user).isNotEmpty) {

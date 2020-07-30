@@ -22,6 +22,7 @@ class UserData {
   String otherInfo;
   String latitude;
   String longitude;
+  String mesibo_token;
   int isPrivate;
   int profileStatus;
   List<PhotosBusiness> photos;
@@ -46,6 +47,7 @@ class UserData {
     this.longitude,
     this.isPrivate,
     this.profileStatus,
+    this.mesibo_token,
     this.photos,
   });
 
@@ -68,6 +70,7 @@ class UserData {
     longitude = json['longitude'];
     isPrivate = json['is_private'];
     profileStatus = json['profile_status'];
+    mesibo_token = json['mesibo_token'];
 
     auth = json['auth'] != null ? new Auth.fromJson(json['auth']) : null;
     if (json['photos'] != null) {
@@ -99,6 +102,7 @@ class UserData {
     data['longitude'] = this.longitude;
     data['is_private'] = this.isPrivate;
     data['profile_status'] = this.profileStatus;
+    data['mesibo_token']=this.mesibo_token;
 
     if (this.auth != null) {
       data['auth'] = this.auth.toJson();
@@ -136,6 +140,7 @@ class UserBusinessData {
   String longitude;
   int isPrivate;
   int profileStatus;
+  String mesibo_token;
   List<PhotosBusiness> photos;
   List<Time> time;
 
@@ -163,6 +168,7 @@ class UserBusinessData {
       this.longitude,
       this.isPrivate,
       this.profileStatus,
+      this.mesibo_token,
       this.photos,
       this.time});
 
@@ -189,6 +195,7 @@ class UserBusinessData {
     longitude = json['longitude'];
     isPrivate = json['is_private'];
     profileStatus = json['profile_status'];
+    mesibo_token= json['mesibo_token'];
     if (json['photos'] != null) {
       photos = new List<PhotosBusiness>();
       json['photos'].forEach((v) {
@@ -232,6 +239,7 @@ class UserBusinessData {
     data['longitude'] = this.longitude;
     data['is_private'] = this.isPrivate;
     data['profile_status'] = this.profileStatus;
+    data['mesibo_token'] = this.mesibo_token;
     if (this.photos != null) {
       data['photos'] = this.photos.map((v) => v.toJson()).toList();
     }

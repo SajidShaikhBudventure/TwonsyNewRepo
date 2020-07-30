@@ -13,7 +13,7 @@ class AnalyticsResponse {
     if (json['categories'] != null) {
       categories = new List<ProductCategory>();
       json['categories'].forEach((v) {
-        categories.add(new ProductCategory.fromJson(v));
+        categories.add(new ProductCategory.fromJsonAnalytics(v));
       });
     }
   }

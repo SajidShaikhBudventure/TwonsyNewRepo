@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +85,10 @@ class _ImagePageState extends State<ImageShow> {
                       itemBuilder: (BuildContext context, int index) {
                         return  
                        PhotoView(
-      imageProvider:new NetworkImage(widget.arrImages[index].photo)
+      imageProvider:widget.arrImages[index]
+                                            .photo
+                                            .contains("http")
+                                        ? new NetworkImage(widget.arrImages[index].photo): FileImage(File(widget.arrImages[index].photo))
                                );
                            
                       },

@@ -406,7 +406,9 @@ class _LoginVerifyPageState extends State<LoginVerifyPage> {
               widget.userData.auth.accessToken)
           .then((data) async {
         if (data != null && data.success) {
-          await Injector.updateUserData(widget.userData);
+          await Injector.updateVerifyUserDataSign(widget.userData,data.data.toString());
+          print(data.data.toString());
+
 
           Navigator.pushAndRemoveUntil(
             context,
@@ -455,7 +457,7 @@ class _LoginVerifyPageState extends State<LoginVerifyPage> {
           createBusinessProfile();
         } else {
           textShow = true;
-           createBusinessProfile();
+         
           setState(() {});
         }
       }).catchError((e) {

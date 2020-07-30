@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:marketplace/helper/utils.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/addproduct.dart';
@@ -88,16 +89,23 @@ class WebApi {
     headers = {
       HttpHeaders.acceptHeader: acceptHeader,
       HttpHeaders.contentTypeHeader: contentTypeHeader,
-      HttpHeaders.authorizationHeader: authorizationHeader
+      HttpHeaders.authorizationHeader: authorizationHeader,
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+  "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+  "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+  "Access-Control-Allow-Methods": "POST, OPTIONS"
     };
-
+    
+//  print("{"+HttpHeaders.acceptHeader+" : "+acceptHeader+","+ HttpHeaders.contentTypeHeader+" : "+contentTypeHeader+","+HttpHeaders.authorizationHeader+" : "+authorizationHeader+"}");
     BaseOptions options = new BaseOptions(
         baseUrl: baseUrl + apiReq,
         connectTimeout: 20000,
         receiveTimeout: 3000,
+         contentType : "application/json",
         headers: headers);
 
     dio.options = options;
+    print('Base URL :'+baseUrl + apiReq);
 
     return dio;
   }
@@ -183,11 +191,17 @@ class WebApi {
       HttpHeaders.acceptHeader: acceptHeader,
       HttpHeaders.authorizationHeader: authorizationHeader,
       HttpHeaders.contentTypeHeader: contentTypeHeader,
+      
+  "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+  "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+  "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+  "Access-Control-Allow-Methods": "POST, OPTIONS"
     };
     BaseOptions options = new BaseOptions(
         baseUrl: baseUrl + apiReq,
         connectTimeout: 20000,
         receiveTimeout: 3000,
+         contentType : "application/json",
         headers: headers);
     dio.options = options;
     return dio;
@@ -200,7 +214,9 @@ class WebApi {
       String fileName = file[i].path.split('/').last;
       formData = FormData.fromMap({
         "photos[]":
-            await MultipartFile.fromFile(file[i].path, filename: fileName),
+            await MultipartFile.fromFile(file[i].path, filename: fileName
+            
+            ),
       });
     }
     return formData;
@@ -225,7 +241,9 @@ class WebApi {
       String fileName = files[i].path.split('/').last;
 
       formData.files.add(MapEntry("photos[]",
-          await MultipartFile.fromFile(files[i].path, filename: fileName)));
+          await MultipartFile.fromFile(files[i].path, filename: fileName
+         
+          )));
     }
 
     BaseResponse _response;
@@ -249,7 +267,8 @@ class WebApi {
     formData = FormData.fromMap({"firstname": "", "lastname": ""});
 
     formData.files.add(MapEntry("profile",
-        await MultipartFile.fromFile(files.path, filename: fileName)));
+        await MultipartFile.fromFile(files.path, filename: fileName
+       )));
 
     BaseResponse _response;
     await dio.post("", data: formData).then((response) {
@@ -325,6 +344,7 @@ class WebApi {
     }
     return baseResponse;
   }
+  
 
 /* Future<BaseResponse> handleException(
       e, int num, String apiReq, Map<String, dynamic> jsonMap) async {
@@ -343,4 +363,18 @@ class WebApi {
 
     return baseResponse;
   }*/
+
+  
+}
+class Header{
+  String accept;
+  String authorization;
+  bool contenttype;
+
+  Map<String, dynamic> toJson() =>
+  {
+    'accept': accept,
+    'content-type': contenttype,
+    authorization : authorization,
+  }; 
 }

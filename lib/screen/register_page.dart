@@ -525,7 +525,7 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         isLoading = true;
       });
-
+print("TOKEN : "+Injector.accessToken.toString());
       WebApi()
           .callAPI(Const.post, WebApi.rqRegister, rq.toJson(),
               Injector.accessToken)

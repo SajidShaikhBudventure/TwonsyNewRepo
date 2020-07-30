@@ -32,8 +32,9 @@ class ProductInfoPage extends StatefulWidget {
 
 class _ProductInfoPageState extends State<ProductInfoPage> {
   bool isLoading = false;
- ScrollController controller;
+ ScrollController controller=new ScrollController();
   bool fabIsVisible = true;
+  SwiperController swiperController=new SwiperController();
 
   List<GetCategoryAndProduct> getCategoryAndProduct = List();
 
@@ -57,16 +58,14 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
     if (widget.productId != null) {
       getProductById(widget.productId);
     }
-     controller = ScrollController();
+  
     controller.addListener(() {
-      setState(() {
-        fabIsVisible =
-            controller.position.userScrollDirection == ScrollDirection.forward;
-      });
+     
     });
   }
 
   SwiperControl swiperControl = SwiperControl();
+  ScrollController scrollController=new ScrollController();
   SwiperPagination swiperPagination = SwiperPagination();
   int selectImageIndex = 0;
   List<ProductPhoto> arrImages = List();
@@ -104,7 +103,15 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
       appBar: AppBar(
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back, color: ColorRes.white),
-          onPressed: () => Navigator.pop(context, true),
+          onPressed: () { 
+           if(widget.productId != null) {
+            Navigator.pop(context, true);
+           }else{
+             Product product;
+            
+               Navigator.pop(context, product);
+           }
+          },
         ),
         title: Text(""),
         actions: <Widget>[
@@ -116,7 +123,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
         child: InkResponse(
           child: ListView(
             shrinkWrap: true,
-              
+              controller: controller,
             primary: false,
             children: <Widget>[
               firstCarouselView(),
@@ -151,6 +158,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                     width: Utils.getDeviceWidth(context),
                     color: ColorRes.black,
                     child: Swiper(
+                     
                       itemBuilder: (BuildContext context, int index) {
                         return arrImages[index].photo.contains("http")
                             ? CachedNetworkImage(
@@ -175,8 +183,9 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                       },
                       autoplay: false,
                       itemCount: arrImages.length,
-                      pagination: new SwiperPagination(),
+                      pagination: swiperPagination,
                       control: new SwiperControl(),
+                      controller:swiperController,
                       loop: false,
                       onTap: (i){
                         selectImageIndex = i;
@@ -637,18 +646,53 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 ),
                 onTap: () {
                   Navigator.pop(context);
+            Utils.loadAssets().then((value)  
+                {
+                   List<String> paths=value;
+                   bool empty=arrImages.length>0?false:true;
+                   
+                  
 
-                  Utils.getImage(Const.typeGallery).then((file) {
-                    if (file != null) {
-                      ProductPhoto photos = ProductPhoto();
-                      photos.photo = file.path;
-                       print(photos.toJson());
-                      if (product.photos == null) product.photos = List();
+ 
+                   for (String r in paths) {
+        String t = r;
+     
+       ProductPhoto photos = new ProductPhoto();
+                      photos.photo = t;
+                     
                       arrImages.add(photos);
 
-                      setState(() {});
-                    }
-                  });
+                    
+      }
+    print('Size : '+arrImages.length.toString());
+    if(!empty){
+swiperController.move(arrImages.length-1);
+     
+    }else{
+      selectImageIndex=arrImages.length-1;
+    }
+     
+      setState(() {});
+
+                }
+                
+                );
+               
+                
+                  // Utils.getImage(Const.typeGallery).then((file) {
+                  //   if (file != null) {
+                  //     ProductPhoto photos = ProductPhoto();
+                  //     photos.photo = file.path;
+                  //      print(photos.toJson());
+                  //     if (product.photos == null) product.photos = List();
+                  //     arrImages.add(photos);
+ 
+                      
+
+                  
+                 
+                
+                 
                 },
               ),
               Container(
@@ -670,8 +714,9 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                       if (product.photos == null) product.photos = List();
                       arrImages.add(photos);
 
-                      
+                     swiperController.move(arrImages.length-1);
                        setState(() {});
+                        
                     }
                   });
             
@@ -682,41 +727,8 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                 },
               ),
 
-                            Container(
-                height: 1,
-                color: ColorRes.fontGrey,
-              ),
-              InkResponse(
-                child: Container(
-                  padding: EdgeInsets.all(12),
-                  child: Text("Choose Multiple Photo"),
-                  alignment: Alignment.center,
-                ),
-                onTap: () async {
-                  Navigator.pop(context);
-                 
-                Utils.loadAssets().then((value)  
-                {
-                   List<String> paths=value;
-                   for (String r in paths) {
-        String t = r;
-       ProductPhoto photos = new ProductPhoto();
-                      photos.photo = t;
-                     
-                      arrImages.add(photos);
-
-                      print(photos.toJson());
-                      
-
-      }
-     
-      setState(() {});
-
-                }
-                
-                );
-                },
-              ),
+                         
+             
             ],
           ),
         );
@@ -738,14 +750,14 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
 
 var split =   description.text.split('\n').map((i) {
   if (i == "") {
-   
+   descriptionText=descriptionText+i+"\\n";
   } else {
      descriptionText=descriptionText+i+"\\n";
     return Text(i);
   }
 }).toList();
 
-var displayElement = Column(children: split);
+
  rq.category = widget.categoryId;
       rq.productName = productName.text;
       rq.description = descriptionText;
@@ -804,7 +816,7 @@ var displayElement = Column(children: split);
 
 var split =   description.text.split('\n').map((i) {
   if (i == "") {
-   
+      descriptionText=descriptionText+i+"\\n";
   } else {
      descriptionText=descriptionText+i+"\\n";
     return Text(i);
@@ -926,6 +938,8 @@ var split =   description.text.split('\n').map((i) {
           .callAPI(Const.get, WebApi.rqProduct + "/$productId", null,
               Injector.accessToken)
           .then((baseResponse) async {
+
+            print('Product Id:'+productId.toString()+"Access :"+Injector.accessToken);
         if (baseResponse.success) {
           setState(() {
             product = Product.fromJsonPhoto(baseResponse.data);

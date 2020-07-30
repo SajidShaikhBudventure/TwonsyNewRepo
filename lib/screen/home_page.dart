@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:developer' as logger;
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:marketplace/commonview/background.dart';
 import 'package:marketplace/helper/constant.dart';
@@ -12,17 +14,21 @@ import 'package:marketplace/helper/utils.dart';
 import 'package:marketplace/helper/web_api.dart';
 import 'package:marketplace/injection/dependency_injection.dart';
 import 'package:marketplace/model/business_user.dart';
+import 'package:marketplace/model/getProductData.dart';
 import 'package:marketplace/model/session_request.dart';
 import 'package:marketplace/model/slider_img_upload.dart';
 import 'package:marketplace/screen/analytics_page.dart';
+import 'package:marketplace/screen/busniess_image_show.dart';
 import 'package:marketplace/screen/how_to_use.dart';
 import 'package:marketplace/screen/main_page.dart';
+import 'package:marketplace/screen/mesibo_chat_app.dart';
 import 'package:marketplace/screen/product_page.dart';
 import 'package:marketplace/screen/rating_page.dart';
 import 'package:marketplace/screen/support.dart';
 import 'package:marketplace/screen/terms_conditions.dart';
 import 'package:marketplace/screen/webView.dart';
 import 'package:package_info/package_info.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'businessInfo_page.dart';
 import 'package:share/share.dart';
@@ -34,6 +40,7 @@ import 'package:intl/intl.dart';
 class LifecycleEventHandler extends WidgetsBindingObserver {
   final AsyncCallback resumeCallBack;
   final AsyncCallback suspendingCallBack;
+  SwiperController swiperController=new SwiperController();
 
   LifecycleEventHandler({
     this.resumeCallBack,
@@ -46,6 +53,7 @@ class LifecycleEventHandler extends WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         if (resumeCallBack != null) {
           await resumeCallBack();
+          
         }
         break;
       case AppLifecycleState.inactive:
@@ -67,7 +75,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   List<PhotosBusiness> arrImages = [];
-
+static const platform = const MethodChannel("mesibo.flutter.io/messaging");
+  static const EventChannel eventChannel =
+      EventChannel('mesibo.flutter.io/mesiboEvents');
+  String _mesiboStatus = 'Mesibo status: Not Connected.';
   bool isLoading = false;
   TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -76,6 +87,9 @@ class _HomePageState extends State<HomePage>
   String imagePath;
   String businessName;
  UserData userData=Injector.userDataMain;
+ SwiperControl swiperController=new SwiperControl();
+ SwiperController swiperControll=new SwiperController();
+ SwiperPagination swiperPagination=new SwiperPagination();
 
   String businessAddress;
   ScrollController _controller;
@@ -92,8 +106,13 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+    print("Token Mesibo"+Injector.userDataMain.mesibo_token);
+   
+
+    
 
     _initPackageInfo();
+    logger.log("ddd");
     headerImage = Injector.userDataMain.profile;
     _tabController = new TabController(length: 4, vsync: this);
     _tabController.animateTo(0);
@@ -108,13 +127,15 @@ class _HomePageState extends State<HomePage>
     getBusinessUserData();
     visitApi();
     checkUpdateApi();
+    
+    _setCredentials();
 //    Timer( Duration(seconds: 8), () => visitApi());
 
 //    final anHourAgo = (new DateTime.now()) - Duration(minutes: Duration.minutesPerHour);
 
 //    businessSessionAPI();
     _controller = ScrollController();
-
+eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
     _controller.addListener(() {
       if (_controller.offset > 220 && !_controller.position.outOfRange) {
         if(!silverCollapsed){
@@ -140,6 +161,45 @@ class _HomePageState extends State<HomePage>
     WidgetsBinding.instance.addObserver(this);
   }
 
+   void _onEvent(Object event) {
+    print('kkk'+event.toString());
+    setState(() {
+      _mesiboStatus = "" + event.toString();
+    });
+  }
+
+  void _onError(Object error) {
+     print('kkk1');
+    setState(() {
+      _mesiboStatus = 'Mesibo status: unknown.';
+    });
+  }
+   void _setLaunch() async {
+        await platform.invokeMethod("launchMesiboUI");
+   }
+
+  void _setCredentials() async {
+    print("Set Credentials clicked");
+    //get AccessToken and Destination From TextField and add it in a list then send it to native mesibo activity where these can be used to start mesibo
+    final List list = new List();
+    list.add(Injector.userDataMain.mesibo_token.toString());
+    list.add("");
+    if (Platform.isAndroid) {
+      await platform.invokeMethod("setAccessToken", {"Credentials": list});
+    }else{
+await platform.invokeMethod("setAccessToken", <String, dynamic>{
+        'access': Injector.userDataMain.mesibo_token.toString(),
+        'destination': "",});
+    }
+
+    //await platform.invokeMethod("setAccessToken", {"Credentials": list});
+  }
+
+void _setNavOff() async {
+print("gggg");
+await platform.invokeMethod("setNavOff");
+}
+
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -155,6 +215,9 @@ class _HomePageState extends State<HomePage>
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
       print("====== resumed ======");
+      if (Platform.isIOS) {
+     _setNavOff();
+      }
       DateTime now = DateTime.now();
       String sessionStart = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
       Injector.prefs.setString(PrefKeys.sessionStart, sessionStart.toString());
@@ -202,17 +265,43 @@ class _HomePageState extends State<HomePage>
   }
 
   Future getImage(int type) async {
-    Utils.getImage(type).then((file) {
+      
+      if(type ==Const.typeCamera){
+ Utils.getImage(type).then((file) {
       if (file != null) {
+    
         PhotosBusiness photos = PhotosBusiness();
         photos.photo = file.path;
         arrImages.add(photos);
-        uploadImgApi();
+        uploadImgApiProduct();
       }
     });
+      }else{
+      Utils.loadAssets().then((value)  
+                {
+                   List<String> paths=value;
+                   for (String r in paths) {
+        String t = r;
+      PhotosBusiness photos = PhotosBusiness();
+      
+                      photos.photo = t;
+                     
+                     
+  uploadImgApiPhoto(photos);
+                      print(photos.toJson());
+                      
+
+      }
+    }
+                
+);
+
+      }
+   
   }
 
   Future getImageSingle(int type) async {
+     print('fff');
     Utils.getImage(type).then((file) {
       if (file != null) {
         imagePath = file.path.toString();
@@ -337,23 +426,29 @@ class _HomePageState extends State<HomePage>
                               ? Swiper(
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return arrImages[index]
+                                    return   PhotoView(
+      imageProvider:arrImages[index]
                                             .photo
                                             .contains("http")
-                                        ? Image.network(arrImages[index].photo)
-                                        : Image.file(
-                                            File(arrImages[index].photo));
+                                        ? new NetworkImage(arrImages[index].photo): FileImage(File(arrImages[index].photo))
+                               );
                                   },
                                   index: selectImageIndex,
                                   onIndexChanged: (i) {
                                     selectImageIndex = i;
-                                    print("indez__" +
-                                        selectImageIndex.toString());
+                                  
                                   },
+                                   onTap: (i){
+                        selectImageIndex = i;
+                         print("indez__" + selectImageIndex.toString());
+                       Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BussinessImageShow(selectedImageIndex:selectImageIndex,arrImages:arrImages,)));
+                      },
                                   autoplay: false,
                                   itemCount: arrImages.length,
-                                  pagination: new SwiperPagination(),
-                                  control: new SwiperControl(color: ColorRes.black),
+                                  pagination: swiperPagination,
+                                  control: swiperController,
+                                  controller: swiperControll,
                                   loop: false,
                                 )
                               : Center(
@@ -424,11 +519,19 @@ class _HomePageState extends State<HomePage>
                           onIndexChanged: (i) {
                             selectImageIndex = i;
                             print("indez__" + selectImageIndex.toString());
+                         
                           },
+                           onTap: (i){
+                        selectImageIndex = i;
+                         print("indez__" + selectImageIndex.toString());
+                       Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BussinessImageShow(selectedImageIndex:selectImageIndex,arrImages:arrImages,)));
+                      },
                           autoplay: false,
                           itemCount: arrImages.length,
-                          pagination: new SwiperPagination(),
-                          control: new SwiperControl(),
+                          pagination:swiperPagination,
+                          control: swiperController,
+                          controller: swiperControll,
                           loop: false,
                         )
                       : Center(
@@ -653,6 +756,28 @@ class _HomePageState extends State<HomePage>
                   MaterialPageRoute(builder: (context) => HowToPage()));
             },
           ),
+            ListTile(
+            contentPadding: EdgeInsets.only(
+                left: Utils.getDeviceHeight(context) / 60, right: 10.0),
+            title: Text(
+            "Chat Messages",
+              style: TextStyle(
+                  color: ColorRes.black,
+                  fontSize: Utils.getDeviceHeight(context) / 38),
+            ),
+            onTap: () {
+               if(Platform.isAndroid){
+  _setLaunch();
+    }else{
+     _setLaunch();
+    }
+          
+          //  Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //             builder: (context) => VideoChatApp()));
+            }
+          ),
           ListTile(
             contentPadding: EdgeInsets.only(
                 left: Utils.getDeviceHeight(context) / 60, right: 10.0, top: 0),
@@ -811,12 +936,116 @@ class _HomePageState extends State<HomePage>
               baseResponse.data.forEach((v) {
                 arrImages.add(PhotosBusiness.fromJson(v));
               });
+             swiperControll.move(arrImages.length-1);
+              setState(() {
+                
+              });
+             
             } else {
               Utils.showToast(baseResponse.message);
+            
             }
           }
         }).catchError((e) {
           print("image uploading." + e.toString());
+          
+          setState(() {
+            isLoading = false;
+          });
+        });
+      }
+    });
+  }
+  
+  Future<void> uploadImgApiPhoto(PhotosBusiness photo) async {
+    Utils.isInternetConnected().then((isConnected) {
+      PhotoUploadRequest rq = PhotoUploadRequest();
+//      rq.photos = _images.;
+      print("Hello $arrImages");
+      setState(() {
+        isLoading = true;
+      });
+
+      List<File> arrFile = List();
+      arrImages.add(photo);
+      arrImages.forEach((image) {
+        if (!image.photo.contains("http")) arrFile.add(File(image.photo));
+      });
+      swiperControll.move(arrImages.length-1);
+           
+
+      if (arrFile.isNotEmpty) {
+        WebApi()
+            .uploadImgApi(WebApi.rqBusinessPhoto, Injector.accessToken, arrFile)
+            .then((baseResponse) async {
+          if (baseResponse != null) {
+            if (baseResponse.success) {
+              arrImages.clear();
+
+              baseResponse.data.forEach((v) {
+                arrImages.add(PhotosBusiness.fromJson(v));
+              });
+             swiperControll.move(arrImages.length-1);
+              setState(() {
+                
+              });
+             
+            } else {
+              Utils.showToast(baseResponse.message);
+              
+            }
+          }
+        }).catchError((e) {
+          print("image uploading." + e.toString());
+          
+          setState(() {
+            isLoading = false;
+          });
+        });
+      }
+    });
+  }
+  
+
+   Future<void> uploadImgApiProduct() async {
+    Utils.isInternetConnected().then((isConnected) {
+      PhotoUploadRequest rq = PhotoUploadRequest();
+//      rq.photos = _images.;
+      print("Hello $arrImages");
+      setState(() {
+        isLoading = true;
+      });
+
+      List<File> arrFile = List();
+
+      arrImages.forEach((image) {
+        if (!image.photo.contains("http")) arrFile.add(File(image.photo));
+      });
+
+      if (arrFile.isNotEmpty) {
+        WebApi()
+            .uploadImgApi(WebApi.rqBusinessPhoto, Injector.accessToken, arrFile)
+            .then((baseResponse) async {
+             
+          if (baseResponse != null) {
+
+            if (baseResponse.success) {
+              arrImages.clear();
+
+              baseResponse.data.forEach((v) {
+                arrImages.add(PhotosBusiness.fromJson(v));
+              });
+             swiperControll.move(arrImages.length-1);
+           
+              
+            } else {
+              Utils.showToast(baseResponse.message);
+              
+            }
+          }
+        }).catchError((e) {
+          print("image uploading." + e.toString());
+        
           setState(() {
             isLoading = false;
           });

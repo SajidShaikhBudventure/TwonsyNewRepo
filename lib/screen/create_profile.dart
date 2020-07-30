@@ -260,14 +260,23 @@ class _BusinessPageState extends State<CreateProfile> {
               categoryTF.text.toString() != null &&
               categoryTF.text.toString().trim() != null &&
               categoryTF.text.toString().trim().isNotEmpty) {
-            categoryList.add(categoryTF.text.toString());
+                if(!categoryList.contains(categoryTF.text.toString())){
+                 categoryList.add(categoryTF.text.toString());
+                }else{
+                  Utils.showToast("Category Already Added");
+                }
             categoryTF.text = "";
              selected_category="Select Business Category";
                                           other_category=false;
             setState(() {});
           }
         }else{
- categoryList.add(selected_category);
+           if(!categoryList.contains(selected_category)){
+                categoryList.add(selected_category);
+                }else{
+                  Utils.showToast("Category Already Added");
+                }
+ 
  selected_category="Select Business Category";
    categoryTF.text = "";
             setState(() {});
@@ -346,7 +355,12 @@ class _BusinessPageState extends State<CreateProfile> {
               categoryTF.text.toString() != null &&
               categoryTF.text.toString().trim() != null &&
               categoryTF.text.toString().trim().isNotEmpty) {
-            categoryList.add(categoryTF.text.toString());
+                 if(!categoryList.contains(categoryTF.text.toString())){
+                 categoryList.add(categoryTF.text.toString());
+                }else{
+                  Utils.showToast("Category Already Added");
+                }
+         
             categoryTF.text = "";
              selected_category="Select Business Category";
                                           other_category=false;
@@ -879,15 +893,12 @@ displayPredictionNearBy(Prediction p) async {
                       hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28),
                     ),
                     validator: (value) {
-                      if (value.isEmpty) {
-                        setState(() {
-                          isForCategory = true;
-                        });
-                      } else {
+                    
+                      
                         setState(() {
                           isForCategory = false;
                         });
-                      }
+                      
                       return null;
                     },
                   ),

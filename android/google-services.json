@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "487746360668",
+    "firebase_url": "https://townsy-1580126225713.firebaseio.com",
+    "project_id": "townsy-1580126225713",
+    "storage_bucket": "townsy-1580126225713.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487746360668:android:48d417a2b393c315fedd99",
+        "android_client_info": {
+          "package_name": "com.townsy.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "487746360668-ski5o2bid6stq5io9cltfbd0jpujlmhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrK6h2vF0xLHHyOwCG78SSCcR6bhN6H2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "487746360668-ski5o2bid6stq5io9cltfbd0jpujlmhs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

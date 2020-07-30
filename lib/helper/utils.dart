@@ -4,8 +4,11 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
+import 'package:flutter_html/image_properties.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:marketplace/helper/imageproperties.dart';
 import 'package:marketplace/helper/res.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -89,12 +92,13 @@ static Future<List<String>> loadAssets() async {
 
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 300,
+        maxImages: 20,
         enableCamera: true,
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
+          actionBarColor: "#000000",
+          actionBarTitleColor:"#000000",
           actionBarTitle: "Townsy App",
           allViewTitle: "All Photos",
           useDetailsView: false,
@@ -104,9 +108,33 @@ static Future<List<String>> loadAssets() async {
      
 
       for (var r in resultList) {
-        var t = await FlutterAbsolutePath.getAbsolutePath(r.identifier);
-  File image = await FlutterExifRotation.rotateAndSaveImage(path: t);
-        imagePath.add(image.path);
+       var t = await FlutterAbsolutePath.getAbsolutePath(r.identifier);
+       print('Width: '+r.originalWidth.toString()+"Height:"+r.originalHeight.toString());
+        print('Path:'+t);
+        File image;
+        if(Platform.isAndroid){
+    image = await FlutterExifRotation.rotateImage(path: t);
+        }else{
+          image = new File(t.toString());
+        }
+ if(r.originalWidth>4000){
+File compressedFile = await FlutterNativeImage.compressImage(image.path, quality: 80, 
+    targetWidth: 2500, targetHeight: 2000);
+    imagePath.add(compressedFile.path);
+      
+ }else if(r.originalWidth>3000){
+File compressedFile = await FlutterNativeImage.compressImage(image.path, quality: 80, 
+    targetWidth: 2500, targetHeight: 1900);
+    imagePath.add(compressedFile.path);
+      
+ }
+ 
+ else{
+  
+   
+    imagePath.add(image.path);
+ }
+        
         
       }
     } on Exception catch (e) {

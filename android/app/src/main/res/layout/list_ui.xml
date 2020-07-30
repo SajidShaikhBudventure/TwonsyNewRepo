@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:theme="@style/MesiboAppTheme"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#000"
+            app:contentInsetLeft="-20dp"
+            app:contentInsetStart="-20dp"
+
+            >
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- https://stackoverflow.com/questions/32956071/add-views-below-toolbar-in-coordinatorlayout
+     layout_behavior is important
+    -->
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/progress_circular"
+        android:layout_height="@dimen/_30sdp">
+
+    </ProgressBar>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_container_message"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:id="@+id/no_data"
+            android:visibility="gone"
+
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:src="@drawable/mailbox"
+                    android:layout_height="@dimen/_100sdp"></ImageView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:gravity="center"
+                    android:textSize="@dimen/_18sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:text="No Messages Found "
+                    android:fontFamily="sans-serif-medium"></TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_gravity="center"
+
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:text="You don't have any message right now.Please check again later."
+                    android:fontFamily="sans-serif-light"></TextView>
+
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+
+
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:id="@+id/data_layout"
+ >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="#F7F7F7"
+
+            android:layout_height="@dimen/_30sdp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewUsername"
+                android:layout_weight=".65"
+                android:gravity="center|start"
+                android:textColor="#000"
+                android:singleLine="true"
+                android:paddingLeft="@dimen/_8sdp"
+
+                android:textStyle="bold"
+                android:textSize="@dimen/_15sdp"
+
+                android:text="INBOX"
+                ></TextView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="#D2D2D2"
+            android:layout_height="1.5dp">
+
+        </View>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:id="@+id/list_ui"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+    </LinearLayout>
+    <!-- <include layout="@layout/chat_box_new" /> -->
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:id="@+id/chat_row"
+    android:layout_height="@dimen/_63sdp">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_height="@dimen/_60sdp">
+    <LinearLayout
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+
+
+        >
+        <LinearLayout
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/circle"
+            android:layout_gravity="center"
+            android:gravity="center"
+
+
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="A"
+                android:textSize="@dimen/_20sdp"
+                android:id="@+id/textIntial"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+            </TextView>
+
+        </LinearLayout>
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_height="@dimen/_35sdp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/textViewUsername"
+            android:layout_weight=".65"
+            android:gravity="center|start"
+            android:textColor="#000"
+            android:singleLine="true"
+            android:paddingTop="@dimen/_8sdp"
+
+            android:textStyle="bold"
+            android:textSize="@dimen/_16sdp"
+
+            android:text="ADITYA SHOP"
+            ></TextView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".35"
+            android:id="@+id/textDate"
+            android:paddingTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:textColor="#000"
+            android:singleLine="true"
+
+
+            android:textSize="@dimen/_12sdp"
+
+            android:text="11/07/2020"
+            >
+        </TextView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_marginTop="-5dp"
+        android:layout_height="@dimen/_25sdp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".8"
+            android:gravity="center|top|start"
+            android:textColor="#000"
+            android:id="@+id/textMessage"
+            android:singleLine="true"
+
+
+            android:textSize="@dimen/_13sdp"
+
+            android:text="ADITYA SHOP"
+            ></TextView>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+              android:background="@drawable/circle_black"
+                android:gravity="center"
+                android:id="@+id/status"
+                android:layout_gravity="center"
+                android:textColor="#fff"
+
+
+                android:singleLine="true"
+
+
+
+                android:textSize="13dp"
+
+                android:text="1"
+                ></TextView>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E2E2"
+        ></View>
+
+</LinearLayout>

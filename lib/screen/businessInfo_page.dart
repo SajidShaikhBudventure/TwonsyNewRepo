@@ -229,14 +229,22 @@ String selected_category="Select Business Category";
               categoryTF.text.toString() != null &&
               categoryTF.text.toString().trim() != null &&
               categoryTF.text.toString().trim().isNotEmpty) {
+                if(!categoryList.contains(categoryTF.text.toString())){
             categoryList.add(categoryTF.text.toString());
+                }else{
+                  Utils.showToast("Category Already Added");
+                }
             categoryTF.text = "";
              selected_category="Select Business Category";
                                           other_category=false;
             setState(() {});
           }
         }else{
+             if(!categoryList.contains(selected_category)){
  categoryList.add(selected_category);
+             }else{
+  Utils.showToast("Category Already Added");
+             }
  selected_category="Select Business Category";
    categoryTF.text = "";
             setState(() {});
@@ -921,15 +929,11 @@ fullAddressTextFiled() {
 
                     ),
                     validator: (value) {
-                      if (value.isEmpty) {
-                        setState(() {
-                          isForCategory = true;
-                        });
-                      } else {
+                  
                         setState(() {
                           isForCategory = false;
                         });
-                      }
+                     
                       return null;
                     },
                   ),
@@ -1047,7 +1051,11 @@ fullAddressTextFiled() {
               categoryTF.text.toString() != null &&
               categoryTF.text.toString().trim() != null &&
               categoryTF.text.toString().trim().isNotEmpty) {
+                  if(!categoryList.contains(categoryTF.text.toString())){
             categoryList.add(categoryTF.text.toString());
+                  }else{
+                    Utils.showToast("Category Already Added");
+                  }
             categoryTF.text = "";
              selected_category="Select Business Category";
                                           other_category=false;
@@ -2042,6 +2050,7 @@ fullAddressTextFiled() {
             }
              if((businessAddressTF.text =="") | (businessAddressTF.text == null)){
                isForBusinessAddress=true;
+
                setState(() {
                  
                });
@@ -2059,6 +2068,9 @@ fullAddressTextFiled() {
             editBusinessInfo = !editBusinessInfo;
             isLoading = false;
           });
+          selected_category="Select Business Category";
+   categoryTF.text = "";
+   other_category=false;
           Injector.streamController.add(StringRes.sideImage);
         }
       }).catchError((e) {
