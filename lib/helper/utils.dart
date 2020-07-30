@@ -98,7 +98,7 @@ static Future<List<String>> loadAssets() async {
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
           actionBarColor: "#000000",
-          actionBarTitleColor:"#000000",
+          actionBarTitleColor:"#ffffff",
           actionBarTitle: "Townsy App",
           allViewTitle: "All Photos",
           useDetailsView: false,
