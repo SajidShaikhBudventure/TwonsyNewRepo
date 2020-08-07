@@ -95,10 +95,10 @@ class StringRes {
 
   static var invalidOtp             =   "INVALID OTP";
   static var resendOtp              =   "RESEND OTP";
-  static var support                =   "Support";
-  static var viewOnTownsy           =   "View your page";
-  static var sharePage              =   "Share your page";
-  static var HowToUse               =   "How to use the app";
+  static var support                =   "Seller Support";
+  static var viewOnTownsy           =   "View my page";
+  static var sharePage              =   "Share my page";
+  static var HowToUse               =   "App Tutorial";
   static var about                  =   "About";
   static var logout                 =   "Log out";
   static var businessInfo           =   "BUSINESS\nINFO";
@@ -148,7 +148,7 @@ class StringRes {
 
   static var openingTime            =  "Opening Times";
   static var businessCategory       =  "Business Category(s)";
-  static var businessDes            =  "Note: You can add multiple categories. Click the ADD CATEGORY button after typing in the category to add it to your business.";
+  static var businessDes            =  "Note: You can add multiple categories.";
   static var businessType           =  "Business Type";
   static var otherInfoCustomer      =  "Other Info For Customers (Optional)";
 
@@ -250,18 +250,24 @@ class StringRes {
   static var updateNow              =  "Update Now";
 
   static var firstQ              =  "\u2022 What is Townsy?";
-  static var firstA              =  "Townsy.in is an online listing platform for local merchants. It is a platform to help local merchants find and attract more customers. When you list your products on Townsy.in, your products are viewed by thousands of customers in your city who are searching for these products.";
-  static var secondQ              =  "\u2022 What is Townsy Business App?";
-  static var secondA            =  "Merchants and businesses can list their products on Townsy using the Townsy Business App. Using this app, you can list your products on Townsy, add new listings, manage existing listings and get data on how many people are looking at your listed products. You can also share your Townsy Page containing all your products with people or on social media with just one button.";
-  static var thirdQ              =  "\u2022 Is there any fee involved?";
-  static var thirdA              =  "No. Townsy is free to use for both merchants and customers.";
-  static var fourthQ              =  "\u2022 How do I upload my products?";
-  static var fourthA1             =  "Go to the PRODUCTS tab on the app and add a new category of products.";
-  static var fourthA2              =  "Add a new product by clicking the ADD PRODUCT button.";
-  static var fourthA3              =  "Add your product’s photos and details and click DONE.";
-  static var fourthA4              =  "Your product listings are now online on Townsy.in.";
-  static var fifthQ              =  "\u2022 How do I share my page?";
-  static var fifthA              =  "Use the SHARE MY PAGE button on the left-hand side menu to share you page.";
+  static var firstA              =  "Townsy.in is an online marketplace that allows you to buy and sell products in your own town online. It is the best place to list your products if you are a merchant and want to sell your products online.\n\nIt is a platform designed to make online selling easier for merchants by providing them with easy to use tools so that they can grow their business with the power of online selling and compete with big ecommerce websites.\n\nOur vision is to make online selling so easy for merchants that any merchant can start selling online within minutes and reach crores of customers through our platform.";
+  static var secondQ              =  "\u2022 What is Townsy Merchant App?";
+  static var secondA            =  "Townsy Merchant App is a tool for merchants to list and manage their products on Townsy and to engage with customers. Using this app, you can: list new products on Townsy, manage existing products and prices, chat with customers, get data on how many people viewed your products, share your products on social media and reply to your reviews. It is an easy-to-use and user-friendly tool that is designed to make your life easier as a merchant and allow you to sell your products on our website with ease.";
+  static var thirdQ              =  "\u2022 Is there any fees involved?";
+  static var thirdA              =  "No. Townsy is completely free to use for all merchants and there are no fees involved. We don’t charge any commission fee, referral fee or listing fee from our merchants and that is what makes us different from other ecommerce platforms.";
+  static var fourthQ              =  "\u2022 Do I need to provide any information?";
+  static var fourthA              =  "You don’t need to provide any additional information other than the information you provided while signing up. We don’t ask you for any bank account information, tax information or any documents. We want to make online selling as easy as possible for you so that you can sell on Townsy with ease.";
+  static var fifthQ              =  "\u2022 How do I upload my products?";
+  static var fifthA1             =  "Uploading products to Townsy is as simple as following these 3 steps: \n\n- Go to the PRODUCTS tab on the app and add a new category of products.";
+  static var fifthA2              =  "- Add a new product by clicking the ADD PRODUCT button.";
+  static var fifthA3              =  "- Add your product’s photos and details and click DONE.";
+  static var fifthA4              =  "And that's it! Your products are now live on Townsy and visible to millions of customers.";
+  static var sixthQ              =  "\u2022 How should I photograph my products?";
+  static var sixthA              =  "Listings with high-quality images sell faster! A product listing with good background and clearly displayed product attracts customers much faster than a product listing with a messy background and hard-to-see product. Although we do not reject any listings due to poor quality images, we recommend the following guidelines to ensure that your listings are attractive to the customers and you make as many sales as possible on Townsy: \n\n -	Photograph your product in front of a plain background.\n-	Ensure there is good lighting so that your product is clearly visible and images are not dark.\n-	Display all parts of the product in the image including any accessories.\n-	Click multiple images from different angles so that the customer can see all sides of the product.\n-	Make sure other items that are not included with the product are not included in the image.";
+  static var seventhQ              =  "\u2022 What is the analytics tab for?";
+  static var seventhA              =  "The analytics tab gives you data about how your listings are performing on the Townsy website. You can see data on how many people opened your page, how many people saw directions to your store, how many people called you through the website and how many times each of your products was opened on the website. This tan helps you know which products are most popular among the customers.";
+  static var eighthQ              =  "\u2022 How do I contact the support team?";
+  static var eighthA              =  "You can call us, email us or reach us on our Facebook page. Feel free to reach out to us anytime you need help with something and we would be happy to help. You can find all the information about contacting us on the “Seller Support” page.";
 
 
   //google ads key:

@@ -129,20 +129,20 @@ ScrollController controller = ScrollController();
 
     return 
     Scaffold(
+      backgroundColor: ColorRes.productBgGrey,
           body:
     Container(
         color: ColorRes.productBgGrey,
         child: ScrollConfiguration(
           behavior: MyBehavior(),
-  
-           
-         
-             
-            
-          
-                
+
+
+
+
+
+
+
               child: SingleChildScrollView(
-              
               primary: true,
                 child: new Column(
               children: <Widget>[
@@ -154,7 +154,7 @@ ScrollController controller = ScrollController();
                      
                 indicatorShow(),
 
-            
+
               ],
             
               
@@ -169,10 +169,10 @@ ScrollController controller = ScrollController();
               
         ),
     ),
-floatingActionButton: Container(
+      floatingActionButton: arrCategoryAndProduct.length>1?Container(
              transform: Matrix4.translationValues(0.0, 0.0, 0.0),
              margin:   EdgeInsets.only(left: 0,right: 0),
-             width: 200,
+             width: Utils.getDeviceWidth(context)/3,
             child: 
             Visibility(
               visible: _isVisible,
@@ -192,18 +192,18 @@ floatingActionButton: Container(
              mainAxisAlignment: MainAxisAlignment.center,   
       children: <Widget>[
 
-        Text('GO TO TOP', style: TextStyle(color: Colors.white),),
+        Text('GO TO TOP', style: TextStyle(color: Colors.white,fontSize: Utils.getDeviceWidth(context) / 30),),
        Padding(
-   padding: EdgeInsets.only(bottom: 2, left:5),
+   padding: EdgeInsets.only(top: 2, left:5),
        
-       child: Icon(Icons.arrow_upward, color: Colors.white),
+       child: Icon(Icons.arrow_upward, color: Colors.white,size: Utils.getDeviceWidth(context) / 24,),
        ),
       ],
               ),
              
             ),
           ),
-                ),
+                ):Container(),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         );

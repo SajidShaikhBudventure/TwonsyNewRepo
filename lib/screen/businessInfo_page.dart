@@ -164,11 +164,12 @@ String selected_category="Select Business Category";
                 addresstitleText(StringRes.businessAddress, 2),
                 addressTextFiled(),
                 titleText(StringRes.phoneNumber, 3),
-                telephoneNumberView(),
                 mobileNumberView(),
-                addAdditionNumber(),
-                titleTextAdd("Additional Phone Number (Optional)" ,4),
+                telephoneNumberView(),
                 addtelephoneNumberView(),
+                //addAdditionNumber(),
+                //titleTextAdd("Additional Phone Number (Optional)" ,4),
+
                 titleText(StringRes.openingTime, 5),
                 dateTimeView(),
                 invalidTime(),
@@ -188,12 +189,12 @@ String selected_category="Select Business Category";
                           isExpanded: true,
 
                            
-                           style: TextStyle(color: Colors.black),
+                           style: TextStyle(color: Colors.black, fontSize: Utils.getDeviceWidth(context) / 28),
                           underline: Container(
         height: 0,
        
       ),
-                         items: <String>['Select Business Category',"Men's Fashion", 'Women Fashion', 'Mobile Phones', 'Laptop & Computers','Electronics & Appliances','Furniture','Home Decor','Auto Accessories','Gift Products','Kid Products','Other'].map((String value) {
+                         items: <String>['Select Business Category',"Men's Fashion", "Women's Fashion", 'Mobile Phones', 'Laptops & Computers','Electronics & Appliances','Furniture','Home Decor','Auto Accessories','Gift Products','Kids Products','Other'].map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
                               child: new Text(value),
@@ -701,18 +702,18 @@ fullAddressTextFiled() {
   addtelephoneNumberView() {
     return 
     Visibility(
-     visible: other_address,
+     visible: editBusinessInfo?true:addtelephoneTF.text==""?false:true,
 
     child:Container(
       margin: EdgeInsets.only(
           top: Utils.getDeviceHeight(context) / 100,
-          left: Utils.getDeviceWidth(context) / 30),
+          left: Utils.getDeviceWidth(context) / 15 + Utils.getDeviceHeight(context) / 27),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
         
           Container(
-            width: Utils.getDeviceWidth(context) * 2 / 4,
+            width: Utils.getDeviceWidth(context) * 2 / 5,
             height: Utils.getDeviceHeight(context) / 16,
             margin: EdgeInsets.only(top: 0,left: 3),
             child: addtelePhoneNumberAddText(),
@@ -794,7 +795,7 @@ fullAddressTextFiled() {
                         ),
                       )
                     : Container(),
-                SizedBox(width: 0),
+                SizedBox(width: 5),
                 Expanded(
                   child: Text(
                     dayList[index].name,
@@ -895,7 +896,7 @@ fullAddressTextFiled() {
       editBusinessInfo
       ?Container(
         margin: EdgeInsets.only(
-            top: Utils.getDeviceHeight(context) / 200,
+            top: Utils.getDeviceHeight(context) / 100,
             right: Utils.getDeviceWidth(context) / 30,
             left: Utils.getDeviceWidth(context) / 30),
         child: Visibility(
@@ -924,7 +925,7 @@ fullAddressTextFiled() {
                         // width: 0.0 produces a thin "hairline" border
                         borderSide: const BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: "Other Category",
+                      hintText: "Type Category Name",
                       hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28),
 
                     ),
@@ -968,7 +969,7 @@ fullAddressTextFiled() {
         children: List.generate(categoryList.length, (index) {
           return Padding(
             padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+                 EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, right: Utils.getDeviceWidth(context)/30, top: 5, bottom: 5),
             child: Container(
               decoration: BoxDecoration(
                   border: Border.all(color: ColorRes.lightGrey),
@@ -1026,9 +1027,9 @@ fullAddressTextFiled() {
           ),*/
           Container(
             color: ColorRes.black,
-            margin: const EdgeInsets.only(left: 0.0, right: 20.0,bottom:5),
+            margin: const EdgeInsets.only(top: 5.0, left: 0.0, right: 20.0,bottom:5),
            
-            padding: EdgeInsets.only(right: 10,left: 10, top: 5, bottom: 5),
+            padding: EdgeInsets.only(right: 10,left: 10, top: 10, bottom: 10),
             child: Text(
               "DONE",
               style: TextStyle(
@@ -1189,15 +1190,16 @@ fullAddressTextFiled() {
                 enabled: editBusinessInfo,
                 keyboardType: TextInputType.multiline,
                 style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
-                maxLines: 1,
+                maxLines: 5,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 20, top: 0),
                   border: OutlineInputBorder(),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
                     borderSide: const BorderSide(color: Colors.black, width: 1.0),
                   ),
-
+                  hintText: "Example: Paytm Info, Home Delivery Charges, Offers and Discounts, etc.",
+                  hintStyle: TextStyle(color: editBusinessInfo?ColorRes.greyText:ColorRes.white, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28, height: 1),
                 ),
               ),
             ),
@@ -1391,7 +1393,7 @@ fullAddressTextFiled() {
           Container(
             padding: EdgeInsets.only(left: 13, top: 10,bottom: 10),
             child: Text(
-              "+ ADD PHONE NUMBERS",
+              "+ ADD PHONE NUMBER",
               style: TextStyle(
                   fontSize: Utils.getDeviceWidth(context) / 26,
                   color:  Color(0xff456FCB)),
@@ -1402,7 +1404,7 @@ fullAddressTextFiled() {
       onTap: () {
      other_address=true;
      setState(() {
-       
+
      });
 
       },
@@ -1908,11 +1910,11 @@ fullAddressTextFiled() {
   ];
 
   getBusinessTypeList() {
-    BusinessTypeModel businessTypeModel = new BusinessTypeModel();
+    /*BusinessTypeModel businessTypeModel = new BusinessTypeModel();
     businessTypeModel.isSelectedType = false;
     businessTypeModel.businessTypes = StringRes.manufacturer;
     businessTypeModel.businessTypesInInt = 1;
-    businessTypeList.add(businessTypeModel);
+    businessTypeList.add(businessTypeModel);*/
 
     BusinessTypeModel businessTypeModel2 = new BusinessTypeModel();
     businessTypeModel2.isSelectedType = false;

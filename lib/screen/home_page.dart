@@ -745,22 +745,7 @@ await platform.invokeMethod("setNavOff");
             contentPadding: EdgeInsets.only(
                 left: Utils.getDeviceHeight(context) / 60, right: 10.0),
             title: Text(
-              StringRes.HowToUse,
-              style: TextStyle(
-                  color: ColorRes.black,
-                  fontSize: Utils.getDeviceHeight(context) / 38),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HowToPage()));
-            },
-          ),
-            ListTile(
-            contentPadding: EdgeInsets.only(
-                left: Utils.getDeviceHeight(context) / 60, right: 10.0),
-            title: Text(
-            "Chat Messages",
+            "My chats",
               style: TextStyle(
                   color: ColorRes.black,
                   fontSize: Utils.getDeviceHeight(context) / 38),
@@ -814,6 +799,21 @@ await platform.invokeMethod("setNavOff");
                   context,
                   MaterialPageRoute(
                       builder: (context) => WebViewPage(webUrl: webProfile)));*/
+            },
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.only(
+                left: Utils.getDeviceHeight(context) / 60, right: 10.0),
+            title: Text(
+              StringRes.HowToUse,
+              style: TextStyle(
+                  color: ColorRes.black,
+                  fontSize: Utils.getDeviceHeight(context) / 38),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HowToPage()));
             },
           ),
           /*ListTile(
@@ -889,9 +889,10 @@ await platform.invokeMethod("setNavOff");
                   ),
                 ),
               ),
+              SizedBox(width: 10),
               arrImages.isNotEmpty && arrImages.length > 0
                   ? Padding(
-                      padding: const EdgeInsets.all(5.0),
+                      padding: EdgeInsets.only(right: 8, top: 5, bottom: 5, left: 5),
                       child: InkResponse(
                         onTap: () {
                           deleteImgApi(arrImages[selectImageIndex].id);

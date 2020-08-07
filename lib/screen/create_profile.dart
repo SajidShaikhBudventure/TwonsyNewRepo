@@ -146,11 +146,11 @@ class _BusinessPageState extends State<CreateProfile> {
   }
 
   getBusinessTypeList() {
-    BusinessTypeModel businessTypeModel = new BusinessTypeModel();
+    /*BusinessTypeModel businessTypeModel = new BusinessTypeModel();
     businessTypeModel.isSelectedType = false;
     businessTypeModel.businessTypes = StringRes.manufacturer;
     businessTypeModel.businessTypesInInt = 1;
-    businessTypeList.add(businessTypeModel);
+    businessTypeList.add(businessTypeModel);*/
 
     BusinessTypeModel businessTypeModel2 = new BusinessTypeModel();
     businessTypeModel2.isSelectedType = false;
@@ -192,11 +192,11 @@ class _BusinessPageState extends State<CreateProfile> {
                     addressTextFiled(),
                     titleTextMobileNumber(),
                     mobileNumberView(),
-                    titleText("Additonal Phone Number", 4),
+                    titleText("Additonal Phone Numbers (Optional)", 4),
                     telephoneNumberView(),
 
-                    addAdditionNumber(),
-                    titleTextAdd(StringRes.addtelephoneNumber, 4),
+                    //addAdditionNumber(),
+                    //titleTextAdd(StringRes.addtelephoneNumber, 4),
                     addtelephoneNumberView(),
                     titleText(StringRes.openingTime, 5),
                     dateTimeView(),
@@ -218,12 +218,12 @@ class _BusinessPageState extends State<CreateProfile> {
                           isExpanded: true,
 
                            
-                           style: TextStyle(color: Colors.black),
+                           style: TextStyle(color: Colors.black, fontSize: Utils.getDeviceWidth(context) / 28),
                           underline: Container(
         height: 0,
        
       ),
-                         items: <String>['Select Business Category',"Men's Fashion", 'Women Fashion', 'Mobile Phones', 'Laptop & Computers','Electronics & Appliances','Furniture','Home Decor','Auto Accessories','Gift Products','Kid Products','Other'].map((String value) {
+                         items: <String>['Select Business Category',"Men's Fashion", "Women's Fashion", 'Mobile Phones', 'Laptops & Computers','Electronics & Appliances','Furniture','Home Decor','Auto Accessories','Gift Products','Kids Products','Other'].map((String value) {
                             return new DropdownMenuItem<String>(
                               value: value,
                               child: new Text(value),
@@ -330,9 +330,9 @@ class _BusinessPageState extends State<CreateProfile> {
           ),*/
           Container(
             color: ColorRes.black,
-            margin: const EdgeInsets.only(left: 0.0, right: 20.0,bottom:5),
-           
-            padding: EdgeInsets.only(right: 10,left: 10, top: 5, bottom: 5),
+            margin: const EdgeInsets.only(top: 5.0, left: 0.0, right: 20.0,bottom:5),
+
+            padding: EdgeInsets.only(right: 10,left: 10, top: 10, bottom: 10),
             child: Text(
               "DONE",
               style: TextStyle(
@@ -759,18 +759,18 @@ displayPredictionNearBy(Prediction p) async {
   addtelephoneNumberView() {
     return 
     Visibility(
-     visible: other_address,
+     visible: true,
     child:Container(
       margin: EdgeInsets.only(
-          top: Utils.getDeviceHeight(context) / 200,
+          top: Utils.getDeviceHeight(context) / 100,
           right: Utils.getDeviceWidth(context) / 30,
-          left: Utils.getDeviceWidth(context) / 65),
+          left: Utils.getDeviceWidth(context) / 15 + Utils.getDeviceHeight(context) / 30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
          
           Container(
-            width: Utils.getDeviceWidth(context) * 2 / 4,
+            width: Utils.getDeviceWidth(context) * 2 / 5,
             margin: EdgeInsets.only(left: 10),
             child: add_telePhoneNumberAddText(),
           ),
@@ -860,7 +860,7 @@ displayPredictionNearBy(Prediction p) async {
     return Center(
       child: Container(
         margin: EdgeInsets.only(
-            top: Utils.getDeviceHeight(context) / 200,
+            top: Utils.getDeviceHeight(context) / 100,
             right: Utils.getDeviceWidth(context) / 30,
             left: Utils.getDeviceWidth(context) / 30),
         //padding: const EdgeInsets.only(top: 5.0, right: 10, left: 10),
@@ -889,7 +889,7 @@ displayPredictionNearBy(Prediction p) async {
                         // width: 0.0 produces a thin "hairline" border
                         borderSide: const BorderSide(color: Colors.black, width: 1.0),
                       ),
-                      hintText: "Other Category",
+                      hintText: "Type Category Name",
                       hintStyle: TextStyle(color: ColorRes.greyText, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28),
                     ),
                     validator: (value) {
@@ -932,7 +932,7 @@ displayPredictionNearBy(Prediction p) async {
         children: List.generate(categoryList.length, (index) {
           return Padding(
             padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
+            EdgeInsets.only(left: Utils.getDeviceWidth(context)/30, right: Utils.getDeviceWidth(context)/30, top: 5, bottom: 5),
             child: Container(
               decoration: BoxDecoration(
                   border: Border.all(color: ColorRes.lightGrey),
@@ -1082,17 +1082,19 @@ displayPredictionNearBy(Prediction p) async {
 
                 enabled: editBusinessInfo,
                 keyboardType: TextInputType.multiline,
-                maxLines: null,
+                maxLines: 5,
                 style: TextStyle(fontSize: Utils.getDeviceWidth(context) / 28),
 //                  textInputAction: TextInputAction.go,
 
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 20, top: 0),
                   border: OutlineInputBorder(),
                   enabledBorder: const OutlineInputBorder(
                     // width: 0.0 produces a thin "hairline" border
                     borderSide: const BorderSide(color: Colors.black, width: 1.0),
                   ),
+                  hintText: "Example: Paytm Info, Home Delivery Charges, Offers and Discounts, etc.",
+                  hintStyle: TextStyle(color: editBusinessInfo?ColorRes.greyText:ColorRes.white, fontFamily: FontRes.nunito, fontWeight: FontWeight.normal, fontSize: Utils.getDeviceWidth(context)/28, height: 1),
                 ),
               ),
             ),

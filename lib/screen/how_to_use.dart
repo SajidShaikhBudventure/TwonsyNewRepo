@@ -18,7 +18,7 @@ class _HowToPageState extends State<HowToPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("HOW TO USE", style: TextStyle(fontSize: Utils.getDeviceWidth(context)/21)),
+        title: Text("APP TUTORIAL", style: TextStyle(fontSize: Utils.getDeviceWidth(context)/21)),
       ),
       body: body(),
     );
@@ -46,6 +46,12 @@ class _HowToPageState extends State<HowToPage> {
           fourthAnswer(),
           fifthQuestion(),
           fifthAnswer(),
+          sixthQuestion(),
+          sixthAnswer(),
+          seventhQuestion(),
+          seventhAnswer(),
+          eighthQuestion(),
+          eighthAnswer(),
         ],
       ),
     )]
@@ -137,11 +143,33 @@ class _HowToPageState extends State<HowToPage> {
       padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
       margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
       alignment: Alignment.topLeft,
+      child: Text(StringRes.fourthA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+    );
+  }
+
+  fifthQuestion(){
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      color: ColorRes.white,
+      padding: EdgeInsets.all(Utils.getDeviceWidth(context)/25),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/25),
+      //alignment: Alignment(0,0),
+      child: Text(StringRes.fifthQ, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/23, fontWeight: FontWeight.w600)),
+    );
+  }
+
+  fifthAnswer(){
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      color: ColorRes.white,
+      padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
+      alignment: Alignment.topLeft,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(StringRes.fourthA1, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+          Text(StringRes.fifthA1, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -153,7 +181,7 @@ class _HowToPageState extends State<HowToPage> {
               //width: Utils.getDeviceWidth(context)/2,
             ),
           ),
-          Text(StringRes.fourthA2, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+          Text(StringRes.fifthA2, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -165,7 +193,7 @@ class _HowToPageState extends State<HowToPage> {
               //width: Utils.getDeviceWidth(context)/2,
             ),
           ),
-          Text(StringRes.fourthA3, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+          Text(StringRes.fifthA3, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -188,7 +216,7 @@ class _HowToPageState extends State<HowToPage> {
               //width: Utils.getDeviceWidth(context)/2,
             ),
           ),
-          Text(StringRes.fourthA4, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+          Text(StringRes.fifthA4, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
           Container(
             //height: Utils.getDeviceHeight(context)/2,
             //width:  Utils.getDeviceWidth(context),
@@ -204,52 +232,69 @@ class _HowToPageState extends State<HowToPage> {
     );
   }
 
-  fifthQuestion(){
+  sixthQuestion(){
     return Container(
       width: Utils.getDeviceWidth(context),
       color: ColorRes.white,
       padding: EdgeInsets.all(Utils.getDeviceWidth(context)/25),
       margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/25),
       //alignment: Alignment(0,0),
-      child: Text(StringRes.fifthQ, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/23, fontWeight: FontWeight.w600)),
+      child: Text(StringRes.sixthQ, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/23, fontWeight: FontWeight.w600)),
     );
   }
 
-  fifthAnswer(){
+  sixthAnswer(){
     return Container(
       width: Utils.getDeviceWidth(context),
       color: ColorRes.white,
       padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
-      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50, bottom: Utils.getDeviceHeight(context)/30),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
       alignment: Alignment.topLeft,
-      child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(StringRes.fifthA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
-        Container(
-          //height: Utils.getDeviceHeight(context)/2,
-          //width:  Utils.getDeviceWidth(context),
-          margin: EdgeInsets.only(right: 0, left: 0, top: Utils. getDeviceHeight(context)/30, bottom: Utils. getDeviceHeight(context)/50),
-          alignment: Alignment(0,0),
-          child: Image.asset(
-            Utils.getAssetsImg("HowTo5"),
-            //height: Utils.getDeviceHeight(context)/2,
-            //width: Utils.getDeviceWidth(context)/2,
-          ),
-        ),
-        Container(
-          //height: Utils.getDeviceHeight(context)/2,
-          //width:  Utils.getDeviceWidth(context),
-          margin: EdgeInsets.only(right: 0, left: 0, top: Utils. getDeviceHeight(context)/30, bottom: 0),
-          alignment: Alignment(0,0),
-          child: Image.asset(
-            Utils.getAssetsImg("HowTo6"),
-            //height: Utils.getDeviceHeight(context)/2,
-            //width: Utils.getDeviceWidth(context)/2,
-          ),
-        ),
-      ],),
+      child: Text(StringRes.sixthA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+    );
+  }
+
+  seventhQuestion(){
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      color: ColorRes.white,
+      padding: EdgeInsets.all(Utils.getDeviceWidth(context)/25),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/25),
+      //alignment: Alignment(0,0),
+      child: Text(StringRes.seventhQ, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/23, fontWeight: FontWeight.w600)),
+    );
+  }
+
+  seventhAnswer(){
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      color: ColorRes.white,
+      padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
+      alignment: Alignment.topLeft,
+      child: Text(StringRes.seventhA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
+    );
+  }
+
+  eighthQuestion(){
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      color: ColorRes.white,
+      padding: EdgeInsets.all(Utils.getDeviceWidth(context)/25),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/25),
+      //alignment: Alignment(0,0),
+      child: Text(StringRes.eighthQ, style: Theme.of(context).textTheme.title.copyWith(fontSize: Utils.getDeviceWidth(context)/23, fontWeight: FontWeight.w600)),
+    );
+  }
+
+  eighthAnswer(){
+    return Container(
+      width: Utils.getDeviceWidth(context),
+      color: ColorRes.white,
+      padding: EdgeInsets.only(right: Utils.getDeviceWidth(context)/25, left: Utils.getDeviceHeight(context)/30, bottom: Utils.getDeviceHeight(context)/50),
+      margin: EdgeInsets.only(left: 0, right:0, top: Utils.getDeviceHeight(context)/50),
+      alignment: Alignment.topLeft,
+      child: Text(StringRes.eighthA, style: TextStyle(fontSize: Utils.getDeviceWidth(context)/24, fontWeight: FontWeight.w200, height: Platform.isAndroid? 1.075 : 1.25),textAlign: TextAlign.justify),
     );
   }
 }

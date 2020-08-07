@@ -64,7 +64,7 @@ class ListActivity : AppCompatActivity(),Mesibo.HttpListener,MesiboRegistrationI
          //getSupportActionBar().setHomeAsUpIndicator(new RoundImageDrawable(b));
          getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
          getSupportActionBar()?.setDisplayShowHomeEnabled(true)
-      setTitle("Townsy")
+      setTitle("MY CHATS")
          val recyclerView = findViewById(R.id.list_ui) as RecyclerView
 
          //adding a layoutmanager

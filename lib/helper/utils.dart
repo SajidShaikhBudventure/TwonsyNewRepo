@@ -99,7 +99,7 @@ static Future<List<String>> loadAssets() async {
         materialOptions: MaterialOptions(
           actionBarColor: "#000000",
           actionBarTitleColor:"#ffffff",
-          actionBarTitle: "Townsy App",
+          actionBarTitle: "Select Photos",
           allViewTitle: "All Photos",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",

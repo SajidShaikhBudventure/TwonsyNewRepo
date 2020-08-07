@@ -78,11 +78,11 @@
                     android:gravity="center"
                     android:textSize="@dimen/_18sdp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:text="No Messages Found "
+                    android:layout_marginTop="20dp"
+                    android:text="NO MESSAGES"
                     android:fontFamily="sans-serif-medium"></TextView>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -92,7 +92,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:text="You don't have any message right now.Please check again later."
-                    android:fontFamily="sans-serif-light"></TextView>
+                    android:fontFamily="sans-serif-light"></TextView>-->
 
 
             </LinearLayout>
@@ -114,27 +114,27 @@
     android:id="@+id/data_layout"
  >
 
-        <LinearLayout
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:background="#F7F7F7"
+
+        android:layout_height="@dimen/_30sdp">
+        <TextView
             android:layout_width="match_parent"
-            android:background="#F7F7F7"
+            android:layout_height="match_parent"
+            android:id="@+id/textViewUsername"
+            android:layout_weight=".65"
+            android:gravity="center|start"
+            android:textColor="#000"
+            android:singleLine="true"
+            android:paddingLeft="@dimen/_8sdp"
 
-            android:layout_height="@dimen/_30sdp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/textViewUsername"
-                android:layout_weight=".65"
-                android:gravity="center|start"
-                android:textColor="#000"
-                android:singleLine="true"
-                android:paddingLeft="@dimen/_8sdp"
+            android:textStyle="bold"
+            android:textSize="@dimen/_15sdp"
 
-                android:textStyle="bold"
-                android:textSize="@dimen/_15sdp"
-
-                android:text="INBOX"
-                ></TextView>
-        </LinearLayout>
+            android:text="INBOX"
+            ></TextView>
+    </LinearLayout>-->>
         <View
             android:layout_width="match_parent"
             android:background="#D2D2D2"
