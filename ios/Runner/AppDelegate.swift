@@ -165,7 +165,7 @@ import MesiboUI
         ui?.mStatusBarColor = 0x000000
         ui?.mToolbarColor =  0x000000
         
-        ui?.emptyUserListMessage = "No active conversations! Invite your family and friends to try mesibo."
+        ui?.emptyUserListMessage = "NO MESSAGES"
         
         let mesiboController = MesiboUI.getViewController()
         
@@ -383,7 +383,7 @@ import MesiboUI
               let content = UNMutableNotificationContent()
               content.title = "New Message"
             
-            content.body = "You have recieved a message."
+            content.body = "You have received a new message."
               content.sound = UNNotificationSound.default
               
               //To Present image in notification
