@@ -556,15 +556,17 @@ fullAddressTextFiled() {
             "=====>" +
             addresses.first.coordinates.longitude.toString());
 
-        latitude = addresses.first.coordinates.latitude.toString();
-        longitude = addresses.first.coordinates.longitude.toString();
+        // latitude = addresses.first.coordinates.latitude.toString();
+        //longitude = addresses.first.coordinates.longitude.toString();
 
         setState(() {});
+        
       }
     } catch (e) {
       print(e);
     }
   }
+
 displayPredictionNearBy(Prediction p) async {
     try {
       if (p != null) {
@@ -642,7 +644,7 @@ displayPredictionNearBy(Prediction p) async {
 
   nearbyTextFiled() {
     Prediction p;
-
+    
     return Container(
       margin: EdgeInsets.only(
           top: Utils.getDeviceHeight(context) / 200,
@@ -1202,13 +1204,13 @@ displayPredictionNearBy(Prediction p) async {
                 } else {
                   setState(() {
                     dayTimeList[index].startTime = newTime;
-                    isSelectTimeInvalid = true;
+                    isSelectTimeInvalid = false;
                   });
                 }
               } else {
                 setState(() {
                   dayTimeList[index].startTime = newTime;
-                  isSelectTimeInvalid = true;
+                  isSelectTimeInvalid = false;
                 });
               }
             }, currentTime: DateTime.now());
@@ -1266,13 +1268,13 @@ displayPredictionNearBy(Prediction p) async {
             } else {
               setState(() {
                 dayTimeList[index].endTime = newTime;
-                isSelectTimeInvalid = true;
+                isSelectTimeInvalid = false;
               });
             }
           } else {
             setState(() {
               dayTimeList[index].endTime = newTime;
-              isSelectTimeInvalid = true;
+              isSelectTimeInvalid = false;
             });
           }
         }, currentTime: DateTime.now());
@@ -1647,7 +1649,7 @@ displayPredictionNearBy(Prediction p) async {
           .then((baseResponse) async {
         if (baseResponse != null && baseResponse.success) {
           Utils.showToast(baseResponse.message);
-  print("login_" + baseResponse.message);
+          print("login_" + baseResponse.message);
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
 

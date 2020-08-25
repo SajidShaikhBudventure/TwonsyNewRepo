@@ -99,8 +99,8 @@ class WebApi {
 //  print("{"+HttpHeaders.acceptHeader+" : "+acceptHeader+","+ HttpHeaders.contentTypeHeader+" : "+contentTypeHeader+","+HttpHeaders.authorizationHeader+" : "+authorizationHeader+"}");
     BaseOptions options = new BaseOptions(
         baseUrl: baseUrl + apiReq,
-        connectTimeout: 20000,
-        receiveTimeout: 3000,
+        connectTimeout: 200000,
+        receiveTimeout: 30000,
          contentType : "application/json",
         headers: headers);
 

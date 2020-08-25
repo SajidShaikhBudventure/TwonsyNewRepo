@@ -14,5 +14,11 @@ class Const {
   static var typeGallery         = 102;
 
 
-  static int imgQuality          = 20;
+
+    static int imgQuality          = 20;
+
+    static int categoryIndexToScroll=0;
+    static int productIndexToScroll=0;
+
+
 }

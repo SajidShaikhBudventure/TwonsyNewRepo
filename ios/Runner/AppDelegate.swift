@@ -70,9 +70,10 @@ import MesiboUI
 //
 //          print("gggssss==============")
 //
-//              let ui = Mesibo.getInstance().getUiOptions()
+             let ui = Mesibo.getInstance().getUiOptions()
 //
-//                     ui?.useLetterTitleImage =  true
+                    ui?.useLetterTitleImage =  true
+                    
 //
 //                     ui?.emptyUserListMessage = "No active conversations! Invite your family and friends to try mesibo."
 //

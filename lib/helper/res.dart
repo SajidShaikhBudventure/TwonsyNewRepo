@@ -33,6 +33,7 @@ class StringRes {
   static var marketPlace            =   "MarketPlace";
   static var townsyTitle            =   "Townsy";
   static var businessTitle          =   "Business";
+  static var newbusinessTitle       =   "Merchant";
   static var register               =   "REGISTER";
   static var signIn                 =   "SIGN IN";
   static var continueGoogle         =   "CONTINUE WITH GOOGLE";
@@ -236,6 +237,7 @@ class StringRes {
   static var businessSlider1        =  "1";
   static var sideImage              =  "sideMenuImageShow";
   static var keyBoardShow           =  "keyBoardShow";
+  static var analyticalProductGet   =  "Analytical Data Get";
 
 
   //Edit profile .

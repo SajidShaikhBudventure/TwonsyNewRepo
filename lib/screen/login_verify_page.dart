@@ -408,7 +408,7 @@ class _LoginVerifyPageState extends State<LoginVerifyPage> {
         if (data != null && data.success) {
           await Injector.updateVerifyUserDataSign(widget.userData,data.data.toString());
           print(data.data.toString());
-
+        
 
           Navigator.pushAndRemoveUntil(
             context,

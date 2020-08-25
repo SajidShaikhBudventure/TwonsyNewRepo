@@ -114,8 +114,8 @@ static const platform = const MethodChannel("mesibo.flutter.io/messaging");
     _initPackageInfo();
     logger.log("ddd");
     headerImage = Injector.userDataMain.profile;
-    _tabController = new TabController(length: 4, vsync: this);
-    _tabController.animateTo(0);
+    _tabController = new TabController(length: 4, vsync: this,initialIndex: 1);
+    _tabController.animateTo(1);
 
     DateTime now = DateTime.now();
     String sessionStart = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
@@ -365,7 +365,7 @@ await platform.invokeMethod("setNavOff");
       if (data == StringRes.sideImage) {
         headerImage = Injector.userDataMain.profile;
         businessName = Injector.prefs.getString(PrefKeys.businessName);
-        businessAddress = Injector.prefs.getString(PrefKeys.businessAddress);
+       // businessAddress = Injector.prefs.getString(PrefKeys.businessAddress);
      print(businessName+" ====Busniess Name 2");
      }
       setState(() {});
@@ -661,7 +661,7 @@ await platform.invokeMethod("setNavOff");
                         overflow: TextOverflow.ellipsis),
                   ),
                   Container(
-                    height: Utils.getDeviceHeight(context) / 29,
+                    height: Utils.getDeviceHeight(context) /29,
                     width: Utils.getDeviceWidth(context),
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(
@@ -1104,6 +1104,12 @@ await platform.invokeMethod("setNavOff");
           Injector.userDataMain.businessName = userBusinessData.businessName;
           Injector.userDataMain.address = userBusinessData.address;
           Injector.userDataMain.profileStatus = userBusinessData.profileStatus;
+
+          businessAddress=(userBusinessData.additional_address==null?"":(userBusinessData.additional_address));
+                         // +(userBusinessData.landmark==null?"":(userBusinessData.landmark+" ,"))
+                         // +(userBusinessData.address==null?"":userBusinessData.address);
+
+
           arrImages = userBusinessData.photos;
 
           webProfile = userBusinessData.webProfile;

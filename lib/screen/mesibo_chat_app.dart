@@ -42,7 +42,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
     userAccessTokenController = new TextEditingController(text: Injector.userDataMain.mesibo_token);
-  destinationController = new TextEditingController(text: "Aditya Jaitly");
+    destinationController = new TextEditingController(text: "Aditya Jaitly");
 
     eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError);
 

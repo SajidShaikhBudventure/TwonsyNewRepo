@@ -1,6 +1,10 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
@@ -15,6 +19,7 @@ import 'package:marketplace/model/getProductData.dart';
 import 'package:marketplace/model/getcategory.dart';
 import 'package:marketplace/screen/product_Info_page.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:share/share.dart';
 
 
 
@@ -31,36 +36,71 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   Analytics analytics;
   List<ProductCategory> categories = List();
 
+  bool _isVisible = false;
+  GlobalKey analyticsKey = new GlobalKey();
 
-  bool isLoadingLazy = false;
+
   int currentPageName = 0;
   int page = 1;
-  Meta meta = Meta();
+ // Meta meta = Meta();
+  bool fabIsVisible = true;
+  ScrollController controller = ScrollController();
 
   @override
   void initState() {
-    Utils.isInternetConnected().then((isConnected) {
+
+    Injector.streamController = StreamController.broadcast();
+    
+    controller.addListener(() {
+       fabIsVisible =controller.position.userScrollDirection == ScrollDirection.forward;
+    });
+
+    Injector.streamController.stream.listen((data) {
+      if (data == StringRes.analyticalProductGet) {
+        setState(() {
+          categories = List();
+           page = 1;
+           Utils.isInternetConnected().then((isConnected) {
+               if (isConnected) callApi();
+          }); //n
+        });
+      }
+    }, onDone: () {}, onError: (error) {});
+
+     Utils.isInternetConnected().then((isConnected) {
       if (isConnected) callApi();
     });
+
     super.initState();
+    
   }
 
-  Future _loadMore() async {
-    setState(() {
-      isLoadingLazy = true;
-    });
+  List<int> data = [];
+  int currentLength = 0;
+  bool isLoadingLazy = false;
+  final int increment = 10;
 
-    // Add in an artificial delay
-    await new Future.delayed(const Duration(seconds: 5));
-//    if(meta.currentPage == page) {
-      page++;
-      Utils.isInternetConnected().then((isConnected) {
-        if (isConnected) callApi();
+  Future _loadMore() async {
+   
+  // if (mounted) {
+      setState(() {
+        isLoadingLazy = true;
       });
-//    }
-    setState(() {
-      isLoadingLazy = false;
-    });
+   // }
+
+    await new Future.delayed(const Duration(seconds: 5));
+    //if (meta.currentPage == page) {
+      page++;
+       Utils.isInternetConnected().then((isConnected) {
+      if (isConnected) callApi();
+       });
+   // }
+    //if (mounted) {
+      setState(() {
+        isLoadingLazy = false;
+      });
+    //}
+
   }
 
 
@@ -95,14 +135,18 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   }
 
   widgetsLayout() {
-    return ScrollConfiguration(
+    return Scaffold(
+     body:Container(
+     // color: ColorRes.productBgGrey,
+    child:ScrollConfiguration(
       behavior: MyBehavior(),
-      child: LazyLoadScrollView(
-        isLoading: isLoadingLazy,
-        onEndOfPage: () => _loadMore(),
-        child: ListView(
-          primary: true,
-          shrinkWrap: true,
+      child: SingleChildScrollView(
+        primary: true,
+        // isLoading: isLoadingLazy,
+         //onEndOfPage: () => _loadMore(),
+         child: Column(
+         // primary: true,
+          //shrinkWrap: true,
           children: <Widget>[
             firstDropDownMenu(),
             titleTextShow("Your Business", 1),
@@ -117,13 +161,50 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
           ],
         ),
       ),
-    );
+    )),floatingActionButton: categories.length > 1
+          ? Container(
+              transform: Matrix4.translationValues(0.0, 0.0, 0.0),
+              margin: EdgeInsets.only(left: 0, right: 0),
+              width: Utils.getDeviceWidth(context) / 3,
+              child: Visibility(
+                visible: categories.length>1?true:false,
+                child: MaterialButton(
+                  color: ColorRes.black,
+                  onPressed: () => {
+                    Scrollable.ensureVisible(analyticsKey.currentContext),
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'GO TO TOP',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Utils.getDeviceWidth(context) / 30),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 2, left: 5),
+                        child: Icon(
+                          Icons.arrow_upward,
+                          color: Colors.white,
+                          size: Utils.getDeviceWidth(context) / 24,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : Container(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,);
   }
 
   firstDropDownMenu() {
-    return Align(
+    return 
+    Align(
       alignment: Alignment.centerRight,
       child: Container(
+          key: analyticsKey,
           alignment: Alignment.center,
           width: Utils.getDeviceWidth(context) / 2.5,
           height: Utils.getDeviceHeight(context)/15,
@@ -207,8 +288,10 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   }
 
   titleTextShow(String title, int type) {
-      return Container(
+      return 
+          Container(
         padding: EdgeInsets.only(bottom: 10, top: 15, left: 15, right: 8),
+        alignment: Alignment.topLeft,
         child: Text(
           title,
           style: TextStyle(
@@ -264,14 +347,18 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
   }
 
   fourMainListView() {
-    return ListView.builder(
+    return 
+    Container(
+      child:ListView.builder(
       itemCount: categories.length,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+       shrinkWrap: true,
+       controller: controller,
+       physics: ScrollPhysics(),
+      //physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return listOfItem(index, categories[index]);
       },
-    );
+    ));
   }
 
   listOfItem(int categoryIndex, ProductCategory productCategory) {
@@ -327,7 +414,10 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       child: Container(
         width: Utils.getDeviceWidth(context) / 2.3,
         padding: EdgeInsets.all(4.0),
-        child: Card(
+        child:Stack( 
+         children: <Widget>[
+        
+         Card(
             color: ColorRes.white,
             elevation: 4,
             child: Column(
@@ -383,11 +473,27 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                 ),
               ],
             )),
-      ),
+             Positioned( 
+           top: 0,
+           right: 0,
+           child: IconButton(
+            onPressed: () {
+              shareLink(product);
+            },
+            icon: Icon(Icons.share,color: Colors.black,size: 24,),
+          ),)
+         ])),
       onTap: () {
         navigateToProductInfo(categoryIndex, product);
       },
     );
+  }
+
+  void shareLink(Product product) {
+    final RenderBox box = context.findRenderObject();
+    Share.share("https://townsy.in/product/${product.id}",
+        subject: "",
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 
   Future<void> navigateToProductInfo(int categoryIndex, Product product) async {
@@ -398,7 +504,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
                   categoryId: categories[categoryIndex]?.id,
                   productId: product != null ? product.id : null,
                 )));
-    setState(() {});
+           setState(() {});
   }
 
   
@@ -425,7 +531,62 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
     );
   }
 
-  callApiForGetAnalyticsInfo(String month, int year) async {
+//   callApiForGetAnalyticsInfo(String month, int year) async {
+//     print("month: " + month + "====Year: " + year.toString());
+    
+//     //print("Token  "+Injector.accessToken);
+
+//     bool isConnected = await Utils.isInternetConnectedWithAlert();
+      
+//     if (isConnected) {
+//       Map<String, dynamic> map = {'month': month, 'year': year};
+      
+//       WebApi()
+//           .callAPI(
+//               Const.postWithAccess, page == 1 ? "/analytics_list" :"/analytics?page=${page.toString()}", map, Injector.accessToken)
+//           .then((baseResponse) async {
+//         if (baseResponse.success) {
+//           setState(() {
+//             isLoading = false;
+//             _isVisible = true;
+//          AnalyticsResponse analyticsResponse =
+//               AnalyticsResponse.fromJson(baseResponse.data);
+
+//           analytics = analyticsResponse.analytics;
+
+// //          baseResponse.data.forEach((v) {
+// //          });
+//           for(int i = 0; i < analyticsResponse.categories.length; i++) {
+// //            categories.add(baseResponse.data[i]);
+// //            categories.add(ProductCategory.fromJson(baseResponse.data[i]));
+//             categories.add(analyticsResponse.categories[i]);
+//           }
+
+//          // meta = baseResponse.meta as Meta;
+//           setState(() {
+
+//           });
+
+//           });
+//           }else {
+//           if (mounted) {
+//             setState(() {
+//               isLoading = false;
+//             });
+//             _isVisible = true;
+//           }
+//         }
+//       }).catchError((e) {
+//         setState(() {
+//           isLoading = false;
+//         });
+//         print("login_" + e.toString());
+//       });
+//     }
+
+//   }
+
+callApiForGetAnalyticsInfo(String month, int year) async {
     print("month: " + month + "====Year: " + year.toString());
 
     bool isConnected = await Utils.isInternetConnectedWithAlert();
@@ -434,7 +595,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       Map<String, dynamic> map = {'month': month, 'year': year};
       WebApi()
           .callAPI(
-              Const.postWithAccess, page == 1 ? "/analytics" :"/analytics?page=${page.toString()}", map, Injector.accessToken)
+              Const.postWithAccess, page == 1 ? "/analytics_list" :"/analytics?page=${page.toString()}", map, Injector.accessToken)
           .then((baseResponse) async {
         if (baseResponse.success) {
           AnalyticsResponse analyticsResponse =
@@ -478,6 +639,7 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
       var formatterForMonth = new DateFormat('MM');
       var formatterForYear = new DateFormat('yyyy');
       var formatterForDisplay = new DateFormat('MMM yyyy');
+
       String formatted = formatterForDisplay.format(DateTime.now());
       selectedDateWithYear = formatted;
       callApiForGetAnalyticsInfo(

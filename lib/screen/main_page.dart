@@ -61,7 +61,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
                             ),
                             SizedBox(height: Utils.getDeviceWidth(context)/60),
                             Text(
-                              StringRes.businessTitle,
+                              StringRes.newbusinessTitle,
                               style: TextStyle(
                                   fontSize: Utils.getDeviceHeight(context)/21,
                                   color: ColorRes.white,

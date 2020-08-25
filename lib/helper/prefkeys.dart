@@ -5,6 +5,7 @@ class PrefKeys {
   static var refreshToken = "refreshToken";
   static var businessName = "businessName";
   static var businessAddress = "businessAddress";
+  static var businessFullAddress = "businessFullAddress";
   static var sessionStart = "sessionStart";
   static var todayDate = "todayDate";
   static var latitude = "latitude";

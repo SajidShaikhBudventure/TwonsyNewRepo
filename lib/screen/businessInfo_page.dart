@@ -53,7 +53,7 @@ class _BusinessPageState extends State<BusinessPage> {
 
   String latitude;
   String longitude;
-String selected_category="Select Business Category";
+  String selected_category="Select Business Category";
   bool other_category=false;
   List<int> showBusinessType = List();
   final _formKey = GlobalKey<FormState>();
@@ -206,7 +206,7 @@ String selected_category="Select Business Category";
                             }else{
                                other_category=false;
                             }
- if (newValue.isEmpty) {
+          if (newValue.isEmpty) {
                         setState(() {
                           isForCategory = true;
                         });
@@ -235,9 +235,11 @@ String selected_category="Select Business Category";
                 }else{
                   Utils.showToast("Category Already Added");
                 }
-            categoryTF.text = "";
+                
+             categoryTF.text = "";
              selected_category="Select Business Category";
-                                          other_category=false;
+             other_category=false;
+
             setState(() {});
           }
         }else{
@@ -521,6 +523,8 @@ fullAddressTextFiled() {
 
         latitude = addresses.first.coordinates.latitude.toString();
         longitude = addresses.first.coordinates.longitude.toString();
+        Injector.prefs.setString(PrefKeys.latitude, latitude);
+        Injector.prefs.setString(PrefKeys.longitude, longitude);
 
         setState(() {});
       }
@@ -540,10 +544,10 @@ fullAddressTextFiled() {
             "=====>" +
             addresses.first.coordinates.longitude.toString());
 
-        latitude = addresses.first.coordinates.latitude.toString();
-        Injector.prefs.setString(PrefKeys.latitude, latitude);
-        longitude = addresses.first.coordinates.longitude.toString();
-        Injector.prefs.setString(PrefKeys.longitude, longitude);
+       // latitude = addresses.first.coordinates.latitude.toString();
+       // Injector.prefs.setString(PrefKeys.latitude, latitude);
+       // longitude = addresses.first.coordinates.longitude.toString();
+      //  Injector.prefs.setString(PrefKeys.longitude, longitude);
 
         setState(() {});
       }
@@ -1249,13 +1253,13 @@ fullAddressTextFiled() {
                       } else {
                         setState(() {
                           dayTimeList[index].startTime = newTime;
-                          isSelectTimeInvalid = true;
+                          isSelectTimeInvalid = false;
                         });
                       }
                     } else {
                       setState(() {
                         dayTimeList[index].startTime = newTime;
-                        isSelectTimeInvalid = true;
+                        isSelectTimeInvalid = false              ;
                       });
                     }
                   }, currentTime: DateTime.now());
@@ -1312,13 +1316,13 @@ fullAddressTextFiled() {
                       } else {
                         setState(() {
                           dayTimeList[index].endTime = newTime;
-                          isSelectTimeInvalid = true;
+                          isSelectTimeInvalid = false;
                         });
                       }
                     } else {
                       setState(() {
                         dayTimeList[index].endTime = newTime;
-                        isSelectTimeInvalid = true;
+                        isSelectTimeInvalid = false;
                       });
                     }
                   }, currentTime: DateTime.now());
@@ -2071,8 +2075,8 @@ fullAddressTextFiled() {
             isLoading = false;
           });
           selected_category="Select Business Category";
-   categoryTF.text = "";
-   other_category=false;
+          categoryTF.text = "";
+          other_category=false;
           Injector.streamController.add(StringRes.sideImage);
         }
       }).catchError((e) {
